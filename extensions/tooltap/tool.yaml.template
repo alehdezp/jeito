@@ -1,0 +1,174 @@
+# tooltap configuration template
+# Copy to ~/.pi/agent/tool.yaml and customize.
+# Every option is documented inline. Defaults shown where non-obvious.
+#
+# Tool classification tiers:
+#
+#   Tier          Config key          Startup cost   Activation
+#   ────────────  ──────────────────  ─────────────  ──────────────────────────
+#   Core          policy.core         Full schema    Always callable
+#   Startup       policy.startup      Full schema    Always callable
+#   Unlisted      policy.unlisted     Zero           exact request or capability
+#   ExplicitOnly  policy.explicitOnly Zero           exact request, ##tool, /tool, group
+#   Excluded      policy.excluded     Zero           None — unreachable
+#
+# tooltap always exposes one public `tools` control. `routing` chooses
+# Pi-native deferral, direct dispatch, or strict two-step gateway execution.
+# Provider/model names live only in this file, never in extension code.
+# The extension never rewrites provider payloads or patches Pi at startup.
+
+# ─── Tool classification ─────────────────────────────────────────────────────
+
+policy:
+  # Minimal foundation. Full schemas sent from session start on every turn.
+  # Keep this small — each tool here costs tokens permanently.
+  core:
+    - read
+    - write
+    - edit
+    - bash
+
+  # Frequently-used tools. Full schemas from session start, like core.
+  # Use for tools needed often enough to justify the permanent cost.
+  startup:
+    - grep
+    - find
+    - explore
+    - trace
+    - docs_search
+    - diff
+    - lsp_validate
+    - web_search
+    - web_fetch
+    - web_answer
+    - web_lookup
+    - recall
+    - todo
+
+  # Omit from the displayed catalog while retaining exact/capability search.
+  unlisted: []
+
+  # Zero individual metadata in the loader. Activate only through exact names[],
+  # an exact ##tool marker, an exact user /tool command, or a configured group.
+  explicitOnly:
+    - detect_package_manager
+    - pi_ext_benchmark
+    - pi_version
+
+  # Completely absent from tooltap discovery, activation, restoration,
+  # and execution routes.
+  excluded: []
+
+  # Stable ordering for startup-visible tools. Does not activate tools;
+  # names not present in core/startup are ignored here.
+  order: []
+
+# ─── Capability groups ───────────────────────────────────────────────────────
+# Named collections for batch activation via #group-name or groups[].
+# Group descriptions are discoverable; explicitOnly member names stay absent
+# until explicit activation. List only tools registered by loaded extensions.
+groups:
+  pi-runtime:
+    description: Pi version, documentation, changelog, loaded-tool and package-manager utilities.
+    tools:
+      - pi_version
+      - pi_docs
+      - pi_changelog
+      - pi_changelog_versions
+      - pi_loaded_tools
+      - detect_package_manager
+      - pi_ext_benchmark
+
+# ─── Public control ──────────────────────────────────────────────────────────
+# Exactly one model-facing control named `tools`. Its name and schema are fixed:
+# native/direct use { request }; gateway uses { request, arguments? } with
+# strict two-step enablement and execution.
+label: Tools
+
+# Optional strict gateway normalization: declared primitive coercion, trimming,
+# and schema defaults only. It never guesses names, enums, or structure.
+proxyNormalize: false
+
+# Optional control description and prompt snippet. Do not teach route names;
+# tooltap appends the current route's exact calling instructions.
+# intro: |
+#   Find and enable additional registered tools omitted from startup context.
+# promptSnippet: |
+#   Use tools with one request when an additional capability is needed.
+
+# ─── Model routing ───────────────────────────────────────────────────────────
+# Put model names in one execution group. Users do not configure providers,
+# APIs, regular expressions, capability fields, fallbacks, or route prose.
+#
+# Matching:
+#   kimi-k3          exact normalized model name on any provider
+#   ox-alpha^        model-family prefix on any provider
+#   provider/model^  provider-qualified prefix exception
+#
+# Exact matches beat family matches. Provider-qualified matches beat
+# unqualified matches. Equal-specificity cross-group conflicts fail safe to
+# proxy with a diagnostic. Unknown models also use proxy.
+#
+# `native` requires Pi model deferred-tool support AND the cache-safe
+# setActiveToolsWithDeferred/getRegisteredTool runtime APIs. Otherwise use
+# proxy before the first request; never promote a late schema as fallback.
+routing:
+  native:
+    - gpt-^
+  direct:
+    - deepseek-^
+    - ox-alpha^
+  proxy:
+    - kimi-k3
+    - muse-spark^
+    - qwen3.8-max
+# ─── UI behavior ─────────────────────────────────────────────────────────────
+# Show one compact name-only line for ordinary enabled tools. Default: true
+showActiveToolsInManifest: true
+
+# Show additional discoverable tools in the /tools manifest. Default: true
+showHiddenToolsInManifest: true
+
+# Show tool count in the footer status bar. Default: true
+showToolSearchFooterStatus: true
+
+# Footer status slot ID. Default: tool-search
+# footerStatusId: tool-search
+
+# Notify on session start with tool summary. Default: true
+notifyOnSessionStart: true
+
+# ─── Activation ──────────────────────────────────────────────────────────────
+# Enable ##tool-name and #group-name activation in prompts. Default: true
+hashToolActivation: true
+
+
+# Register the /tool command for interactive enablement. Default: true
+registerToolCommand: true
+
+
+# ─── Diagnostics ─────────────────────────────────────────────────────────────
+# Passive local activation/payload-observation logging. Never sends a request
+# and never mutates provider payloads. Default: false
+logPayloads: false
+
+# Warn about groups and overrides that reference unregistered tools.
+configHealthCheck: true
+
+# ─── Discovery ownership ─────────────────────────────────────────────────────
+# Exact loader-assigned Pi source IDs listed here may use their registered
+# descriptions as both manifest text and decisive fuzzy-enablement authority.
+# Use this only for source you own and review; untrusted source descriptions
+# can rank suggestions but cannot change permission.
+trustedDescriptionSources: []
+
+# ─── Per-tool discovery overrides ────────────────────────────────────────────
+# Use manifestBlurb for built-in or third-party tools whose source description
+# is not ours to edit. Do not duplicate descriptions owned by a trusted source.
+toolOverrides: {}
+  # bash:
+  #   description: Execute shell commands. Prefer read/grep/find tools for file inspection.
+  #   promptSnippet: Run shell commands for tests/builds/git/side effects only.
+  #   promptGuidelines:
+  #     - Use bash for commands with side effects.
+  #   manifestBlurb: Run shell commands for tests/builds/git side effects

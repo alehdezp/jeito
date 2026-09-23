@@ -1,0 +1,28 @@
+{
+  "name": "@alehdezp/guidepin",
+  "version": "0.1.0",
+  "description": "Suite-only append-only partner reminders and goal-management guidance for jeito.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "system-prompt",
+    "append-system",
+    "prompt-salience"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": ">=0.82.1"
+  },
+  "pi": {
+    "extensions": [],
+    "skills": []
+  },
+  "scripts": {
+    "test": "node --experimental-strip-types --test append-salience.test.ts && python3 -B -m unittest discover -s tests -p 'test_*.py'"
+  }
+}

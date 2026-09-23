@@ -1,0 +1,139 @@
+[package]
+name = "pi-nav"
+version = "0.9.0"
+edition = "2021"
+publish = false
+description = "Tree-sitter indexed lookups — smart code reading for AI agents"
+license = "MIT"
+readme = "README.md"
+keywords = ["mcp", "code-search", "tree-sitter", "developer-tools"]
+categories = ["command-line-utilities", "development-tools"]
+[lib]
+crate-type = ["rlib", "cdylib"]
+
+
+[[bin]]
+name = "pi-nav"
+path = "src/main.rs"
+[features]
+default = []
+napi-addon = ["dep:napi", "dep:napi-derive"]
+
+
+[dependencies]
+# CLI
+clap = { version = "4", features = ["derive"] }
+clap_complete = "4"
+
+# Tree-sitter (AST outlines)
+tree-sitter = "0.26"
+streaming-iterator = "0.1"
+tree-sitter-rust = "0.24"
+tree-sitter-javascript = "0.25"
+tree-sitter-typescript = "0.23"
+tree-sitter-python = "0.25"
+tree-sitter-go = "0.25"
+tree-sitter-java = "0.23"
+tree-sitter-c = "0.24"
+tree-sitter-cpp = "0.23"
+tree-sitter-ruby = "0.23"
+tree-sitter-php = "0.24"
+tree-sitter-scala = "0.26"
+tree-sitter-c-sharp = "0.23"
+tree-sitter-swift = "0.7"
+tree-sitter-kotlin-ng = "1.1"
+tree-sitter-elixir = "0.3"
+tree-sitter-bash = "0.25.1"
+tree-sitter-md = "0.5"
+
+# Search (ripgrep internals)
+grep-matcher = "0.1"
+grep-regex = "0.1"
+grep-searcher = "0.1"
+ignore = "0.4"
+globset = "0.4"
+
+# Regex escaping (transitive dep of grep-regex, used directly for literal search)
+regex-syntax = "0.8"
+
+# Byte scanning (SIMD-accelerated)
+memchr = "2"
+memmap2 = "0.9"
+
+# Parallelism
+rayon = "1"
+
+# Channel with select! for the timeout wrapper (sibling of crossbeam-deque/-utils
+# already pulled in transitively by rayon; gives the closer-to-Java-Future
+# ergonomics that std::sync::mpsc::recv_timeout cannot express on multiple arms).
+crossbeam-channel = "0.5"
+
+# Concurrent cache
+dashmap = "6"
+
+# Structured data parsing
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# Raw-byte source proof digests shared with the TypeScript authority coordinator.
+sha2 = "0.10"
+# A1 uses SQLite's transactions/FTS, not a custom persistence engine. Bundle the
+# same SQLite on supported hosts; system versions may lack FTS5 or WAL fixes.
+rusqlite = { version = "0.40.2", default-features = false, features = ["bundled"] }
+# Local semantic inference only; the application owns pinned assets and admission.
+model2vec-rs = { version = "=0.2.1", default-features = false, features = ["local-only", "onig"] }
+toml = "1.1"
+
+# In-process Node-API front door (feature-gated; no Tokio runtime).
+napi = { version = "3", optional = true, features = ["napi10", "serde-json"] }
+napi-derive = { version = "3", optional = true }
+
+
+# Error types
+thiserror = "2"
+
+# Bloom filter (fast SIMD-optimized impl)
+fastbloom = "0.17"
+
+# MCP protocol (JSON-RPC over stdio)
+# (handled manually — no framework needed)
+
+# String similarity (char-aware Levenshtein for filename / heading suggestions)
+strsim = "0.11"
+
+# URI percent-decoding (file:// roots from MCP host)
+percent-encoding = "2.3"
+
+# Cross-platform home directory lookup (cargo-team maintained)
+home = "0.5"
+
+# Terminal size detection (TIOCGWINSZ ioctl, falls back to env vars)
+terminal_size = "0.4"
+
+# O_NOFOLLOW open flag for pi_nav_write's overwrite path (refuse symlink follow)
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[dev-dependencies]
+tempfile = "3"
+[build-dependencies]
+napi-build = "2"
+
+
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1
+strip = true
+panic = "unwind"
+overflow-checks = false
+
+[profile.release.build-override]
+opt-level = 2
+
+# Optimized but fast to compile — for benchmarking during development
+[profile.fast]
+inherits = "release"
+lto = "thin"
+codegen-units = 8
+strip = false

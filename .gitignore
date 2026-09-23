@@ -1,0 +1,48 @@
+# Dependencies and extension-owned runtimes
+node_modules/
+.runtime/
+vendor/
+
+# Generated project navigation, graph, and retrieval state
+.pi-navigation.json
+.pi-navigation.json.bak-*
+**/.pi/navigation/
+**/.pi/navigation-setup.log.jsonl
+**/.pi/navigation-prepare-err.log
+**/graphify-out/
+.codegraph/
+.infigraph/
+.reposkein/
+.compass/
+.code-review-graph/
+.zvec-grep/
+
+# Session, research, and tool-local state
+.cache/
+.scratch/
+.research
+.claude/
+.pi/goals/
+.pi/plans/
+.pi/subagents.json
+.pi/subagent-schedules/
+agents/findings/
+.tmp/
+
+# Build, coverage, logs, and editor/OS artifacts
+coverage/
+target/
+__pycache__/
+.pytest_cache/
+*.log
+*.bak-*
+*.pi-edit-*
+.DS_Store
+.obsidian/
+
+# Host-specific tool configuration
+.mcp.json
+opencode.json
+
+# Sweet Search local index
+.sweet-search/

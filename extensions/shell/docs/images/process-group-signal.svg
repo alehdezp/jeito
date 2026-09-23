@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="624" viewBox="0 0 560 624" role="img" aria-labelledby="title desc">
+  <title id="title">A signal has to reach the whole process tree, not the spawned process</title>
+  <desc id="desc">A job spawns a wrapper that starts the real command, and descendants may lead their own process groups. Signalling only the spawned process can leave the command running. shell reads the parent-child table, signals the job's process group, then signals every descendant's group. Node names and pids are illustrative; the signal mapping and fan-out are the implemented behaviour.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#26322d"/>
+      <stop offset="1" stop-color="#1b2220"/>
+    </linearGradient>
+    <style>
+      .live { animation: live 2.6s ease-in-out infinite; }
+      @keyframes live { 0%, 100% { opacity: .45 } 50% { opacity: 1 } }
+      @media (prefers-reduced-motion: reduce) { .live { animation: none; opacity: 1 } }
+    </style>
+  </defs>
+  <rect width="560" height="624" rx="16" fill="url(#bg)"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <path d="M24 27l8 7-8 7m15 0h10" fill="none" stroke="#80d5bd" stroke-width="3" stroke-linecap="round"/>
+    <text x="62" y="41" fill="#9dc4b6" font-size="17" letter-spacing="2">shell / signals</text>
+
+    <text x="24" y="80" fill="#f4f1e9" font-size="28" font-weight="700">Signal the tree, not the wrapper.</text>
+    <text x="24" y="108" fill="#b6c2bb" font-size="16.5">The job spawns a wrapper; the wrapper spawns the work.</text>
+
+    <!-- one process signal -->
+    <rect x="24" y="132" width="512" height="184" rx="10" fill="#2a2427" stroke="#5a3f47"/>
+    <rect x="24" y="132" width="4" height="184" rx="2" fill="#f38ba8"/>
+    <text x="44" y="160" fill="#e7b6c3" font-size="15">Signal only the spawned process</text>
+    <g font-size="11.5">
+      <circle cx="366" cy="156" r="4" fill="#f38ba8"/>
+      <text x="380" y="160" fill="#c08b9a">signalled</text>
+      <circle cx="467" cy="156" r="4" fill="#f9e2af"/>
+      <text x="481" y="160" fill="#d9c39a">running</text>
+    </g>
+
+    <g stroke="#6b4a52" stroke-width="1.5" fill="none">
+      <path d="M166 207H185V193H204"/>
+      <path d="M166 207H185V243H204"/>
+      <path d="M354 243H382"/>
+    </g>
+    <rect x="40" y="190" width="126" height="34" rx="6" fill="#332a2e" stroke="#8a5560"/>
+    <circle cx="54" cy="207" r="4" fill="#f38ba8"/>
+    <text x="66" y="204" fill="#b98a96" font-size="10" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">4821</text>
+    <text x="66" y="218" fill="#e3cfd5" font-size="13">lean-ctx</text>
+
+    <rect x="204" y="176" width="150" height="34" rx="6" fill="#2b3532" stroke="#4a5852"/>
+    <circle class="live" cx="218" cy="193" r="4" fill="#f9e2af"/>
+    <text x="230" y="189" fill="#8b9a93" font-size="10" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">4832</text>
+    <text x="230" y="203" fill="#dae1dc" font-size="13">/bin/bash -c</text>
+    <rect x="204" y="226" width="150" height="34" rx="6" fill="#2b3532" stroke="#4a5852"/>
+    <circle class="live" cx="218" cy="243" r="4" fill="#f9e2af"/>
+    <text x="230" y="239" fill="#8b9a93" font-size="10" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">4836</text>
+    <text x="230" y="253" fill="#dae1dc" font-size="13">npm test</text>
+    <rect x="382" y="226" width="150" height="34" rx="6" fill="#2b3532" stroke="#4a5852"/>
+    <circle class="live" cx="396" cy="243" r="4" fill="#f9e2af"/>
+    <text x="408" y="239" fill="#8b9a93" font-size="10" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">4901</text>
+    <text x="408" y="253" fill="#dae1dc" font-size="13">node …</text>
+
+    <text x="44" y="288" fill="#c08b9a" font-size="13">kill(4821, SIGTERM) reaches one process.</text>
+    <text x="44" y="308" fill="#9aa8a1" font-size="12.5">The wrapper can end while the command it started keeps running.</text>
+
+    <!-- the job's whole group -->
+    <rect x="24" y="330" width="512" height="184" rx="10" fill="#253230" stroke="#3f5a52"/>
+    <rect x="24" y="330" width="4" height="184" rx="2" fill="#80d5bd"/>
+    <text x="44" y="358" fill="#a6d9c8" font-size="15">Signal the job's group, then each descendant</text>
+    <g font-size="11.5">
+      <circle cx="468" cy="354" r="4" fill="#a6e3a1"/>
+      <text x="482" y="358" fill="#9dc4b6">signalled</text>
+    </g>
+
+    <g stroke="#4d6b5c" stroke-width="1.5" fill="none">
+      <path d="M166 405H185V391H204"/>
+      <path d="M166 405H185V441H204"/>
+      <path d="M354 441H382"/>
+    </g>
+    <rect x="40" y="388" width="126" height="34" rx="6" fill="#2b3532" stroke="#5d8574"/>
+    <circle cx="54" cy="405" r="4" fill="#a6e3a1"/>
+    <text x="66" y="402" fill="#8b9a93" font-size="10" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">4821</text>
+    <text x="66" y="416" fill="#dae1dc" font-size="13">lean-ctx</text>
+    <text x="44" y="442" fill="#80d5bd" font-size="10.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">pgid = 4821</text>
+
+    <rect x="204" y="374" width="150" height="34" rx="6" fill="#2b3532" stroke="#5d8574"/>
+    <circle cx="218" cy="391" r="4" fill="#a6e3a1"/>
+    <text x="230" y="387" fill="#8b9a93" font-size="10" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">4832</text>
+    <text x="230" y="401" fill="#dae1dc" font-size="13">/bin/bash -c</text>
+    <rect x="204" y="424" width="150" height="34" rx="6" fill="#2b3532" stroke="#5d8574"/>
+    <circle cx="218" cy="441" r="4" fill="#a6e3a1"/>
+    <text x="230" y="437" fill="#8b9a93" font-size="10" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">4836</text>
+    <text x="230" y="451" fill="#dae1dc" font-size="13">npm test</text>
+    <rect x="382" y="424" width="150" height="34" rx="6" fill="#2b3532" stroke="#5d8574"/>
+    <circle cx="396" cy="441" r="4" fill="#a6e3a1"/>
+    <text x="408" y="437" fill="#8b9a93" font-size="10" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">4901</text>
+    <text x="408" y="451" fill="#dae1dc" font-size="13">node …</text>
+
+    <text x="44" y="484" fill="#cfe0d9" font-size="11.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">ps -axo pid=,ppid=   →   walk children   →   signal each group</text>
+    <text x="44" y="504" fill="#9dc4b6" font-size="12.5">The job's own group is signalled first, then every descendant's.</text>
+
+    <text x="24" y="552" fill="#f4f1e9" font-size="15.5">Every job is spawned detached, so it leads its own process group.</text>
+    <text x="24" y="578" fill="#c0b9a4" font-size="11.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">term → SIGTERM 143 · kill → SIGKILL 137 · stop → SIGSTOP · cont → SIGCONT</text>
+    <text x="24" y="604" fill="#9aa8a1" font-size="14">Tree shape and pids are illustrative; the fan-out order is the code's.</text>
+  </g>
+</svg>

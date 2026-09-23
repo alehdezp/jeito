@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="260" viewBox="0 0 1200 260" role="img" aria-labelledby="bt dd">
+<title id="bt">websift banner</title>
+<desc id="dd">websift banner: the name in large type over the tagline "Read less, keep the rest: web research that keeps its sources.", with a mint scan line sweeping down a saved page on the right. Loops automatically.</desc>
+<style>
+.sweep { animation: sweepY 3s linear infinite; }
+@keyframes sweepY { from { transform: translateY(0); } to { transform: translateY(96px); } }
+.dim { animation: dimA 3s linear infinite; }
+@keyframes dimA { 0%,100% { opacity: .35; } 50% { opacity: 1; } }
+</style>
+<pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#ffffff" fill-opacity="0.05"/></pattern>
+<rect width="1200" height="260" rx="14" fill="#202725"/>
+<rect width="1200" height="260" rx="14" fill="url(#dots)"/>
+<rect x="8" y="8" width="1184" height="244" rx="10" fill="none" stroke="#3a4541" stroke-width="1.5"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="48" y="70" fill="#5c6863" font-size="13" letter-spacing="3">pi extension</text>
+<text x="48" y="150" fill="#f4f1e9" font-size="46" font-weight="700" letter-spacing="-0.5">websift</text>
+<rect x="48" y="172" width="148" height="4" rx="2" fill="#80d5bd"/>
+<text x="48" y="212" fill="#c1ccc6" font-size="17">Read less, keep the rest: web research that keeps its sources.</text>
+<g>
+<rect x="876" y="56" width="180" height="148" rx="8" fill="#171d1f" stroke="#3a4541" stroke-width="2"/>
+<rect x="892" y="76" width="148" height="6" rx="3" fill="#3a4541"/>
+<rect x="892" y="92" width="148" height="6" rx="3" fill="#3a4541"/>
+<rect x="892" y="108" width="148" height="6" rx="3" fill="#3a4541"/>
+<rect x="892" y="124" width="148" height="6" rx="3" fill="#3a4541"/>
+<rect x="892" y="140" width="148" height="6" rx="3" fill="#3a4541"/>
+<rect x="892" y="156" width="148" height="6" rx="3" fill="#3a4541"/>
+<rect x="892" y="172" width="148" height="6" rx="3" fill="#3a4541"/>
+<rect class="sweep" x="886" y="76" width="160" height="8" rx="4" fill="#80d5bd"/>
+<rect class="dim" x="1074" y="112" width="76" height="36" rx="6" fill="#20463a" stroke="#80d5bd" stroke-width="2"/>
+<path d="M1092 130 h10 M1100 124 v12" stroke="#80d5bd" stroke-width="2.5"/>
+</g>
+</g>
+</svg>

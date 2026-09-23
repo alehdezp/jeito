@@ -1,0 +1,39 @@
+{
+  "name": "@alehdezp/fff-search",
+  "version": "0.1.0",
+  "description": "@-file-reference autocomplete enhancer for Pi; forked from ShpetimA/pi-fff scoped to editor autocomplete only.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "autocomplete",
+    "file-search",
+    "fff"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "dependencies": {
+    "@ff-labs/fff-node": "^0.10.6",
+    "better-result": "^2.8.2"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": ">=0.84.2",
+    "@earendil-works/pi-tui": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm test",
+    "test": "node --experimental-transform-types --test tests/*.test.mjs"
+  },
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+# Build artifacts
+/target
+/result
+/result-*
+/native/*
+!/native/pi_nav.darwin-arm64.node
+!/native/pi_nav.linux-arm64.node
+/bin/*
+!/bin/aarch64-apple-darwin/
+!/bin/aarch64-apple-darwin/pi-nav
+!/bin/aarch64-unknown-linux-gnu/
+!/bin/aarch64-unknown-linux-gnu/pi-nav
+
+# Internal docs (reviews, feedback, specs)
+/docs
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.iml
+
+# Python
+__pycache__/
+*.pyc
+
+# Benchmark
+benchmark/fixtures/repo/
+benchmark/fixtures/repos/
+benchmark/results/*.jsonl
+benchmark/results/*.md
+!benchmark/results/.gitkeep
+
+# Brand (petals) — pulled from the plotplot umbrella, kept local (never committed)
+.petalsrc
+.brand/

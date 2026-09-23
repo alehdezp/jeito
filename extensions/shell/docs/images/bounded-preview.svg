@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="640" viewBox="0 0 560 640" role="img" aria-labelledby="title desc">
+  <title id="title">Bounded delta polls over one captured log</title>
+  <desc id="desc">Three delta polls against a 134204-byte captured log. Each poll shows at most 16000 bytes, the final window before the current end of file, and then the cursor advances to that end. Bytes between a poll's cursor and its window were never displayed, yet the cursor still moves past them; they remain readable in the named file. Byte counts are illustrative, the returned marker shape is not.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#26322d"/>
+      <stop offset="1" stop-color="#1b2220"/>
+    </linearGradient>
+    <linearGradient id="pane" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#303a36"/>
+      <stop offset="1" stop-color="#28312e"/>
+    </linearGradient>
+    <linearGradient id="seen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#9ae5cd"/>
+      <stop offset="1" stop-color="#6fc4ab"/>
+    </linearGradient>
+    <pattern id="void" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="8" stroke="#3b4a44" stroke-width="2.6"/>
+    </pattern>
+    <style>
+      .poll { animation: poll 6.6s ease-in-out infinite; }
+      @keyframes poll { 0%, 100% { opacity: .5 } 8%, 26% { opacity: 1 } }
+      .dot { animation: dot 6.6s ease-in-out infinite; }
+      @keyframes dot { 0%, 100% { opacity: .45 } 8%, 30% { opacity: 1 } }
+      @media (prefers-reduced-motion: reduce) { .poll, .dot { animation: none; opacity: 1 } }
+    </style>
+  </defs>
+  <rect width="560" height="640" rx="16" fill="url(#bg)"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <path d="M24 27l8 7-8 7m15 0h10" fill="none" stroke="#80d5bd" stroke-width="3" stroke-linecap="round"/>
+    <text x="62" y="41" fill="#9dc4b6" font-size="17" letter-spacing="2">shell / bounded preview</text>
+
+    <text x="24" y="80" fill="#f4f1e9" font-size="28" font-weight="700">Bounded preview, complete log.</text>
+    <text x="24" y="108" fill="#b6c2bb" font-size="16.5">Three delta polls. Most of the file never reached the agent.</text>
+
+    <text x="24" y="136" fill="#8b9a93" font-size="12">the captured session log</text>
+    <text x="536" y="136" text-anchor="end" fill="#8b9a93" font-size="12" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">134204 bytes captured</text>
+
+    <!-- the file: what was shown, and everything else that still exists -->
+    <rect x="24" y="144" width="512" height="54" rx="4" fill="#161c1a"/>
+    <rect x="24" y="144" width="512" height="54" rx="4" fill="url(#void)" opacity="0.5"/>
+    <g stroke="#2a332f" stroke-width="1">
+      <line x1="100" y1="144" x2="100" y2="198"/>
+      <line x1="177" y1="144" x2="177" y2="198"/>
+      <line x1="253" y1="144" x2="253" y2="198"/>
+      <line x1="329" y1="144" x2="329" y2="198"/>
+      <line x1="406" y1="144" x2="406" y2="198"/>
+      <line x1="482" y1="144" x2="482" y2="198"/>
+    </g>
+    <rect x="197.2" y="144" width="61.1" height="54" fill="url(#seen)"/>
+    <rect x="340.2" y="144" width="61.1" height="54" fill="url(#seen)"/>
+    <rect x="474.8" y="144" width="61.2" height="54" fill="url(#seen)"/>
+    <rect x="24.5" y="144.5" width="511" height="53" rx="3.5" fill="none" stroke="#55635d"/>
+
+    <text x="110" y="176" text-anchor="middle" fill="#a8b6b0" font-size="11.5">captured but never shown</text>
+    <text x="299" y="176" text-anchor="middle" fill="#95a5a0" font-size="10.5">not shown</text>
+    <text x="438" y="176" text-anchor="middle" fill="#95a5a0" font-size="10.5">not shown</text>
+
+    <g>
+      <circle class="poll" cx="227.7" cy="166" r="9" fill="#16201d" stroke="#f4f1e9" stroke-width="1.2"/>
+      <text class="poll" x="227.7" y="170" text-anchor="middle" fill="#f4f1e9" font-size="11" font-weight="700">1</text>
+      <circle class="poll" cx="370.7" cy="166" r="9" fill="#16201d" stroke="#f4f1e9" stroke-width="1.2"/>
+      <text class="poll" x="370.7" y="170" text-anchor="middle" fill="#f4f1e9" font-size="11" font-weight="700">2</text>
+      <circle class="poll" cx="505.4" cy="166" r="9" fill="#16201d" stroke="#f4f1e9" stroke-width="1.2"/>
+      <text class="poll" x="505.4" y="170" text-anchor="middle" fill="#f4f1e9" font-size="11" font-weight="700">3</text>
+    </g>
+    <g fill="#16201d" font-size="10.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" text-anchor="middle" font-weight="700">
+      <text x="227.7" y="190">16000</text>
+      <text x="370.7" y="190">16000</text>
+      <text x="505.4" y="190">16000</text>
+    </g>
+
+    <!-- where each poll left the cursor -->
+    <text x="24" y="215" fill="#edc786" font-size="11" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">delta cursor</text>
+    <line x1="24" y1="222" x2="536" y2="222" stroke="#7a6738" stroke-width="1" stroke-dasharray="3 4"/>
+    <g stroke="#edc786" stroke-width="1" stroke-dasharray="2 3">
+      <line x1="258.3" y1="198" x2="258.3" y2="222"/>
+      <line x1="401.3" y1="198" x2="401.3" y2="222"/>
+      <line x1="536" y1="198" x2="536" y2="222"/>
+    </g>
+    <g>
+      <circle class="dot" cx="258.3" cy="222" r="4.5" fill="#edc786"/>
+      <circle class="dot" cx="401.3" cy="222" r="4.5" fill="#edc786"/>
+      <circle class="dot" cx="536" cy="222" r="4.5" fill="#edc786"/>
+    </g>
+    <g fill="#d9c39a" font-size="11" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+      <text x="258.3" y="242" text-anchor="middle">61402</text>
+      <text x="401.3" y="242" text-anchor="middle">98900</text>
+      <text x="536" y="242" text-anchor="end">134204</text>
+    </g>
+
+    <!-- what each poll actually returned -->
+    <rect x="24" y="262" width="512" height="160" rx="10" fill="url(#pane)" stroke="#3d4a44"/>
+    <g font-size="13" fill="#dae1dc">
+      <text x="62" y="298">poll 1 · delta from byte 0</text>
+      <text x="62" y="330">poll 2 · delta from byte 61402</text>
+      <text x="62" y="362">poll 3 · delta from byte 98900</text>
+    </g>
+    <g font-size="11.5" fill="#c0b9a4" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" text-anchor="end">
+      <text x="520" y="298">omitted 45402 · cursor 61402</text>
+      <text x="520" y="330">omitted 21498 · cursor 98900</text>
+      <text x="520" y="362">omitted 19304 · cursor 134204</text>
+    </g>
+    <g>
+      <circle class="poll" cx="44" cy="293" r="9" fill="#39443f" stroke="#80d5bd" stroke-width="1.2"/>
+      <text class="poll" x="44" y="297" text-anchor="middle" fill="#80d5bd" font-size="11" font-weight="700">1</text>
+      <circle class="poll" cx="44" cy="325" r="9" fill="#39443f" stroke="#80d5bd" stroke-width="1.2"/>
+      <text class="poll" x="44" y="329" text-anchor="middle" fill="#80d5bd" font-size="11" font-weight="700">2</text>
+      <circle class="poll" cx="44" cy="357" r="9" fill="#39443f" stroke="#80d5bd" stroke-width="1.2"/>
+      <text class="poll" x="44" y="361" text-anchor="middle" fill="#80d5bd" font-size="11" font-weight="700">3</text>
+    </g>
+    <line x1="24" y1="382" x2="536" y2="382" stroke="#3d4a44" stroke-width="1"/>
+    <text x="62" y="406" fill="#9aa8a1" font-size="12">filter → matching lines · lines → the final N · neither rewrites the file</text>
+
+    <!-- verbatim shape of what comes back -->
+    <rect x="24" y="438" width="512" height="138" rx="8" fill="#1e2623" stroke="#3d4a44"/>
+    <rect x="24" y="438" width="4" height="138" rx="2" fill="#80d5bd"/>
+    <text x="44" y="464" fill="#8b9a93" font-size="12.5">what poll 3 returns to the model, verbatim in shape:</text>
+    <g fill="#cfe0d9" font-size="11" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+      <text x="44" y="488">[Delta preview: showing the final 16000 of 105304 bytes; 19304 earlier</text>
+      <text x="44" y="506">bytes omitted. Cursor advanced to byte 134204.</text>
+      <text x="44" y="524">Full exact session log: /tmp/jeito-shell/tmp-4821-1758323…-a3f9c1.log</text>
+      <text x="44" y="542">(available until session shutdown). Use read/search or a targeted Bash</text>
+      <text x="44" y="560">command on that path before making claims that depend on omitted output.]</text>
+    </g>
+
+    <text x="24" y="606" fill="#f4f1e9" font-size="15.5">Numbers are illustrative; the marker shape is emitted as shown.</text>
+    <text x="24" y="630" fill="#9aa8a1" font-size="15.5">Skipped bytes stay in the file — reachable only by reading that path.</text>
+  </g>
+</svg>

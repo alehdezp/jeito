@@ -1,0 +1,28 @@
+{
+  "name": "@alehdezp/context-diagnostics",
+  "version": "0.1.0",
+  "description": "Explicit private prompt, tool-schema, and message diagnostics for Pi.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "context-diagnostics",
+    "prompt-debugging"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": ">=0.82.1"
+  },
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "scripts": {
+    "test": "node --experimental-strip-types --test index.test.mjs"
+  }
+}

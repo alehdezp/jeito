@@ -1,0 +1,31 @@
+{
+  "name": "@alehdezp/stall-guard",
+  "version": "0.1.0",
+  "description": "Resumes a session cut off by a stalled provider stream, bounded at three consecutive resumes that reset on progress.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "stall-guard",
+    "agent-loop-resilience",
+    "provider-stall"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": ">=0.82.1",
+    "@earendil-works/pi-ai": "*"
+  },
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "scripts": {
+    "test": "node --experimental-strip-types --test index.test.mjs",
+    "typecheck": "tsc --noEmit --module NodeNext --moduleResolution NodeNext --target ES2022 --strict --skipLibCheck index.ts"
+  }
+}

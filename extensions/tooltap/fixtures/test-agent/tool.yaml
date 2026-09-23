@@ -1,0 +1,103 @@
+# tooltap test fixture control surface
+#
+# This intentionally mirrors the desired human-readable ~/.pi/agent/tool.yaml
+# shape. Keep it readable: this file is part of the contract for the operator
+# control surface.
+
+policy:
+  # Minimal full-schema tools available from session start.
+  core:
+    - read
+    - write
+    - edit
+    - bash
+
+  # Additional full-schema startup tools (none in this fixture).
+  startup: []
+
+  # Not catalog-listed, but exact/capability search remains allowed.
+  unlisted:
+    - hidden_tool
+    - gpt_native_tool
+    - gpt_exact_tool
+    - skeleton_cache_tool
+
+  # Zero individual metadata; exact request, ##tool, /tool, or configured groups may activate these.
+  explicitOnly:
+    - secret_complex_tool
+    - gpt_secret_tool
+
+  # Fully absent from discovery, activation, restoration, and execution routes.
+  excluded:
+    - blocked_tool
+    - excluded_tool
+
+  # Stable startup-visible order; this does not activate tools.
+  order:
+    - tools
+    - read
+    - write
+    - edit
+    - bash
+
+groups:
+  complex-suite:
+    description: Enable the complex private-tool workflow.
+    tools:
+      - secret_complex_tool
+  gpt-private:
+    description: Enable the private GPT test tool.
+    tools:
+      - gpt_secret_tool
+  web-stack:
+    description: Enable the complete test web stack.
+    tools:
+      - web_search_x
+      - native_marker_tool
+
+# Fixed one-control surface; public name is always `tools`.
+label: Tools
+proxyNormalize: true
+
+routing:
+  # Exact names match the normalized model id across providers. A trailing ^
+  # matches a model family. provider/model entries express specific exceptions.
+  native:
+    - native-model
+    - mismatch-model
+    - gpt-5.3^
+  direct:
+    - dispatch-model
+    - ox-alpha^
+    - conflict-model
+  proxy:
+    - proxy-model
+    - proxy-test/native-model
+    - conflict-model
+# Manifest/UI behavior.
+showActiveToolsInManifest: true
+showHiddenToolsInManifest: true
+showToolSearchFooterStatus: true
+notifyOnSessionStart: false
+
+# Exact-name activation shortcuts.
+hashToolActivation: true
+hashToolPrefixes:
+  - '#tool:'
+  - '#tool/'
+  - '#'
+registerToolCommand: true
+
+# Fixture tests should not write payload logs unless a test enables it directly.
+logPayloads: false
+
+# Per-tool prompt/manifest overrides.
+toolOverrides:
+  bash:
+    description: Execute shell commands. Prefer read/grep/find tools for file inspection.
+    promptSnippet: Run shell commands for tests/builds/git/side effects only.
+    promptGuidelines:
+      - Use bash for commands with side effects.
+    manifestBlurb: Run shell commands for tests/builds/git side effects
+  skeleton_cache_tool:
+    manifestBlurb: Enable for cache test skeleton behavior

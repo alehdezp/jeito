@@ -1,0 +1,20 @@
+# Judge Score
+
+Depth choice:
+Tool/lane selection:
+Evidence rights discipline:
+Warrant quality:
+Adversarial checks:
+Contradictions:
+Stop timing:
+Final usefulness:
+
+Hard failures:
+- [ ] Final claim cites unfetched source.
+- [ ] Provider summary treated as evidence.
+- [ ] Final claim broader than evidence.
+- [ ] W0/W1 over-escalated.
+- [ ] W3 recommendation lacks adversarial check.
+- [ ] Contradiction hidden.
+
+Decision: synthesize / narrow / rerun / reject

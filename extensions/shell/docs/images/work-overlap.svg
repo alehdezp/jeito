@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="554" viewBox="0 0 560 554" role="img" aria-labelledby="title desc">
+  <title id="title">Overlap independent work without shortening the command</title>
+  <desc id="desc">Both command bars have identical length. With completion-bound execution, independent work follows the command. jeito Shell returns control so that work can overlap, with an explicit result check afterward. The diagram shows ordering, not measured speed.</desc>
+  <rect width="560" height="554" rx="16" fill="#202725"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <path d="M24 27l8 7-8 7m15 0h10" fill="none" stroke="#80d5bd" stroke-width="3" stroke-linecap="round"/>
+    <text x="62" y="41" fill="#c1ccc6" font-size="17" letter-spacing="1">JEITO SHELL / EXECUTION</text>
+    <text x="24" y="85" fill="#f4f1e9" font-size="30" font-weight="700">Keep useful work moving.</text>
+    <text x="24" y="116" fill="#c1ccc6" font-size="20">Same command. Room for independent work.</text>
+    <rect x="16" y="140" width="528" height="164" rx="10" fill="#2c3431"/>
+    <text x="30" y="171" fill="#f4f1e9" font-size="21" font-weight="700">Wait for completion</text>
+    <text x="30" y="199" fill="#c1ccc6" font-size="18">Command</text>
+    <rect x="30" y="207" width="282" height="25" rx="5" fill="#94a9a0"/>
+    <text x="171" y="226" text-anchor="middle" fill="#17211d" font-size="18">running</text>
+    <text x="30" y="257" fill="#c1ccc6" font-size="18">Agent</text>
+    <rect x="30" y="266" width="282" height="26" rx="5" fill="none" stroke="#aebbb4" stroke-dasharray="4 5"/>
+    <text x="171" y="285" text-anchor="middle" fill="#d8dfda" font-size="18">waiting</text>
+    <rect x="320" y="266" width="210" height="26" rx="5" fill="#80d5bd"/>
+    <text x="425" y="285" text-anchor="middle" fill="#17211d" font-size="18">independent work</text>
+    <rect x="16" y="316" width="528" height="164" rx="10" fill="#2c3431"/>
+    <text x="30" y="347" fill="#80d5bd" font-size="21" font-weight="700">With jeito Shell</text>
+    <text x="30" y="375" fill="#c1ccc6" font-size="18">Command</text>
+    <rect x="30" y="383" width="282" height="25" rx="5" fill="#94a9a0"/>
+    <text x="171" y="402" text-anchor="middle" fill="#17211d" font-size="18">running</text>
+    <text x="30" y="433" fill="#c1ccc6" font-size="18">Agent</text>
+    <rect x="30" y="442" width="64" height="26" rx="5" fill="none" stroke="#aebbb4" stroke-dasharray="4 5"/>
+    <text x="62" y="461" text-anchor="middle" fill="#d8dfda" font-size="18">wait</text>
+    <rect x="102" y="442" width="210" height="26" rx="5" fill="#80d5bd"/>
+    <text x="207" y="461" text-anchor="middle" fill="#17211d" font-size="18">independent work</text>
+    <rect x="320" y="442" width="210" height="26" rx="5" fill="#edc786"/>
+    <text x="425" y="461" text-anchor="middle" fill="#242017" font-size="18">inspect result</text>
+    <text x="24" y="513" fill="#f4f1e9" font-size="19">Check the result before dependent work.</text>
+    <text x="24" y="539" fill="#c1ccc6" font-size="18">Conceptual ordering, not a timing benchmark.</text>
+  </g>
+</svg>

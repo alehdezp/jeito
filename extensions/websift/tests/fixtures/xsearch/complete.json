@@ -1,0 +1,33 @@
+{
+  "output": [
+    {
+      "content": [
+        {
+          "text": "Grok synthesized summary, part one.",
+          "annotations": [
+            { "url": "https://x.com/example/status/1" },
+            { "url": "https://x.com/example/status/2" }
+          ]
+        }
+      ]
+    },
+    {
+      "content": [
+        {
+          "text": "Grok synthesized summary, part two.",
+          "annotations": [
+            { "url": "https://x.com/example/status/2" },
+            { "url": "https://x.com/example/status/3" }
+          ]
+        }
+      ]
+    }
+  ],
+  "citations": ["https://x.com/example/status/1", "https://x.com/example/status/4"],
+  "usage": {
+    "input_tokens": 100,
+    "output_tokens": 50,
+    "total_tokens": 150,
+    "server_side_tool_usage_details": { "x_search_calls": 2, "web_search_calls": 1 }
+  }
+}

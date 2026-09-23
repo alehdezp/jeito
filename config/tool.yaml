@@ -1,0 +1,213 @@
+# jeito opinionated tooltap defaults
+#
+# /skill:jeito-setup may apply this source to ~/.pi/agent/tool.yaml only after
+# preview, exact backup, and confirmation. Standalone extensions do not apply it.
+# This file controls startup tools, additional-tool discovery, exact-only tools,
+# complete exclusion, groups, and discovery-facing descriptions.
+#
+# Tools not named in policy are discoverable by default. A model group selects
+# native, direct, or proxy execution; unknown and conflicting models use proxy.
+
+policy:
+  # Minimal foundation. Full schemas are sent from session start on every
+  # provider route, so keep this list small. These tools never need activation.
+  core:
+    - read
+    - write
+    - edit
+    - bash
+    - ls
+
+  # Additional first-class tools available from session start. Like core,
+  # every entry adds its complete schema to the initial provider tool surface.
+  # Use this for tools needed frequently enough to justify the permanent cost.
+  startup:
+    - grep
+    - find
+    - explore
+    - trace
+    - docs_search
+    - diff
+    - lsp_validate
+    - web_search
+    - web_fetch
+    - web_answer
+    - web_lookup
+    - todo
+    - recall
+    - jobs
+    - goal_blocked
+    - goal_completed
+
+  # Omit from the displayed catalog without denying exact/capability search.
+  # Use explicitOnly when individual metadata must remain absent.
+  unlisted: []
+
+  # Expose zero individual metadata to the loader manifest and ordinary search.
+  # Activate with exact names[], ##tool, a user /tool command, or configured #group.
+  explicitOnly:
+    - detect_package_manager
+    - pi_ext_benchmark
+    - pi_version
+
+
+  # Completely absent and unreachable through tooltap: no catalog entry,
+  # search result, marker/group activation, restoration, or execution.
+  excluded:
+    - search
+    - fetch_content
+    - serper_search
+    - exa_search
+    - exa_fetch
+    - tavily_extract
+    - linkup_web_fetch
+    - context7_search_skills
+    - context7_list_repo_skills
+    - context7_suggest_skills
+    - context7_inspect_skill
+    - context7_install_skill
+
+  # Stable ordering for startup-visible tools. This does not activate tools;
+  # names not present in core/startup are ignored here.
+  order:
+    - explore
+    - trace
+    - docs_search
+    - read
+    - write
+    - edit
+    - grep
+    - find
+    - diff
+    - bash
+    - lsp_validate
+    - web_search
+    - web_fetch
+    - web_answer
+    - web_lookup
+    - tools
+    - todo
+    - recall
+
+# Operator-authored capability groups. Group descriptions are discoverable;
+# explicitOnly member names remain absent until explicitly activated.
+groups:
+  pi-runtime:
+    description: Enable for Pi version, documentation, changelog, loaded-tool provenance, package-manager detection, or extension startup profiling—especially while developing or debugging Pi extensions
+    tools:
+      - pi_version
+      - pi_docs
+      - pi_changelog
+      - pi_changelog_versions
+      - pi_loaded_tools
+      - detect_package_manager
+      - pi_ext_benchmark
+  web-stack:
+    description: Enable the complete jeito web evidence stack for quick orientation, general and specialist discovery, page retrieval, official library documentation, and cited answering
+    tools:
+      - web_answer
+      - context7
+      - web_search_exa
+      - web_search_x
+      - web_search_tavily
+      - web_answer_exa
+      - web_answer_linkup
+      - web_search
+      - web_fetch
+      - web_lookup
+  library-docs:
+    description: Resolve libraries and retrieve or inspect cached library documentation.
+    tools:
+      - context7_resolve_library_id
+      - context7_get_library_docs
+      - context7_get_cached_doc_raw
+  orchestration:
+    description: Ask the user, spawn sessions, coordinate work, and complete goals.
+    tools:
+      - ask_user_question
+      - cmux_spawn_session
+      - goal_complete
+      - herdr
+  packages:
+    description: Search and install Pi packages.
+    tools:
+      - search_pi_packages
+      - install_pi_package
+
+# One public control. Its name and route-derived schema are fixed by the
+# extension: native/direct expose { request }; gateway exposes
+# { request, arguments? } with strict two-step execution.
+label: Tools
+
+# Optional strict gateway normalization: declared primitive coercion, trimming,
+# and schema defaults only. It never guesses names, enums, or structure.
+proxyNormalize: false
+
+# Model routing is classification, not a provider predicate language. Exact
+# normalized names work on every provider; a trailing ^ selects a family;
+# provider/model entries express narrow exceptions. Unknowns fail to proxy.
+routing:
+  native:
+    # Includes Astra/suffixed and future GPT ids; model AND runtime capability gates apply.
+    - gpt-^
+  direct:
+    - deepseek-^
+    - ox-alpha^
+  proxy:
+    - kimi-k3
+    - muse-spark^
+    - qwen3.8-max
+# Manifest/UI behavior.
+# Keep ordinary enabled tools to one compact name-only line.
+showActiveToolsInManifest: true
+showHiddenToolsInManifest: true
+showToolSearchFooterStatus: true
+notifyOnSessionStart: true
+
+# Exact activation shortcuts. Preferred syntax is ##tool-name or #group-name;
+# legacy #tool:name prefixes remain accepted for compatibility/autocomplete.
+hashToolActivation: true
+registerToolCommand: true
+
+# Route selection changes activation semantics without rewriting provider
+# payloads: native uses Pi deferral, direct uses Pi's dispatch set without
+# changing provider tools[], and proxy executes only explicitly enabled names.
+
+# Passive local activation diagnostics. This sends no provider request.
+logPayloads: true
+
+# No loader source is trusted by default in the source-only snapshot. After
+# installation, configure an exact owned source ID on the host if needed;
+# ranking from untrusted descriptions never grants fuzzy permission.
+trustedDescriptionSources: []
+
+# Discovery and host-owned prompt overrides. tooltap passes this map through
+# Pi's tool-prompt override API; it never rewrites the provider payload itself.
+toolOverrides:
+  bash:
+    description: Execute shell commands. Prefer read/grep/find tools for file inspection.
+    manifestBlurb: Run shell commands for tests/builds/git side effects
+  powershell:
+    manifestBlurb: Run a PowerShell command with optional timeout; enable for Windows- or PowerShell-specific commands and scripts
+  pi_docs:
+    manifestBlurb: List Pi README, documentation, and example files; enable to understand, extend, configure, or debug Pi
+  pi_changelog:
+    manifestBlurb: Read the latest or a specified Pi changelog entry to learn what changed
+  pi_changelog_versions:
+    manifestBlurb: List Pi versions that have changelog entries before requesting one
+  pi_loaded_tools:
+    manifestBlurb: Inspect loaded Pi tools, their source packages, provenance, and active status
+  smart_save_memory:
+    manifestBlurb: Save one durable project fact that should survive compaction or sessions; the host asks for confirmation
+  smart_compact:
+    manifestBlurb: Compact a long conversation only when context is genuinely high while preserving goals, decisions, errors, and next actions
+  herdr_workflow:
+    manifestBlurb: Prepare, start with approval, or cancel an exact project-local multi-agent Herdr workflow
+  subagent:
+    manifestBlurb: Delegate substantial work to a Pi subagent in a terminal pane or isolated worktree; results return automatically
+  subagent_interrupt:
+    manifestBlurb: Interrupt only the active turn of a running Pi subagent while keeping its pane and session alive
+  subagents_list:
+    manifestBlurb: List available subagent definitions and their package, global, or project precedence before delegating
+  subagent_resume:
+    manifestBlurb: Resume a previous Pi subagent session in a new pane for follow-up; it does not reattach a retained worktree

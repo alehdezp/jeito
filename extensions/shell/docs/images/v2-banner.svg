@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="260" viewBox="0 0 1200 260" role="img" aria-labelledby="bt dd">
+<title id="bt">shell banner</title>
+<desc id="dd">shell banner: the name in large type over the tagline "Bound the wait, keep the evidence: slow commands keep running.", with a mint work bar overlapping a running grey command bar on the right. Loops automatically.</desc>
+<style>
+.overlap { animation: slideOver 4s ease-in-out infinite; }
+@keyframes slideOver { 0% { transform: translateX(0); } 50% { transform: translateX(118px); } 100% { transform: translateX(0); } }
+.tick { animation: tickA 2s ease-in-out infinite; }
+@keyframes tickA { 0%,100% { opacity: .4; } 50% { opacity: 1; } }
+</style>
+<pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#ffffff" fill-opacity="0.05"/></pattern>
+<rect width="1200" height="260" rx="14" fill="#202725"/>
+<rect width="1200" height="260" rx="14" fill="url(#dots)"/>
+<rect x="8" y="8" width="1184" height="244" rx="10" fill="none" stroke="#3a4541" stroke-width="1.5"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="48" y="70" fill="#5c6863" font-size="13" letter-spacing="3">pi extension</text>
+<text x="48" y="150" fill="#f4f1e9" font-size="46" font-weight="700" letter-spacing="-0.5">shell</text>
+<rect x="48" y="172" width="148" height="4" rx="2" fill="#80d5bd"/>
+<text x="48" y="212" fill="#c1ccc6" font-size="17">Bound the wait, keep the evidence: slow commands keep running.</text>
+<g>
+<rect x="796" y="78" width="300" height="30" rx="7" fill="#3a4440"/>
+<text x="812" y="98" fill="#c1ccc6" font-size="13">command runs</text>
+<rect class="overlap" x="836" y="128" width="150" height="30" rx="7" fill="#80d5bd"/>
+<text class="overlap" x="852" y="148" fill="#17211d" font-size="13" font-weight="700">independent work</text>
+<rect x="796" y="128" width="300" height="30" rx="7" fill="none" stroke="#3a4541" stroke-width="2" stroke-dasharray="6 5"/>
+<circle class="tick" cx="1122" cy="143" r="16" fill="none" stroke="#80d5bd" stroke-width="3"/>
+<path d="M1114 143 l5 6 l11 -12" fill="none" stroke="#80d5bd" stroke-width="3" stroke-linecap="round"/>
+</g>
+</g>
+</svg>

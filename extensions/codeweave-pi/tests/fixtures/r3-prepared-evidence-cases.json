@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "sourceShapes": [
+    { "name": "displayed_current", "path": "src/current.ts", "line": 3, "text": "export const current = true;", "visibility": "visible_complete", "transformation": "verbatim" },
+    { "name": "pure_location", "path": "src/location.ts", "start": 7, "end": 7 },
+    { "name": "stale_index", "path": "src/stale.ts", "start": 1, "end": 2, "raw_digest": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" },
+    { "name": "historical_removal", "path": "src/deleted.ts", "line": 4, "text": "-removed();" },
+    { "name": "transformed", "path": "docs/design.md", "line": 9, "text": "compressed body", "visibility": "visible_complete", "transformation": "transformed" },
+    { "name": "clipped", "path": "src/clipped.ts", "line": 2, "text": "const clipped =", "visibility": "clipped", "transformation": "verbatim" },
+    { "name": "unsupported_binary", "path": "assets/blob.bin", "start": 1, "end": 1 },
+    { "name": "external_location", "path": "../outside.ts", "start": 1, "end": 1 },
+    { "name": "private_proof", "path": "src/private.ts", "sourceSnapshots": [{ "text": "secret proof bytes" }], "raw_digest": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB" }
+  ]
+}

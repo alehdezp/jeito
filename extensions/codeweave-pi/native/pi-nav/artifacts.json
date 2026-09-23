@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "packageVersion": "0.9.0",
+  "targets": {
+    "darwin-arm64": {
+      "addon": {
+        "path": "native/pi-nav/native/pi_nav.darwin-arm64.node"
+      },
+      "cli": {
+        "path": "native/pi-nav/bin/aarch64-apple-darwin/pi-nav"
+      }
+    },
+    "linux-arm64": {
+      "addon": {
+        "path": "native/pi-nav/native/pi_nav.linux-arm64.node"
+      },
+      "cli": {
+        "path": "native/pi-nav/bin/aarch64-unknown-linux-gnu/pi-nav"
+      }
+    }
+  }
+}

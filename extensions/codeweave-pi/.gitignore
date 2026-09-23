@@ -1,0 +1,54 @@
+# Local/package noise
+node_modules/
+dist/
+build/
+coverage/
+*.log
+.DS_Store
+
+# Python caches
+__pycache__/
+*.pyc
+.runtime/
+.venv/
+.pytest_cache/
+
+# Generated evaluation/smoke artifacts and local tool state
+.tmp/
+.ua/
+pi-tool-smoke-test.txt
+.qmd/
+.researc/
+# APPEND draft snapshots are retired; use readonly legacy snapshots or canonical APPEND_SYSTEM instead.
+docs/APPEND_DRAFTS*.md
+# Local navigation indexes, caches, and generated smoke/evaluation artifacts.
+# These are rebuilt by nav:prepare/nav:freshen/smoke scripts and should not make
+# normal query-time hooks dirty the source tree.
+.pi-navigation.json
+.pi/
+.codanna/
+src/.codanna/
+.semble/
+src/.semble/
+.codannaignore
+src/.codannaignore
+.fastembed_cache
+src/.fastembed_cache
+graphify-out/
+.tmp/nav-tool-surface-eval/
+.tmp/navigation-capability-eval-latest/
+.tmp/navigation-capability-eval/
+.tmp/navigation-crg-benchmark/
+.tmp/cmux-live-eval/
+.tmp/cmux-onboarding-smoke/
+.tmp/manual-cmux/
+.tmp/navigation-adaptive-eval/
+.tmp/navigation-tool-feel/
+.tmp/navigation-prepare/
+.research/
+.code-review-graph/
+.navi/
+
+# Nested patched Tilth checkout is maintained as its own Git repo.
+# See README.md and package tilth:* scripts.
+vendor/tilth-patched/

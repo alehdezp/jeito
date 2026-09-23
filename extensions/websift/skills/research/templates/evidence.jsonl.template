@@ -1,0 +1,1 @@
+{"evidence_id":"E001","source_id":"S001","claim_id":"C001","quote_or_locator":"Exact excerpt, heading, paragraph, line, timestamp, URL fragment, or metadata path","evidence_type":"direct_quote|docs_section|changelog|source_code|issue|registry_metadata|transcript|benchmark","right":"evidence-eligible","strength":"strong|medium|weak","notes":"What this evidence directly says"}

@@ -1,0 +1,11 @@
+# Maintainer-only reference snapshots — reproducible via `npm run vendor:fetch`.
+# NOT required to install or run the extension; end users get runtime deps from package.json.
+vendor/
+
+# Local install / build artifacts (workspace deps hoist to the monorepo root).
+node_modules/
+*.log
+.DS_Store
+
+# Session-local artifacts (probes, scratch evaluations).
+.tmp/

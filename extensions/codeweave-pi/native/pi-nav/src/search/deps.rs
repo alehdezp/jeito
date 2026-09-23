@@ -1,0 +1,801 @@
+//! File-level dependency analysis: what a file imports and what imports it.
+//! Used by `pi_nav_deps` for blast-radius checks before breaking changes.
+
+use std::collections::{HashMap, HashSet};
+use std::fmt::Write as _;
+use std::fs;
+use std::path::{Path, PathBuf};
+
+use crate::error::TilthError;
+use crate::lang::detect_file_type;
+use crate::lang::outline::{extract_import_source, get_outline_entries};
+use crate::read::imports::{is_external, is_import_line, resolve_related_files_with_content};
+use crate::search::callees::{extract_callee_names, structural_declaration_candidates};
+use crate::search::callers::find_callers_batch;
+use crate::types::{FileType, OutlineKind};
+
+/// Maximum number of exported symbols to search for in the reverse direction.
+const MAX_EXPORTED_SYMBOLS: usize = 25;
+
+/// Maximum number of dependents to show before truncation.
+const MAX_DEPENDENTS: usize = 15;
+
+/// Result of a full dependency analysis for a single file.
+pub struct DepsResult {
+    pub target: PathBuf,
+    pub uses_local: Vec<LocalDep>,
+    pub uses_external: Vec<String>,
+    pub used_by: Vec<Dependent>,
+    /// Total dependents found before truncation.
+    pub total_dependents: usize,
+    pub exported_count: usize,
+    /// Actual number of symbols searched (may be < `exported_count` if capped).
+    pub searched_count: usize,
+}
+
+/// A local file dependency with the symbols used from it.
+pub struct LocalDep {
+    pub path: PathBuf,
+    pub symbols: Vec<String>,
+}
+
+/// A file that depends on the target, with symbol-level call detail.
+pub struct Dependent {
+    pub path: PathBuf,
+    /// (`calling_function`, `called_symbol`, `line`) triples.
+    pub symbols: Vec<(String, String, u32)>,
+    pub is_test: bool,
+}
+
+/// Analyse the dependency graph for `path` within `scope`.
+///
+/// Phase 1: Extract exported symbols from the outline.
+/// Phase 2: Forward dependencies — what this file uses.
+/// Phase 3: Reverse dependencies — what uses this file.
+pub fn analyze_deps(
+    path: &Path,
+    scope: &Path,
+    bloom: &crate::index::bloom::BloomFilterCache,
+) -> Result<DepsResult, TilthError> {
+    // Canonicalize for reliable path comparison (callers return absolute paths).
+    let path = &path.canonicalize().map_err(|e| TilthError::IoError {
+        path: path.to_path_buf(),
+        source: e,
+    })?;
+
+    let content = fs::read_to_string(path).map_err(|e| TilthError::IoError {
+        path: path.clone(),
+        source: e,
+    })?;
+
+    let FileType::Code(lang) = detect_file_type(path) else {
+        // Non-code file: return empty deps gracefully.
+        return Ok(DepsResult {
+            target: path.clone(),
+            uses_local: Vec::new(),
+            uses_external: Vec::new(),
+            used_by: Vec::new(),
+            total_dependents: 0,
+            exported_count: 0,
+            searched_count: 0,
+        });
+    };
+
+    // ── Phase 1: Extract exported symbols ────────────────────────────────────
+
+    let entries = get_outline_entries(&content, lang);
+
+    let mut all_names: Vec<String> = Vec::new();
+    for entry in &entries {
+        // Skip imports and re-export wrappers — they don't define symbols here.
+        if matches!(entry.kind, OutlineKind::Import | OutlineKind::Export) {
+            continue;
+        }
+        collect_symbol_names(entry, &mut all_names);
+    }
+
+    // Deduplicate
+    all_names.sort();
+    all_names.dedup();
+
+    // Filter placeholder / noise names
+    all_names.retain(|n| !is_placeholder_name(n));
+
+    let exported_count = all_names.len();
+
+    // Cap at MAX_EXPORTED_SYMBOLS, preferring longer (more specific) names
+    let searched_count = if all_names.len() > MAX_EXPORTED_SYMBOLS {
+        all_names.sort_by(|a, b| b.len().cmp(&a.len()).then_with(|| a.cmp(b)));
+        all_names.truncate(MAX_EXPORTED_SYMBOLS);
+        MAX_EXPORTED_SYMBOLS
+    } else {
+        all_names.len()
+    };
+
+    // ── Phase 2: Forward dependencies ────────────────────────────────────────
+
+    // Names-only declaration alternatives; imports prove file connections, not call binding.
+    let callee_names = extract_callee_names(&content, lang, None);
+    let resolved = structural_declaration_candidates(&callee_names, path, &content, bloom);
+
+    // Group structural declaration candidates by file.
+    let mut local_by_file: HashMap<PathBuf, Vec<String>> = HashMap::new();
+    for callee in resolved {
+        if callee.file != *path {
+            local_by_file
+                .entry(callee.file)
+                .or_default()
+                .push(callee.name);
+        }
+    }
+
+    // Merge in import-resolved files (may not have resolved callees if symbols
+    // weren't matched, but the import relationship itself is meaningful)
+    let import_files = resolve_related_files_with_content(path, &content);
+    for import_path in import_files {
+        local_by_file.entry(import_path).or_default();
+    }
+
+    // Sort symbols within each dep, then build the list sorted by path
+    let mut uses_local: Vec<LocalDep> = local_by_file
+        .into_iter()
+        .map(|(dep_path, mut syms)| {
+            syms.sort();
+            syms.dedup();
+            LocalDep {
+                path: dep_path,
+                symbols: syms,
+            }
+        })
+        .collect();
+    uses_local.sort_by(|a, b| a.path.cmp(&b.path));
+
+    // External deps via line-level import parsing
+    let mut external_set: HashSet<String> = HashSet::new();
+    for line in content.lines() {
+        if !is_import_line(line, lang) {
+            continue;
+        }
+        let source = extract_import_source(line, Some(lang));
+        if source.is_empty() {
+            continue;
+        }
+        if is_external(&source, lang) && !is_stdlib(&source, lang) && is_valid_module_path(&source)
+        {
+            external_set.insert(source.clone());
+        }
+    }
+    let mut uses_external: Vec<String> = external_set.into_iter().collect();
+    uses_external.sort();
+
+    // ── Phase 3: Reverse dependencies ────────────────────────────────────────
+
+    let mut used_by = if searched_count > 0 {
+        let symbols_set: HashSet<String> = all_names.iter().cloned().collect();
+        let raw_matches = find_callers_batch(
+            &symbols_set,
+            scope,
+            bloom,
+            None,
+            crate::search::callers::BATCH_EARLY_QUIT,
+        )?;
+
+        // Alias-aware dependents: import aliases, chained named re-exports,
+        // and tsconfig `baseUrl`/`paths` carriers of the searched exports.
+        // The binder is a no-op for non-TS/JS targets. The matched local name
+        // is kept as the call-site carrier so rows dedupe by the exact
+        // (path, line, carrier) identity.
+        let alias_matches: Vec<(String, crate::search::callers::CallerMatch)> =
+            crate::search::bindings::find_alias_callers_batch(path, &all_names, scope)
+                .into_iter()
+                .map(|(local, ac)| (local, crate::search::callers::CallerMatch::from(ac)))
+                .collect();
+        let merged = crate::search::callers::merge_caller_rows(raw_matches, alias_matches);
+
+        // Group by file path
+        let mut by_file: HashMap<PathBuf, Vec<(String, String, u32)>> = HashMap::new();
+        for (matched_symbol, caller_match) in merged {
+            // Exclude calls from within the target file itself (self-references)
+            if caller_match.path == *path {
+                continue;
+            }
+            by_file.entry(caller_match.path).or_default().push((
+                caller_match.calling_function,
+                matched_symbol,
+                caller_match.line,
+            ));
+        }
+
+        // Build Dependent list
+        let target_dir = path.parent();
+        let mut dependents: Vec<Dependent> = by_file
+            .into_iter()
+            .map(|(dep_path, mut pairs)| {
+                pairs.sort();
+                pairs.dedup();
+                let is_test = is_test_file(&dep_path);
+                Dependent {
+                    path: dep_path,
+                    symbols: pairs,
+                    is_test,
+                }
+            })
+            .collect();
+
+        // Sort: same directory first, non-tests before tests, then alphabetical
+        dependents.sort_by(|a, b| {
+            let a_same_dir = target_dir.is_some_and(|d| a.path.parent() == Some(d));
+            let b_same_dir = target_dir.is_some_and(|d| b.path.parent() == Some(d));
+            b_same_dir
+                .cmp(&a_same_dir)
+                .then_with(|| a.is_test.cmp(&b.is_test))
+                .then_with(|| a.path.cmp(&b.path))
+        });
+
+        dependents
+    } else {
+        Vec::new()
+    };
+
+    let total_dependents = used_by.len();
+    used_by.truncate(MAX_DEPENDENTS);
+
+    Ok(DepsResult {
+        target: path.clone(),
+        uses_local,
+        uses_external,
+        used_by,
+        total_dependents,
+        exported_count,
+        searched_count,
+    })
+}
+
+/// Format a `DepsResult` as a compact, readable string.
+///
+/// Budget truncation priority (when `budget` tokens is too tight):
+/// 1. Truncate "Used by" entries (keep header count)
+/// 2. Truncate "Uses (external)" to count only
+/// 3. Truncate "Uses (local)" symbol lists to file paths only
+/// 4. Never truncate the header line
+pub fn format_deps(result: &DepsResult, scope: &Path, budget: Option<usize>) -> String {
+    let dep_count = result.total_dependents;
+    let (prod_deps, test_deps): (Vec<_>, Vec<_>) = result.used_by.iter().partition(|d| !d.is_test);
+
+    // ── Build sections (full fidelity first) ─────────────────────────────────
+
+    // Header
+    let rel_target = result
+        .target
+        .strip_prefix(scope)
+        .unwrap_or(&result.target)
+        .display()
+        .to_string();
+    let header = format!(
+        "# Deps: {} — {} local, {} external, {} dependent{}",
+        rel_target,
+        result.uses_local.len(),
+        result.uses_external.len(),
+        dep_count,
+        if dep_count == 1 { "" } else { "s" },
+    );
+
+    let uses_local_section = format_uses_local(&result.uses_local, scope, true);
+    let uses_external_section = format_uses_external(&result.uses_external);
+    let used_by_section = format_used_by(&prod_deps, scope, "## Used by");
+    let used_by_tests_section = format_used_by(&test_deps, scope, "## Used by (tests)");
+
+    let barrel_note = if result.exported_count > MAX_EXPORTED_SYMBOLS {
+        format!(
+            "\n\n> ({} of {} exports shown — barrel file detected)",
+            result.searched_count, result.exported_count
+        )
+    } else {
+        String::new()
+    };
+
+    // Full output
+    let mut parts: Vec<String> = Vec::new();
+    parts.push(header.clone());
+    if !uses_local_section.is_empty() {
+        parts.push(uses_local_section.clone());
+    }
+    if !uses_external_section.is_empty() {
+        parts.push(uses_external_section.clone());
+    }
+    if !used_by_section.is_empty() {
+        parts.push(used_by_section.clone());
+    }
+    if !used_by_tests_section.is_empty() {
+        parts.push(used_by_tests_section.clone());
+    }
+    let truncated = result.total_dependents.saturating_sub(result.used_by.len());
+    if truncated > 0 {
+        parts.push(format!("... and {truncated} more dependents"));
+    }
+    if !barrel_note.is_empty() {
+        parts.push(barrel_note.clone());
+    }
+
+    let full = parts.join("\n\n");
+    let full_tokens = crate::types::estimate_tokens(full.len() as u64) as usize;
+
+    let output = match budget {
+        None => full,
+        Some(b) if full_tokens <= b => full,
+        Some(b) => {
+            // Apply truncation in priority order
+            apply_budget_truncation(
+                &header,
+                &uses_local_section,
+                &uses_external_section,
+                &prod_deps,
+                &test_deps,
+                &barrel_note,
+                scope,
+                b,
+            )
+        }
+    };
+
+    let token_est = crate::types::estimate_tokens(output.len() as u64);
+    format!("{output}\n\n[~{token_est} tokens]")
+}
+
+// ---------------------------------------------------------------------------
+// Internal helpers
+// ---------------------------------------------------------------------------
+
+/// Collect symbol names from an outline entry and its children.
+fn collect_symbol_names(entry: &crate::types::OutlineEntry, out: &mut Vec<String>) {
+    out.push(entry.name.clone());
+    for child in &entry.children {
+        // Include public methods of classes/structs/impls
+        if !matches!(child.kind, OutlineKind::Import | OutlineKind::Export) {
+            out.push(child.name.clone());
+        }
+    }
+}
+
+/// Returns true if the name is a noise/placeholder that should be excluded
+/// from the reverse-dependency search.
+fn is_placeholder_name(name: &str) -> bool {
+    if name == "<anonymous>" {
+        return true;
+    }
+    if name.starts_with('<') {
+        return true;
+    }
+    if name.starts_with("impl ") {
+        return true;
+    }
+    // Single-character names are too generic (e.g. `T`, `E`, `f`)
+    if name.chars().count() == 1 {
+        return true;
+    }
+    false
+}
+
+/// Root (first `/`-segment) of each Go stdlib package. A Go import is stdlib
+/// when its first path segment is one of these — covering both single-segment
+/// (`fmt`) and multi-segment (`net/http`, `encoding/json`) forms. Matching the
+/// root (not the whole path) avoids misclassifying a local package like
+/// `mypackage` while still suppressing the noisy multi-segment stdlib paths.
+const GO_STDLIB_ROOTS: &[&str] = &[
+    "archive",
+    "bufio",
+    "bytes",
+    "cmp",
+    "compress",
+    "container",
+    "context",
+    "crypto",
+    "database",
+    "debug",
+    "embed",
+    "encoding",
+    "errors",
+    "flag",
+    "fmt",
+    "go",
+    "hash",
+    "html",
+    "image",
+    "index",
+    "io",
+    "log",
+    "maps",
+    "math",
+    "mime",
+    "net",
+    "os",
+    "path",
+    "plugin",
+    "reflect",
+    "regexp",
+    "runtime",
+    "slices",
+    "sort",
+    "strconv",
+    "strings",
+    "sync",
+    "syscall",
+    "testing",
+    "text",
+    "time",
+    "unicode",
+    "unsafe",
+    // Go 1.23+ additions
+    "iter",
+    "unique",
+];
+
+/// Returns true if the import source is a standard library module.
+/// Agents can't navigate into stdlib — showing these is noise.
+fn is_stdlib(source: &str, lang: crate::types::Lang) -> bool {
+    use crate::types::Lang;
+    match lang {
+        Lang::Rust => {
+            source.starts_with("std::")
+                || source.starts_with("core::")
+                || source.starts_with("alloc::")
+        }
+        Lang::Python => {
+            // Common stdlib modules — not exhaustive but covers the noisy ones
+            matches!(
+                source.split('.').next().unwrap_or(""),
+                "os" | "sys"
+                    | "re"
+                    | "json"
+                    | "math"
+                    | "time"
+                    | "datetime"
+                    | "pathlib"
+                    | "typing"
+                    | "collections"
+                    | "functools"
+                    | "itertools"
+                    | "abc"
+                    | "io"
+                    | "logging"
+                    | "unittest"
+                    | "dataclasses"
+                    | "enum"
+                    | "copy"
+                    | "hashlib"
+                    | "subprocess"
+                    | "threading"
+                    | "asyncio"
+            )
+        }
+        Lang::Go => GO_STDLIB_ROOTS.contains(&source.split('/').next().unwrap_or(source)),
+        _ => false,
+    }
+}
+
+/// Returns true if the string looks like a valid module/package path.
+/// Filters out garbage from string literals that pass `is_import_line`.
+fn is_valid_module_path(source: &str) -> bool {
+    // Must not contain spaces (real module paths don't)
+    if source.contains(' ') {
+        return false;
+    }
+    // Must start with an alphanumeric, @, or dot
+    source
+        .chars()
+        .next()
+        .is_some_and(|c| c.is_alphanumeric() || c == '@' || c == '.')
+}
+
+use crate::types::is_test_file;
+
+/// Format the "Uses (local)" section.
+fn format_uses_local(deps: &[LocalDep], scope: &Path, with_symbols: bool) -> String {
+    if deps.is_empty() {
+        return String::new();
+    }
+    let mut out = String::from(
+        "## Uses (local) — import and source-name candidates; call binding unverified",
+    );
+    for dep in deps {
+        let rel = dep
+            .path
+            .strip_prefix(scope)
+            .unwrap_or(&dep.path)
+            .display()
+            .to_string();
+        if with_symbols && !dep.symbols.is_empty() {
+            let _ = write!(out, "\n{:<30} {}", rel, dep.symbols.join(", "));
+        } else {
+            let _ = write!(out, "\n{rel}");
+        }
+    }
+    out
+}
+
+/// Format the "Uses (external)" section.
+fn format_uses_external(externals: &[String]) -> String {
+    if externals.is_empty() {
+        return String::new();
+    }
+    let mut out = String::from("## Uses (external)");
+    for ext in externals {
+        let _ = write!(out, "\n{ext}");
+    }
+    out
+}
+
+/// Format a "Used by" section from a slice of dependents.
+fn format_used_by(deps: &[&Dependent], scope: &Path, heading: &str) -> String {
+    if deps.is_empty() {
+        return String::new();
+    }
+    let mut out = String::from(heading);
+    for dep in deps {
+        let rel = dep
+            .path
+            .strip_prefix(scope)
+            .unwrap_or(&dep.path)
+            .display()
+            .to_string();
+        // Group by (caller, line) for readability — keep the earliest line per caller
+        let mut by_caller: HashMap<&str, (u32, Vec<&str>)> = HashMap::new();
+        for (caller, symbol, line) in &dep.symbols {
+            let entry = by_caller
+                .entry(caller.as_str())
+                .or_insert((*line, Vec::new()));
+            entry.0 = entry.0.min(*line);
+            entry.1.push(symbol.as_str());
+        }
+        let mut callers: Vec<(&str, u32, Vec<&str>)> = by_caller
+            .into_iter()
+            .map(|(caller, (line, syms))| (caller, line, syms))
+            .collect();
+        callers.sort_unstable_by(|a, b| a.1.cmp(&b.1).then_with(|| a.0.cmp(b.0)));
+        for (caller, line, syms) in callers {
+            let loc = format!("{rel}:{line}");
+            let joined = syms.join(", ");
+            let _ = write!(out, "\n{loc:<30} {caller:<20} \u{2192} {joined}");
+        }
+    }
+    out
+}
+
+/// Apply progressive budget truncation and reassemble the output.
+#[allow(clippy::too_many_arguments)]
+fn apply_budget_truncation(
+    header: &str,
+    uses_local_full: &str,
+    uses_external_full: &str,
+    prod_deps: &[&Dependent],
+    test_deps: &[&Dependent],
+    barrel_note: &str,
+    scope: &Path,
+    budget: usize,
+) -> String {
+    // Try progressively degraded versions
+    #[allow(clippy::type_complexity)]
+    let candidates: &[fn(
+        &str,
+        &str,
+        &str,
+        &[&Dependent],
+        &[&Dependent],
+        &str,
+        &Path,
+    ) -> String] = &[
+        // Level 0: no tests
+        |hdr, ul, ue, pd, _td, bn, sc| {
+            assemble(&[hdr, ul, ue, &format_used_by(pd, sc, "## Used by"), bn])
+        },
+        // Level 1: no used-by entries at all
+        |hdr, ul, ue, pd, _td, bn, _sc| {
+            let count = pd.len();
+            let note = if count > 0 {
+                format!("\n\n(... {count} more dependents)")
+            } else {
+                String::new()
+            };
+            assemble(&[hdr, ul, ue, &note, bn])
+        },
+        // Level 2: external as count only
+        |hdr, ul, _ue, _pd, _td, bn, _sc| assemble(&[hdr, ul, bn]),
+        // Level 3: local as paths only (no symbols)
+        |hdr, ul, _ue, _pd, _td, _bn, _sc| {
+            // Strip symbol lists: each line is "path_padded  symbols" — take only up to first space run
+            let local_lines: Vec<&str> = ul
+                .lines()
+                .skip(1) // skip heading
+                .map(|l| l.split_whitespace().next().unwrap_or(l))
+                .collect();
+            let paths_only = if local_lines.is_empty() {
+                String::new()
+            } else {
+                format!("## Uses (local)\n{}", local_lines.join("\n"))
+            };
+            assemble(&[hdr, &paths_only])
+        },
+        // Level 4: header only
+        |hdr, _ul, _ue, _pd, _td, _bn, _sc| hdr.to_string(),
+    ];
+
+    for candidate_fn in candidates {
+        let candidate = candidate_fn(
+            header,
+            uses_local_full,
+            uses_external_full,
+            prod_deps,
+            test_deps,
+            barrel_note,
+            scope,
+        );
+        let tokens = crate::types::estimate_tokens(candidate.len() as u64) as usize;
+        if tokens <= budget {
+            return candidate;
+        }
+    }
+
+    // Absolute fallback: just the header
+    header.to_string()
+}
+
+/// Join non-empty parts with double newlines.
+fn assemble(parts: &[&str]) -> String {
+    parts
+        .iter()
+        .filter(|s| !s.trim().is_empty())
+        .copied()
+        .collect::<Vec<_>>()
+        .join("\n\n")
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn analyze_deps_recovers_alias_reexport_and_tsconfig_dependents() {
+        let dir = tempfile::tempdir().unwrap();
+        let write = |rel: &str, content: &str| {
+            let p = dir.path().join(rel);
+            std::fs::create_dir_all(p.parent().unwrap()).unwrap();
+            std::fs::write(p, content).unwrap();
+        };
+        write(
+            "src/manifest.ts",
+            "export function loadManifest(raw: string) {\n  return JSON.parse(raw);\n}\n",
+        );
+        write(
+            "src/direct.ts",
+            "import { loadManifest as localLoad } from './manifest';\nexport function directCaller(raw: string) {\n  return localLoad(raw);\n}\n",
+        );
+        write(
+            "src/barrel-a.ts",
+            "export { loadManifest as parseManifest } from './manifest';\n",
+        );
+        write(
+            "src/barrel-b.ts",
+            "export { parseManifest as readManifest } from './barrel-a';\n",
+        );
+        write(
+            "src/reexport.ts",
+            "import { readManifest } from './barrel-b';\nexport function reexportCaller(raw: string) {\n  return readManifest(raw);\n}\n",
+        );
+        write(
+            "src/path-alias.ts",
+            "import { loadManifest as configLoad } from '@/manifest';\nexport function pathAliasCaller(raw: string) {\n  return configLoad(raw);\n}\n",
+        );
+        write(
+            "src/plain.ts",
+            "import { loadManifest } from './manifest';\nexport function plainCaller(raw: string) {\n  return loadManifest(raw);\n}\n",
+        );
+        // Hard stop: this module does not export loadManifest, so importing
+        // from it must never attribute rows to manifest.ts. The decoy never
+        // calls the name, so neither the lexical walk nor the binder emits it.
+        write("src/barrel-x.ts", "export const unrelated = 1;\n");
+        write(
+            "src/decoy.ts",
+            "import { loadManifest } from './barrel-x';\nexport function decoy() {\n  return 1;\n}\n",
+        );
+        write(
+            "tsconfig.json",
+            r#"{"compilerOptions":{"baseUrl":"./src","paths":{"@/*":["*"]}}}"#,
+        );
+        let bloom = crate::index::bloom::BloomFilterCache::default();
+        let result = analyze_deps(&dir.path().join("src/manifest.ts"), dir.path(), &bloom).unwrap();
+        assert_eq!(result.exported_count, 1);
+        let by_name: HashMap<&str, &Dependent> = result
+            .used_by
+            .iter()
+            .map(|d| (d.path.file_name().unwrap().to_str().unwrap(), d))
+            .collect();
+        for name in ["direct.ts", "reexport.ts", "path-alias.ts", "plain.ts"] {
+            assert!(
+                by_name.contains_key(name),
+                "missing dependent {name}: {:?}",
+                by_name.keys().collect::<Vec<_>>()
+            );
+        }
+        let direct = &by_name["direct.ts"];
+        assert_eq!(
+            direct.symbols,
+            vec![("directCaller".to_string(), "localLoad".to_string(), 3)],
+            "alias carrier must preserve owner, call-site name, and line"
+        );
+        assert_eq!(
+            by_name["plain.ts"].symbols,
+            vec![("plainCaller".to_string(), "loadManifest".to_string(), 3)],
+            "direct named import must merge to one (path, line, carrier) row"
+        );
+        assert!(
+            !by_name.contains_key("decoy.ts"),
+            "hard-stop decoy must not be attributed: {:?}",
+            by_name.keys().collect::<Vec<_>>()
+        );
+    }
+    use super::*;
+
+    #[test]
+    fn go_stdlib_fmt_is_stdlib() {
+        assert!(is_stdlib("fmt", crate::types::Lang::Go));
+    }
+
+    #[test]
+    fn go_stdlib_fmtlib_is_not_stdlib() {
+        // "fmtlib" is not a Go stdlib package—previously matched via starts_with("fmt")
+        assert!(!is_stdlib("fmtlib", crate::types::Lang::Go));
+    }
+
+    #[test]
+    fn go_stdlib_fmtutil_is_not_stdlib() {
+        assert!(!is_stdlib("fmtutil", crate::types::Lang::Go));
+    }
+
+    #[test]
+    fn go_stdlib_multi_segment_paths_are_stdlib() {
+        // Regression: multi-segment stdlib imports (single-line form
+        // `import "net/http"`) must classify as stdlib via their root segment.
+        // The exact-match allowlist briefly regressed these to "external".
+        for path in [
+            "net/http",
+            "encoding/json",
+            "path/filepath",
+            "crypto/sha256",
+            "text/template",
+            "container/list",
+            "database/sql",
+        ] {
+            assert!(
+                is_stdlib(path, crate::types::Lang::Go),
+                "{path} should be classified as Go stdlib"
+            );
+        }
+    }
+
+    #[test]
+    fn go_local_multi_segment_path_is_not_stdlib() {
+        // A local/third-party multi-segment package whose root isn't stdlib.
+        assert!(!is_stdlib("mypackage/sub", crate::types::Lang::Go));
+    }
+
+    #[test]
+    fn go_local_package_without_dot_is_not_stdlib() {
+        // A local package like "mypackage" has no dot but is NOT stdlib—
+        // the old !source.contains('.') rule wrongly classified it as stdlib.
+        assert!(!is_stdlib("mypackage", crate::types::Lang::Go));
+    }
+
+    #[test]
+    fn go_external_dotted_path_is_not_stdlib() {
+        assert!(!is_stdlib(
+            "github.com/gin-gonic/gin",
+            crate::types::Lang::Go
+        ));
+    }
+
+    #[test]
+    fn go_stdlib_cmp_and_maps_are_stdlib() {
+        // Go 1.21+ added `cmp` and `maps` to the standard library.
+        assert!(is_stdlib("cmp", crate::types::Lang::Go));
+        assert!(is_stdlib("maps", crate::types::Lang::Go));
+    }
+}

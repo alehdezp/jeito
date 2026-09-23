@@ -1,0 +1,44 @@
+{
+  "name": "@alehdezp/draft-lift",
+  "version": "0.1.0",
+  "description": "Experimental context-preserving side request for improving the current Pi editor draft.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "prompt-enhancement",
+    "sidequest"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-ai": ">=0.82.1",
+    "@earendil-works/pi-coding-agent": ">=0.82.1",
+    "@earendil-works/pi-tui": ">=0.82.1"
+  },
+  "peerDependenciesMeta": {
+    "@earendil-works/pi-ai": {
+      "optional": true
+    },
+    "@earendil-works/pi-tui": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@earendil-works/pi-ai": "0.82.1",
+    "@earendil-works/pi-coding-agent": "0.82.1",
+    "@earendil-works/pi-tui": "0.82.1"
+  },
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "scripts": {
+    "check": "node --experimental-strip-types --check index.ts && node --experimental-strip-types --check clean.ts",
+    "test": "node --experimental-strip-types --test index.test.mjs"
+  }
+}

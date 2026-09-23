@@ -1,0 +1,94 @@
+{
+  "name": "@alehdezp/codeweave-pi",
+  "version": "0.9.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "postinstall": "node scripts/pi-nav-build.mjs check-core --json && node scripts/qmd-model-provision.mjs",
+    "nav:provision": "node scripts/pi-nav-build.mjs check-core --json && node scripts/qmd-model-provision.mjs",
+    "nav:provision:legacy": "node scripts/navigation-provision.mjs",
+    "qmd:model-provision": "node scripts/qmd-model-provision.mjs",
+    "qmd:runtime-smoke": "node scripts/qmd-local-runtime-smoke.mjs",
+    "nav:doctor": "node scripts/navigation-doctor.mjs",
+    "nav:init": "node scripts/navigation-doctor.mjs init --write",
+    "nav:freshen": "node scripts/navigation-freshen.mjs",
+    "nav:prepare": "node scripts/navigation-prepare.mjs",
+    "nav:audit": "node scripts/navigation-audit.mjs",
+    "nav:real-smoke": "node scripts/navigation-real-smoke.mjs",
+    "nav:loaded-runtime-smoke": "node scripts/navigation-loaded-runtime-smoke.mjs",
+    "nav:cmux-onboarding-smoke": "node scripts/navigation-cmux-onboarding-smoke.mjs",
+    "nav:cmux-suite": "node scripts/navigation-cmux-behavior-suite.mjs",
+    "nav:tool-feel": "node scripts/navigation-tool-feel-eval.mjs",
+    "nav:adaptive-eval": "node scripts/navigation-adaptive-eval.mjs",
+    "nav:clean": "node scripts/navigation-clean.mjs",
+    "nav:bootstrap": "node scripts/navigation-bootstrap.mjs",
+    "nav:skill-smoke": "node scripts/navigation-skill-smoke.mjs",
+    "nav:impact-benchmark": "node scripts/navigation-impact-benchmark.mjs",
+    "nav:edit-benchmark": "node scripts/edit-engine-benchmark.mjs",
+    "test:nav-contract": "node --test tests/v3-clean-break-navigation.test.mjs tests/v3-backend-registry.test.mjs tests/v3-provider-registry.test.mjs tests/v3-sqlite-runtime.test.mjs",
+    "test:nav-live-dry": "node --input-type=module -e \"await import('./index.ts'); await import('./scripts/navigation-doctor.mjs'); await import('./scripts/navigation-prepare.mjs'); await import('./scripts/navigation-freshen.mjs'); console.log('imports ok')\" && npm run nav:doctor -- --path . --json && npm run nav:prepare -- --path . --dry-run --json",
+    "test:nav-behavior": "npm run test:nav-contract && npm run test:nav-live-dry",
+    "pi-nav:build": "node scripts/pi-nav-build.mjs build",
+    "pi-nav:check": "node scripts/pi-nav-build.mjs check",
+    "pi-nav:package": "node scripts/pi-nav-build.mjs package",
+    "validate:inner": "node scripts/validate-release.mjs inner",
+    "validate:qmd": "node scripts/validate-release.mjs qmd",
+    "validate:qmd:linux": "node scripts/validate-qmd-container.mjs",
+    "validate:checkpoint": "node scripts/validate-release.mjs checkpoint",
+    "validate:release": "node scripts/validate-release.mjs release",
+    "test:nav-cmux": "node scripts/navigation-cmux-onboarding-smoke.mjs --json"
+  },
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "skills": [
+      "./skills"
+    ]
+  },
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "napi": {
+    "binaryName": "pi_nav"
+  },
+  "dependencies": {
+    "@earendil-works/pi-tui": "0.82.1",
+    "@lumis-sh/wasm-go": "0.26.1",
+    "@lumis-sh/wasm-java": "0.26.1",
+    "@lumis-sh/wasm-javascript": "0.26.2",
+    "@lumis-sh/wasm-kotlin": "0.26.3",
+    "@lumis-sh/wasm-markdown": "0.26.1",
+    "@lumis-sh/wasm-python": "0.26.1",
+    "@lumis-sh/wasm-rust": "0.26.3",
+    "@lumis-sh/wasm-tsx": "0.26.1",
+    "@lumis-sh/wasm-typescript": "0.26.1",
+    "better-sqlite3": "12.10.0",
+    "diff": "9.0.0",
+    "fast-glob": "3.3.3",
+    "js-tiktoken": "1.0.21",
+    "node-llama-cpp": "3.18.1",
+    "pi-lens": "3.8.70",
+    "picomatch": "4.0.4",
+    "sqlite-vec": "0.1.9",
+    "web-tree-sitter": "0.26.10",
+    "yaml": "2.9.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": ">=0.82.1"
+  },
+  "peerDependenciesMeta": {
+    "@earendil-works/pi-coding-agent": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "3.7.0",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^24.13.3",
+    "esbuild": "0.28.1",
+    "jsonc-parser": "3.3.1"
+  },
+  "description": "Opinionated project evidence, prepared semantic navigation, live source authority, mutation, change review, and diagnostics for Pi."
+}

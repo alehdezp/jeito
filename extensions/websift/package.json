@@ -1,0 +1,54 @@
+{
+  "name": "@alehdezp/websift",
+  "version": "0.1.1",
+  "description": "Owned Pi web retrieval: four startup tools, lazy library docs, and five explicit provider/method specialists over one evidence-aware fetch pipeline.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "jeito",
+    "pi-package",
+    "pi-extension",
+    "web-search",
+    "web-fetch",
+    "retrieval"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": ">=0.82.1"
+  },
+  "dependencies": {
+    "@blackwell-systems/gcf": "2.4.0",
+    "@earendil-works/pi-tui": "0.82.1",
+    "@mozilla/readability": "^0.6.0",
+    "@tavily/core": "^0.7.6",
+    "exa-js": "^2.16.3",
+    "linkedom": "^0.16.0",
+    "p-limit": "^6.1.0",
+    "turndown": "^7.2.0",
+    "typebox": "^1.1.24",
+    "yaml": "^2.5.0"
+  },
+  "optionalDependencies": {
+    "unpdf": "^1.6.2"
+  },
+  "devDependencies": {
+    "@types/turndown": "^5.0.6",
+    "typescript": "^5.9.2"
+  },
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ],
+    "skills": [
+      "./skills"
+    ]
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "node --experimental-strip-types --test tests/*.test.mjs tests/adapters/*.test.mjs tests/fetch-handlers/*.test.mjs",
+    "vendor:fetch": "node scripts/vendor-fetch.mjs"
+  }
+}

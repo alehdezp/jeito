@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="660" viewBox="0 0 560 660" role="img" aria-labelledby="title desc">
+  <title id="title">What one rendered shell card tells you</title>
+  <desc id="desc">An annotated result card drawn at 56 columns, the width the UI gallery can reproduce. The title line names the tool and the call it received, the corner, rail and bottom border take the status colour while the label text stays in the terminal's own colour, error lines are tinted rose and warning lines yellow, and the bottom label carries the cell id, exit code and output line count. A truncation note states the density budget the card was cut to. Output shown here is illustrative and elided; the background job completion card below is TUI status only, never model evidence. A Nerd Font adds a glyph before the tool name, omitted here.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#26322d"/>
+      <stop offset="1" stop-color="#1b2220"/>
+    </linearGradient>
+    <linearGradient id="pane" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#303a36"/>
+      <stop offset="1" stop-color="#28312e"/>
+    </linearGradient>
+    <style>
+      .b1 { animation: b1 8s ease-in-out infinite; }
+      .b2 { animation: b2 8s ease-in-out infinite; }
+      .b3 { animation: b3 8s ease-in-out infinite; }
+      .b4 { animation: b4 8s ease-in-out infinite; }
+      @keyframes b1 { 0%, 100% { opacity: .5 } 4%, 22% { opacity: 1 } }
+      @keyframes b2 { 0%, 100% { opacity: .5 } 26%, 44% { opacity: 1 } }
+      @keyframes b3 { 0%, 100% { opacity: .5 } 48%, 66% { opacity: 1 } }
+      @keyframes b4 { 0%, 100% { opacity: .5 } 70%, 92% { opacity: 1 } }
+      @media (prefers-reduced-motion: reduce) { .b1, .b2, .b3, .b4 { animation: none; opacity: 1 } }
+    </style>
+  </defs>
+  <rect width="560" height="660" rx="16" fill="url(#bg)"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <path d="M24 27l8 7-8 7m15 0h10" fill="none" stroke="#80d5bd" stroke-width="3" stroke-linecap="round"/>
+    <text x="62" y="41" fill="#9dc4b6" font-size="17" letter-spacing="2">shell / rendered card</text>
+
+    <text x="24" y="80" fill="#f4f1e9" font-size="28" font-weight="700">One card, four checkable facts.</text>
+    <text x="24" y="108" fill="#b6c2bb" font-size="16">The same frame renders while the command runs and after it ends.</text>
+
+    <!-- the card, at the renderer's own character columns for a 56-column terminal -->
+    <rect x="24" y="124" width="512" height="168" rx="8" fill="#171e1c" stroke="#3d4a44"/>
+    <rect x="24" y="124" width="4" height="168" rx="2" fill="#80d5bd"/>
+    <g font-size="12.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+      <text x="48" y="150" fill="#a6e3a1">╭──</text>
+      <text x="78" y="150" fill="#cdd6f4" font-weight="700">bash</text>
+      <text x="115.5" y="150" fill="#89dceb">npm test -- --silent</text>
+      <text x="273" y="150" fill="#a6e3a1">──────────────────────────</text>
+
+      <text x="48" y="168" fill="#a6e3a1">│</text>
+      <text x="63" y="168" fill="#cfe0d9">PASS  test/parser.test.ts</text>
+      <text x="48" y="186" fill="#a6e3a1">│</text>
+      <text x="63" y="186" fill="#cfe0d9">PASS  test/queue.test.ts</text>
+      <text x="48" y="204" fill="#a6e3a1">│</text>
+      <text x="63" y="204" fill="#f9e2af">warning: 1 test file skipped by config</text>
+      <text x="48" y="222" fill="#93949e">│</text>
+      <text x="63" y="222" fill="#6d7a83">⋮</text>
+      <text x="48" y="240" fill="#a6e3a1" opacity="0.55">│</text>
+      <text x="63" y="240" fill="#93949e">… UI truncated to 30 lines · Ctrl+U to show</text>
+
+      <text x="48" y="258" fill="#a6e3a1">╰──</text>
+      <text x="78" y="258" fill="#cfe0d9">✓ sh-3 exit 0 • 246 output lines</text>
+      <text x="325.5" y="258" fill="#a6e3a1">───────────────────</text>
+    </g>
+    <g font-size="11" font-weight="700" text-anchor="middle">
+      <circle class="b1" cx="506" cy="146" r="10" fill="#16201d" stroke="#80d5bd" stroke-width="1.4"/>
+      <text class="b1" x="506" y="150" fill="#80d5bd">1</text>
+      <circle class="b2" cx="506" cy="164" r="10" fill="#16201d" stroke="#80d5bd" stroke-width="1.4"/>
+      <text class="b2" x="506" y="168" fill="#80d5bd">2</text>
+      <circle class="b3" cx="506" cy="200" r="10" fill="#16201d" stroke="#80d5bd" stroke-width="1.4"/>
+      <text class="b3" x="506" y="204" fill="#80d5bd">3</text>
+      <circle class="b4" cx="506" cy="254" r="10" fill="#16201d" stroke="#80d5bd" stroke-width="1.4"/>
+      <text class="b4" x="506" y="258" fill="#80d5bd">4</text>
+    </g>
+
+    <!-- what each marker points at -->
+    <rect x="24" y="302" width="512" height="160" rx="10" fill="url(#pane)" stroke="#3d4a44"/>
+    <g font-size="12.5" fill="#f4f1e9" font-weight="700">
+      <text x="64" y="338">What ran</text>
+      <text x="64" y="368">The rails</text>
+      <text x="64" y="398">Tinting</text>
+      <text x="64" y="428">The verdict</text>
+    </g>
+    <g font-size="11.5" fill="#9aa8a1">
+      <text x="156" y="338">the tool name, plus the command it received</text>
+      <text x="156" y="368">corner, rail and bottom take the status colour</text>
+      <text x="156" y="398">error lines rose, warning lines yellow</text>
+      <text x="156" y="428">cell id, exit code, output line count</text>
+    </g>
+    <g font-size="10.5" font-weight="700" text-anchor="middle">
+      <circle class="b1" cx="44" cy="334" r="9" fill="#39443f" stroke="#80d5bd" stroke-width="1.2"/>
+      <text class="b1" x="44" y="338" fill="#9ae5cd">1</text>
+      <circle class="b2" cx="44" cy="364" r="9" fill="#39443f" stroke="#80d5bd" stroke-width="1.2"/>
+      <text class="b2" x="44" y="368" fill="#9ae5cd">2</text>
+      <circle class="b3" cx="44" cy="394" r="9" fill="#39443f" stroke="#80d5bd" stroke-width="1.2"/>
+      <text class="b3" x="44" y="398" fill="#9ae5cd">3</text>
+      <circle class="b4" cx="44" cy="424" r="9" fill="#39443f" stroke="#80d5bd" stroke-width="1.2"/>
+      <text class="b4" x="44" y="428" fill="#9ae5cd">4</text>
+    </g>
+    <line x1="40" y1="440" x2="520" y2="440" stroke="#3d4a44"/>
+    <text x="40" y="456" fill="#c0b9a4" font-size="11">30-line budget · Ctrl+U cycles: ultra 1 · condensed 8 · normal 30 · extended 120</text>
+
+    <!-- a background job's completion card -->
+    <rect x="24" y="476" width="512" height="114" rx="10" fill="url(#pane)" stroke="#3d4a44"/>
+    <text x="40" y="500" fill="#8b9a93" font-size="12.5">When a background job ends, the session appends its own card:</text>
+    <g font-size="12.5" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, monospace">
+      <text x="48" y="524" fill="#a6e3a1">╭──</text>
+      <text x="78" y="524" fill="#cdd6f4" font-weight="700">jobs</text>
+      <text x="115.5" y="524" fill="#89dceb">job-3</text>
+      <text x="160.5" y="524" fill="#a6e3a1">─────────────────────────────────────────</text>
+      <text x="48" y="542" fill="#a6e3a1">│</text>
+      <text x="63" y="542" fill="#93949e">sh-3 · 42s · 246 output lines · LeanCTX</text>
+      <text x="48" y="560" fill="#a6e3a1">╰──</text>
+      <text x="78" y="560" fill="#cfe0d9">✓ job-3 completed</text>
+      <text x="213" y="560" fill="#a6e3a1">──────────────────────────────────</text>
+    </g>
+    <text x="40" y="582" fill="#9aa8a1" font-size="12">TUI status only — it never wakes the agent. Polling makes it evidence.</text>
+
+    <text x="24" y="618" fill="#f4f1e9" font-size="14">Output is illustrative and elided; frame, columns and colours are the renderer's.</text>
+    <text x="24" y="644" fill="#9aa8a1" font-size="14">Reproduce the frame: npm run ui:gallery -- --tool bash --width 56</text>
+  </g>
+</svg>

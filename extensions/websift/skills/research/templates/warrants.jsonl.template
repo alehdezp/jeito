@@ -1,0 +1,1 @@
+{"warrant_id":"W001","claim_id":"C001","evidence_ids":["E001"],"why_supports":"Why the evidence supports the claim","scope":"What claim scope is allowed","limits":["What this evidence does not prove"],"overclaim_risk":"low|medium|high","allowed_final_claim":"The narrowest accurate wording","not_licensed":["Broader claims this evidence cannot support"]}

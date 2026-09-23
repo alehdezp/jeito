@@ -1,0 +1,98 @@
+# >>> jeito-codeweave-pi default CRG ignores
+# Code review graph output
+.code-review-graph/
+**/.code-review-graph/
+# Generated navigation state and tool caches; source-owned hidden instructions/config remain indexable
+.tmp/
+**/.tmp/
+.ua/
+**/.ua/
+.pi/navigation/
+**/.pi/navigation/
+.pi/crg/
+**/.pi/crg/
+.cache/
+**/.cache/
+.rtfm/
+**/.rtfm/
+.gsd/
+**/.gsd/
+.codanna/
+**/.codanna/
+.codedb-mcp/
+**/.codedb-mcp/
+.codescope/
+**/.codescope/
+.codesearch.db/
+**/.codesearch.db/
+.trace-mcp/
+**/.trace-mcp/
+.fastembed_cache/
+**/.fastembed_cache/
+.semble/
+**/.semble/
+# Nested VCS metadata
+.git/
+**/.git/
+.svn/
+**/.svn/
+.hg/
+**/.hg/
+# Dependency directories
+node_modules/
+**/node_modules/
+.venv/
+**/.venv/
+venv/
+**/venv/
+vendor/
+**/vendor/
+oh-my-pi-upstream/
+**/oh-my-pi-upstream/
+# Python cache
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+# Build / generated output
+dist/
+**/dist/
+build/
+**/build/
+out/
+**/out/
+.next/
+**/.next/
+target/
+**/target/
+generated/
+**/generated/
+coverage/
+**/coverage/
+# Minified / bundled assets
+*.min.js
+*.min.css
+*.map
+# Lockfiles
+*.lock
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+poetry.lock
+Cargo.lock
+# Databases / local state
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+logs/
+**/logs/
+log/
+**/log/
+sessions/
+**/sessions/
+*.log
+graphify-out/
+**/graphify-out/
+# <<< jeito-codeweave-pi default CRG ignores

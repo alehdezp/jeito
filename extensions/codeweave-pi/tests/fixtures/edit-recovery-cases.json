@@ -1,0 +1,26 @@
+{
+  "upstream": {
+    "repository": "https://github.com/can1357/oh-my-pi",
+    "commit": "e8d0a93db61e756361aad84d4bcbc2dd2db88973",
+    "license": "MIT"
+  },
+  "cases": [
+    { "id": "same-coordinate-unrelated-change", "category": "recovery", "expected": "recover", "risk": "changed non-target region" },
+    { "id": "preceding-insert-unique-offset", "category": "recovery", "expected": "recover", "risk": "line shift" },
+    { "id": "preceding-delete-unique-offset", "category": "recovery", "expected": "recover", "risk": "negative line shift" },
+    { "id": "duplicate-anchor-without-context", "category": "recovery", "expected": "refuse", "risk": "wrong duplicate landing" },
+    { "id": "mixed-anchor-offsets", "category": "recovery", "expected": "refuse", "risk": "partial remap" },
+    { "id": "changed-anchor", "category": "recovery", "expected": "refuse", "risk": "overwrite newer content" },
+    { "id": "session-chain-unchanged-anchor", "category": "recovery", "expected": "recover", "risk": "older in-session snapshot" },
+    { "id": "session-chain-changed-anchor", "category": "recovery", "expected": "refuse", "risk": "replay corruption" },
+    { "id": "two-sided-boundary-echo", "category": "repair", "expected": "repair", "risk": "duplicated keepers" },
+    { "id": "intended-duplicate-statement", "category": "repair", "expected": "unchanged", "risk": "false repair" },
+    { "id": "one-sided-structural-closer", "category": "repair", "expected": "repair", "risk": "off-by-one closer" },
+    { "id": "jsx-named-closer", "category": "repair", "expected": "repair", "risk": "broken JSX" },
+    { "id": "delimiter-in-string-comment", "category": "repair", "expected": "unchanged", "risk": "naive delimiter count" },
+    { "id": "ambiguous-block-anchor", "category": "block", "expected": "refuse", "risk": "wrong construct" },
+    { "id": "rename-destination-collision", "category": "file_operation", "expected": "refuse", "risk": "overwrite destination" },
+    { "id": "multi-file-mid-commit-failure", "category": "transaction", "expected": "rollback", "risk": "partial mutation" },
+    { "id": "repeated-noop", "category": "diagnostic", "expected": "escalate", "risk": "agent loop" }
+  ]
+}

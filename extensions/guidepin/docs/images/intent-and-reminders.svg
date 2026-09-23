@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="512" viewBox="0 0 640 512" role="img" aria-labelledby="title desc">
+<title id="title">An earlier reminder stays in its original place</title>
+<desc id="desc">An earlier request contains a user message, reminder R1 and subsequent work. The next run retains those items and appends the next user message and reminder R2. Old reminders continue to occupy context. Block widths are schematic, not token counts, and stable placement does not guarantee cache reuse.</desc>
+<defs><style>text{font-family:DejaVu Sans,Arial,sans-serif;fill:#F2F5F7}.kicker{font-size:20px;font-weight:700;letter-spacing:1px;fill:#A5B4C5}.title{font-size:30px;font-weight:700}.label{font-size:24px;font-weight:600}.body{font-size:24px}.note{font-size:22px;fill:#A5B4C5}.retained{fill:#192532;stroke:#A4CDFA;stroke-width:1.5}.added{fill:#1A2926;stroke:#D3ECA6;stroke-width:1.5}.blue{fill:#A4CDFA}.green{fill:#D3ECA6}</style></defs>
+<rect x="1" y="1" width="638" height="510" rx="20" fill="#0E141C" stroke="#2B3A4B"/>
+<path d="M32 44V26h6v6h6v-6h6v6h6v-6h6v18l-6 6v8H38v-8Z" fill="#D3ECA6"/>
+<text x="80" y="48" class="kicker">PROMPT RUNTIME</text>
+<text x="32" y="104" class="title">Keep earlier reminders in place</text>
+<text x="32" y="144" class="note">R1 and R2 are separate reminder messages.</text>
+<text x="32" y="196" class="label">Earlier request</text>
+<rect x="32" y="216" width="96" height="64" rx="8" class="retained"/>
+<rect x="152" y="216" width="96" height="64" rx="8" class="retained"/>
+<rect x="272" y="216" width="96" height="64" rx="8" class="retained"/>
+<text x="80" y="256" text-anchor="middle" class="body blue">User</text><text x="200" y="256" text-anchor="middle" class="label blue">R1</text><text x="320" y="256" text-anchor="middle" class="body blue">Work</text>
+<path d="M32 288v40m120-40v40m120-40v40m96-40v40" stroke="#2B3A4B" stroke-dasharray="4 4"/>
+<text x="32" y="320" class="note">Same earlier items</text>
+<text x="392" y="320" class="note">Next run adds</text>
+<rect x="32" y="344" width="96" height="64" rx="8" class="retained"/>
+<rect x="152" y="344" width="96" height="64" rx="8" class="retained"/>
+<rect x="272" y="344" width="96" height="64" rx="8" class="retained"/>
+<rect x="392" y="344" width="96" height="64" rx="8" class="added"/>
+<rect x="512" y="344" width="96" height="64" rx="8" class="added"/>
+<text x="80" y="384" text-anchor="middle" class="body blue">User</text><text x="200" y="384" text-anchor="middle" class="label blue">R1</text><text x="320" y="384" text-anchor="middle" class="body blue">Work</text><text x="440" y="384" text-anchor="middle" class="body green">User</text><text x="560" y="384" text-anchor="middle" class="label green">R2</text>
+<path d="M32 440h576" stroke="#2B3A4B"/>
+<text x="32" y="477" class="note">The trade-off: old reminders still occupy context.</text>
+</svg>

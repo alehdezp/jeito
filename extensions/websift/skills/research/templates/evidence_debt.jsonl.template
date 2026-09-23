@@ -1,0 +1,1 @@
+{"debt_id":"D001","draft_claim":"Claim the agent wants to make but cannot support yet","needed_evidence":["maintenance history","issue patterns","source inspection"],"status":"unpaid|paid|downgraded","final_answer_action":"do not say this; downgrade or mark uncertain"}

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="236" viewBox="0 0 640 236" role="img" aria-labelledby="title desc">
+  <title id="title">websift</title>
+  <desc id="desc">Research tools for Pi. A document surrounded by connected points identifies the websift extension.</desc>
+  <defs>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; }
+      .connection { fill: none; stroke: #58738F; stroke-width: 2; }
+    </style>
+  </defs>
+  <rect x="1" y="1" width="638" height="234" rx="20" fill="#0E141C" stroke="#2B3A4B" stroke-width="2"/>
+  <g aria-hidden="true">
+    <circle cx="501" cy="118" r="98" fill="#151E29"/>
+    <circle cx="501" cy="118" r="77" fill="none" stroke="#2B3A4B" stroke-width="1.5" stroke-dasharray="3 9"/>
+    <path d="M418 53Q473 41 483 79M589 72Q559 53 540 83M414 177Q448 188 476 156M581 187Q550 196 534 155" class="connection"/>
+    <path d="M418 53Q373 108 414 177M589 72Q624 132 581 187" class="connection"/>
+    <circle cx="418" cy="53" r="7" fill="#A4CDFA"/>
+    <circle cx="589" cy="72" r="7" fill="#D3ECA6"/>
+    <circle cx="414" cy="177" r="7" fill="#D3ECA6"/>
+    <circle cx="581" cy="187" r="7" fill="#A4CDFA"/>
+    <path d="M463 65H521L545 89V171H463Z" fill="#192532" stroke="#A4CDFA" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M521 65V89H545" fill="none" stroke="#A4CDFA" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M479 106H528M479 122H520M479 154H515" fill="none" stroke="#A5B4C5" stroke-width="4" stroke-linecap="round"/>
+    <path d="M479 138H528" fill="none" stroke="#D3ECA6" stroke-width="4" stroke-linecap="round"/>
+    <path d="M32 51V33H38V39H44V33H50V39H56V33H62V51L56 57V66H38V57Z" fill="#D3ECA6"/>
+  </g>
+  <text x="78" y="57" font-size="24" font-weight="700" letter-spacing="2" fill="#A5B4C5">PI EXTENSION</text>
+  <text x="30" y="144" font-size="76" font-weight="700" letter-spacing="-2" fill="#F2F5F7">websift</text>
+  <text x="34" y="195" font-size="26" fill="#A4CDFA">Research tools for Pi</text>
+</svg>

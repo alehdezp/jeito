@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="688" viewBox="0 0 640 688" role="img" aria-labelledby="title desc">
+<title id="title">Keep drafting out of the working conversation</title>
+<desc id="desc">The working conversation supplies context to a separate drafting exchange containing a candidate and the user's revision feedback. Acceptance returns an unsent editor draft. Sending that draft is the action that adds a new request to the working conversation. Rejected candidates and feedback are not added there.</desc>
+<defs><style>text{font-family:DejaVu Sans,Arial,sans-serif;fill:#F2F5F7}.kicker{font-size:20px;font-weight:700;letter-spacing:1px;fill:#A5B4C5}.title{font-size:30px;font-weight:700}.label{font-size:24px;font-weight:600}.body{font-size:24px}.note{font-size:22px;fill:#A5B4C5}.panel{fill:#151E29;stroke:#2B3A4B;stroke-width:1.5}.added{fill:#1A2926;stroke:#D3ECA6;stroke-width:1.5}.line{fill:none;stroke:#A5B4C5;stroke-width:2}.blue{fill:#A4CDFA}.green{fill:#D3ECA6}</style><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L8 5 1 9" fill="none" stroke="#A5B4C5" stroke-width="1.5"/></marker></defs>
+<rect x="1" y="1" width="638" height="686" rx="20" fill="#0E141C" stroke="#2B3A4B"/>
+<path d="M32 44V26h6v6h6v-6h6v6h6v-6h6v18l-6 6v8H38v-8Z" fill="#D3ECA6"/>
+<text x="80" y="48" class="kicker">PROMPT SIDEQUEST</text>
+<text x="32" y="104" class="title">Draft outside the working session</text>
+<text x="32" y="144" class="note">Revision feedback stays in the drafting exchange.</text>
+<text x="32" y="192" class="label">Working session</text>
+<text x="352" y="192" class="label">Drafting exchange</text>
+<rect x="32" y="216" width="248" height="258" rx="12" class="panel"/>
+<text x="56" y="260" class="body blue">Task history</text>
+<path d="M56 288h200m-200 24h164m-164 40h200m-200 24h140" stroke="#A4CDFA" stroke-width="5" stroke-linecap="round"/>
+<text x="56" y="420" class="note">No draft revisions</text><text x="56" y="448" class="note">added here</text>
+<rect x="352" y="216" width="256" height="258" rx="12" class="panel"/>
+<text x="376" y="260" class="body">Context + draft</text>
+<path d="M288 244h56" class="line" marker-end="url(#arrow)"/>
+<text x="376" y="318" class="body">Candidate</text>
+<path d="M376 339h160m-160 16h128" stroke="#72859B" stroke-width="4" stroke-linecap="round"/>
+<text x="376" y="411" class="body">Your feedback</text>
+<path d="M548 422h36V302h-28" class="line" marker-end="url(#arrow)"/>
+<path d="M480 482v58" class="line" marker-end="url(#arrow)"/>
+<text x="502" y="520" class="note">Accept</text>
+<rect x="352" y="550" width="256" height="74" rx="8" class="added"/>
+<text x="480" y="580" text-anchor="middle" class="body green">Editor</text><text x="480" y="608" text-anchor="middle" class="note">Unsent draft</text>
+<rect x="32" y="550" width="248" height="74" rx="8" class="added"/>
+<text x="156" y="596" text-anchor="middle" class="body green">New request</text>
+<path d="M344 596h-56" class="line" marker-end="url(#arrow)"/>
+<text x="316" y="577" text-anchor="middle" class="note">Send</text>
+<text x="32" y="664" class="note">Accepting a rewrite does not submit the request.</text>
+</svg>

@@ -1,0 +1,1 @@
+{"claim_id":"C001","claim":"Atomic claim text","status":"lead|candidate|evidence-eligible|verified|weak|contradicted|unknown|stale-risk","evidence_ids":["E001"],"warrant_ids":["W001"],"freshness_status":"ok|stale-risk|unknown","contradiction_status":"none-found|unresolved|contradicted","final_action":"use|narrow|mark_uncertain|remove|needs_inspection"}

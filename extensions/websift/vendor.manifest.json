@@ -1,0 +1,71 @@
+{
+  "$comment": "Upstream sources vendored (gitignored) into vendor/ for inspection and evolution. Reproduce with `npm run vendor:fetch`. END USERS installing the extension never need vendor/ — runtime dependencies come from package.json via npm. role: 'port' = we copy code from this source; 'reference' = we inspect it to derive an adapter while the runtime uses the vendor's npm SDK (a real dependency). First-party jeito code (serper-search, skillsmp-search) is NOT vendored — it is absorbed from the sibling extensions. Refs are best-known tags/branches; vendor:fetch prints the resolved commit SHA, which must be recorded in docs/upstreams/<name>.md so the snapshot is auditable.",
+  "vendorDir": "vendor",
+  "sources": [
+    {
+      "name": "pi-web-access",
+      "package": "pi-web-access",
+      "version": "0.13.0",
+      "repo": "https://github.com/nicobailon/pi-web-access",
+      "ref": "v0.13.0",
+      "role": "port",
+      "mappedPaths": ["extract.ts", "storage.ts", "fetch-params.ts", "utils.ts", "github-extract.ts", "pdf-extract.ts", "youtube-extract.ts", "video-extract.ts", "rsc-extract.ts"]
+    },
+    {
+      "name": "pi-tavily",
+      "package": "@weihan28/pi-tavily",
+      "version": "1.0.2",
+      "repo": "https://github.com/weihan28/pi-tavily",
+      "ref": "v1.0.2",
+      "role": "reference",
+      "mappedPaths": ["src/"]
+    },
+    {
+      "name": "pi-exa",
+      "package": "@capyup/pi-exa",
+      "version": "0.5.1",
+      "repo": "https://github.com/capyup/pi-exa",
+      "ref": "v0.5.1",
+      "role": "reference",
+      "mappedPaths": ["src/"]
+    },
+    {
+      "name": "pi-linkup",
+      "package": "@aliou/pi-linkup",
+      "version": "0.11.0",
+      "repo": "https://github.com/aliou/pi-linkup",
+      "ref": "v0.11.0",
+      "role": "reference",
+      "mappedPaths": ["src/"]
+    },
+    {
+      "name": "pi-lab-xsearch",
+      "package": "@pi-lab/xsearch",
+      "version": "1.0.3",
+      "repo": "https://github.com/anthod0/pi-lab",
+      "ref": "main",
+      "subpath": "packages/xsearch",
+      "role": "reference",
+      "mappedPaths": ["packages/xsearch/"]
+    },
+    {
+      "name": "pi-context7",
+      "package": "@dreki-gg/pi-context7",
+      "version": "0.2.0",
+      "repo": "https://github.com/dreki-gg/pi-extensions",
+      "ref": "@dreki-gg/pi-context7@0.2.0",
+      "subpath": "packages/context7",
+      "role": "reference",
+      "mappedPaths": ["packages/context7/"]
+    },
+    {
+      "name": "pi-package-search",
+      "package": "pi-package-search",
+      "version": "0.1.1",
+      "repo": "https://github.com/forjd/pi-package-search",
+      "ref": "main",
+      "role": "reference",
+      "mappedPaths": ["."]
+    }
+  ]
+}

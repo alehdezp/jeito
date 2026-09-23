@@ -1,0 +1,51 @@
+{
+  "name": "@alehdezp/tooltap",
+  "version": "0.6.2",
+  "description": "One cache-safe tools control with model-epoch rebasing across native, direct, and gateway Pi routes.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "pi-package",
+    "pi-extension",
+    "tool-gateway",
+    "tool-surface",
+    "dynamic-tool-loading"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "pi": {
+    "extensions": [
+      "./extensions/index.ts"
+    ]
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": ">=0.84.2"
+  },
+  "dependencies": {
+    "typebox": "^1.1.24",
+    "yaml": "^2.9.0"
+  },
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "^0.84.2",
+    "tsx": "^4.22.4",
+    "typescript": "^5.7.3"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit --module NodeNext --moduleResolution NodeNext --target ES2022 --strict --skipLibCheck extensions/index.ts",
+    "test": "PI_CODING_AGENT_DIR=$PWD/fixtures/test-agent tsx test-harness.ts && node --test patches/runtime-api.test.mjs",
+    "pack:dry": "npm pack --dry-run",
+    "verify": "npm run typecheck && npm test && npm run pack:dry"
+  },
+  "files": [
+    "extensions/index.ts",
+    "patches/*.mjs",
+    "fixtures/test-agent/tool.yaml",
+    "docs/**/*.md",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "test-harness.ts"
+  ]
+}

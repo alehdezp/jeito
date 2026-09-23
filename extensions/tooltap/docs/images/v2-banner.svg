@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="260" viewBox="0 0 1200 260" role="img" aria-labelledby="bt dd">
+<title id="bt">tooltap banner</title>
+<desc id="dd">tooltap banner: the name in large type over the tagline "Load tools when they matter: cache-safe, on-demand tool loading.", with a mint packet sliding through four door portals on the right. Loops automatically.</desc>
+<style>
+.slidex { animation: slideRight 3.4s linear infinite; }
+@keyframes slideRight { from { transform: translateX(0); } to { transform: translateX(212px); } }
+.pulse { animation: pulseA 2.2s ease-in-out infinite; }
+@keyframes pulseA { 0%,100% { opacity: .45; } 50% { opacity: 1; } }
+</style>
+<pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#ffffff" fill-opacity="0.05"/></pattern>
+<rect width="1200" height="260" rx="14" fill="#202725"/>
+<rect width="1200" height="260" rx="14" fill="url(#dots)"/>
+<rect x="8" y="8" width="1184" height="244" rx="10" fill="none" stroke="#3a4541" stroke-width="1.5"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="48" y="70" fill="#5c6863" font-size="13" letter-spacing="3">pi extension</text>
+<text x="48" y="150" fill="#f4f1e9" font-size="46" font-weight="700" letter-spacing="-0.5">tooltap</text>
+<rect x="48" y="172" width="148" height="4" rx="2" fill="#80d5bd"/>
+<text x="48" y="212" fill="#c1ccc6" font-size="17">Load tools when they matter: cache-safe, on-demand tool loading.</text>
+<g>
+<rect x="800" y="70" width="46" height="112" rx="8" fill="#171d1f" stroke="#3a4541" stroke-width="2"/>
+<circle cx="836" cy="126" r="4" fill="#5c6863"/>
+<rect x="866" y="70" width="46" height="112" rx="8" fill="#171d1f" stroke="#80d5bd" stroke-width="2"/>
+<circle cx="902" cy="126" r="4" fill="#80d5bd"/>
+<rect x="932" y="70" width="46" height="112" rx="8" fill="#171d1f" stroke="#3a4541" stroke-width="2"/>
+<circle cx="968" cy="126" r="4" fill="#5c6863"/>
+<rect x="998" y="70" width="46" height="112" rx="8" fill="#171d1f" stroke="#3a4541" stroke-width="2"/>
+<circle cx="1034" cy="126" r="4" fill="#5c6863"/>
+<rect class="slidex" x="812" y="113" width="26" height="26" rx="5" fill="#80d5bd"/>
+<circle class="pulse" cx="1092" cy="126" r="14" fill="none" stroke="#80d5bd" stroke-width="3"/>
+<path d="M1086 126 l4.5 5 l9 -10" fill="none" stroke="#80d5bd" stroke-width="2.5" stroke-linecap="round"/>
+</g>
+</g>
+</svg>

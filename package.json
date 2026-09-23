@@ -1,0 +1,50 @@
+{
+  "name": "@alehdezp/jeito",
+  "version": "0.1.0",
+  "description": "jeito: an evidence-first, Git-distributed Pi extension suite for navigation, mutation, shell, web retrieval, and cache-safe tool access.",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "extensions/*"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "pi-package",
+    "pi-extension"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": ">=0.87.1"
+  },
+  "devDependencies": {
+    "@earendil-works/pi-coding-agent": "^0.87.1"
+  },
+  "pi": {
+    "extensions": [
+      "./extensions/shell/index.ts",
+      "./extensions/tooltap/extensions/index.ts",
+      "./extensions/draft-lift/index.ts",
+      "./extensions/guidepin/index.ts",
+      "./extensions/websift/index.ts",
+      "./extensions/codeweave-pi/index.ts",
+      "./extensions/fff-search/index.ts",
+      "./extensions/stall-guard/index.ts"
+    ],
+    "skills": [
+      "./.agents/skills/jeito-setup",
+      "./.agents/skills/subagent-mastery",
+      "./extensions/*/skills"
+    ]
+  },
+  "scripts": {
+    "install:codeweave-pi": "node extensions/codeweave-pi/scripts/install-from-checkout.mjs",
+    "test": "npm run test:installation && npm run test:ui && npm run test:cache-prefix && npm test --workspaces --if-present",
+    "test:installation": "node --test tests/pi-installation-contract.test.mjs tests/pi-resource-contract.test.mjs tests/codeweave-pi-checkout-install.test.mjs",
+    "test:ui": "node --experimental-strip-types --test tests/jeito-density-matrix.test.mjs",
+    "test:cache-prefix": "node --experimental-strip-types --test tests/tooltap-prompt-prefix.test.mjs tests/tooltap-native-runtime.test.mjs",
+    "ui:gallery": "node --experimental-strip-types tests/jeito-ui-gallery.mjs",
+    "verify": "npm run test:ui && npm run test:cache-prefix && npm run verify --workspace @alehdezp/tooltap && npm run test --workspace @alehdezp/guidepin && npm run test --workspace @alehdezp/websift && npm run test --workspace @alehdezp/context-diagnostics && npm run check --workspace @alehdezp/draft-lift && npm run test --workspace @alehdezp/draft-lift && npm run validate:inner --workspace @alehdezp/codeweave-pi && npm run check --workspace @alehdezp/fff-search && npm run typecheck --workspace @alehdezp/stall-guard && npm run test --workspace @alehdezp/stall-guard"
+  }
+}

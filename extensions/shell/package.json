@@ -1,0 +1,31 @@
+{
+  "name": "@alehdezp/jeito-shell",
+  "version": "0.1.0",
+  "description": "jeito Shell: LeanCTX-compressed Bash commands, reusable scripts, and background job control for Pi.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "pi-package",
+    "pi-extension"
+  ],
+  "engines": {
+    "node": ">=22.19.0"
+  },
+  "dependencies": {
+    "@earendil-works/pi-tui": "0.82.1"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": ">=0.82.1"
+  },
+  "pi": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "scripts": {
+    "postinstall": "node scripts/install-lean-ctx.mjs",
+    "setup:lean-ctx": "node scripts/install-lean-ctx.mjs",
+    "test": "node --experimental-strip-types --test index.test.mjs install-lean-ctx.test.mjs"
+  }
+}
