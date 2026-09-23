@@ -1,11 +1,11 @@
 // Rebuild the README animation on macOS:
-// swift docs/images/render-jeito-hero.swift docs/images/jeito-hero.gif
-// The first frame contains the whole explanation; motion only follows the proof path.
+// swift docs/images/render-jeito-hero.swift docs/images/jeito-system-hero.gif
+// The first frame contains the whole explanation; motion follows an illustrative loop.
 import AppKit
 import ImageIO
 import UniformTypeIdentifiers
 
-let output = CommandLine.arguments.count > 1 ? CommandLine.arguments[1] : "docs/images/jeito-hero.gif"
+let output = CommandLine.arguments.count > 1 ? CommandLine.arguments[1] : "docs/images/jeito-system-hero.gif"
 let width = 1200
 let height = 420
 let frameCount = 32

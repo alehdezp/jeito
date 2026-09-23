@@ -1,6 +1,6 @@
 # jeito
 
-![Animated illustration of jeito's working loop. Understand the task and its constraints; choose among code, documentation, web and relationship evidence; inspect a bounded reply with omissions visible; act with a guarded edit and a check. All stages stay readable when paused. The path is illustrative, not a required tool sequence.](docs/images/jeito-hero.gif?v=system-loop-1)
+![Animated illustration of jeito's working loop. Understand the task and its constraints; choose among code, documentation, web and relationship evidence; inspect a bounded reply with omissions visible; act with a guarded edit and a check. All stages stay readable when paused. The path is illustrative, not a required tool sequence.](docs/images/jeito-system-hero.gif)
 
 jeito is the [Pi coding agent](https://pi.dev/) harness I built to make the agent's next step answerable to the task and the available evidence. An agent can make a perfectly precise edit in the wrong subsystem, or follow an outdated plan because it never checked the current repository. The versioned [working instructions](config/APPEND_SYSTEM.md) ask it to understand the intended outcome, test its own framing and distinguish what it observed from what it inferred. The extensions give it ways to do that work. Instructions alone do not prove that a model will follow them.
 
