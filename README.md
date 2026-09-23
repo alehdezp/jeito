@@ -18,16 +18,14 @@ The same judgment extends beyond repository search. [tooltap](extensions/tooltap
 
 Each extension owns a different decision boundary. The smaller ones stay small where a separate control is clearer than another general-purpose agent tool.
 
-| Extension | Why it belongs in jeito |
-|---|---|
-| [codeweave-pi](extensions/codeweave-pi/README.md) | Helps the agent discover an implementation owner and its written contract, then keeps a prepared lead separate from current source that can authorize a change. |
-| [tooltap](extensions/tooltap/README.md) | Makes additional capabilities available when relevant without paying for every tool definition at the start or rewriting the earlier prompt merely to enable one. Discovery does not itself grant execution permission. |
-| [shell](extensions/shell/README.md) | Lets the agent continue independent work while a slow command runs, with a captured result to inspect later instead of killing the process or filling the conversation with its log. Exact output needs raw capture. |
-| [websift](extensions/websift/README.md) | Lets outside research begin with a narrow result while retaining extracted source for checking a claim or reading beyond the excerpt. A search hit or provider answer remains distinct from fetched evidence. |
-| [guidepin](extensions/guidepin/README.md) | Keeps the task's working principles visible through append-only reminders and supplies goal guidance for persistent work. A reminder does not assign a new task; the skill's records do not override the user. |
-| [draft-lift](extensions/draft-lift/README.md) | Gives the person a separate place to refine an unsent request using conversation context, then compare it before submitting. Rejected drafts do not become instructions to the coding agent. |
-| [fff search](extensions/fff-search/README.md) | Helps the person choose an explicit `@file` path in the editor before the agent has to infer one. It changes completion, not the agent's model-facing tool set. |
-| [stall-guard](extensions/stall-guard/README.md) | Recovers from a separately watchdog-tagged stalled provider turn only after Pi settles and the tagged failure is still newest. It will not override a user abort or newer work. |
+- [codeweave-pi](extensions/codeweave-pi/README.md): Helps the agent discover an implementation owner and its written contract, then keeps a prepared lead separate from current source that can authorize a change.
+- [tooltap](extensions/tooltap/README.md): Makes additional capabilities available when relevant without paying for every tool definition at the start or rewriting the earlier prompt merely to enable one. Discovery does not itself grant execution permission.
+- [shell](extensions/shell/README.md): Lets the agent continue independent work while a slow command runs, with a captured result to inspect later instead of killing the process or filling the conversation with its log. Exact output needs raw capture.
+- [websift](extensions/websift/README.md): Lets outside research begin with a narrow result while retaining extracted source for checking a claim or reading beyond the excerpt. A search hit or provider answer remains distinct from fetched evidence.
+- [guidepin](extensions/guidepin/README.md): Keeps the task's working principles visible through append-only reminders and supplies goal guidance for persistent work. A reminder does not assign a new task; the skill's records do not override the user.
+- [draft-lift](extensions/draft-lift/README.md): Gives the person a separate place to refine an unsent request using conversation context, then compare it before submitting. Rejected drafts do not become instructions to the coding agent.
+- [fff search](extensions/fff-search/README.md): Helps the person choose an explicit `@file` path in the editor before the agent has to infer one. It changes completion, not the agent's model-facing tool set.
+- [stall-guard](extensions/stall-guard/README.md): Recovers from a separately watchdog-tagged stalled provider turn only after Pi settles and the tagged failure is still newest. It will not override a user abort or newer work.
 
 [context diagnostics](extensions/context-diagnostics/README.md) is a **standalone, opt-in development package**, not part of the aggregate. It can show what Pi assembled when debugging a missing instruction or tool, but its captures may contain private material and cannot prove the final provider request.
 
