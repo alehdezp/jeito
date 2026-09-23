@@ -1,32 +1,30 @@
 # jeito
 
-jeito is a [Pi coding agent](https://pi.dev/) harness built by treating instructions, context and tool interfaces as connected engineering work. The versioned instructions keep the user's requested outcome and unresolved questions in view. The extensions let the agent draw on repository, research and execution evidence as the task develops, at the depth the next decision calls for.
+jeito is a [Pi coding agent](https://pi.dev/) harness I built around the engineering decisions that happen between a user's request and a code change. A system prompt can ask an agent to respect the user's goal, and retrieval can give it relevant text. The harness also has to let the agent challenge an early assumption, inspect what a short reply omitted and distinguish evidence from a plausible guess. I designed its instructions, context delivery and tool boundaries together so the agent can keep reasoning as the task changes.
 
-A recurring design choice is reversible reduction: optional capability can arrive later; a short command reply leaves the full log to inspect; a focused passage keeps the underlying source within reach. Each saves room in the working conversation without making the omitted material disappear. When a caller, a written contract or a change in source could alter the implementation, another inquiry is worth the time and context. Focused tests exercise individual delivery and safety contracts; improved agent decisions remain unmeasured.
+I chose to remove routine volume only where the detail remains recoverable. Optional capability can arrive later, a short command reply leaves its full log intact, and a focused passage keeps a path to the source. Loading everything at once spends context before relevance is known; unconditional summaries can conceal the condition that changes a decision. The hoped-for benefit is fewer unsupported implementation choices and a codebase that remains easier to work on later. Focused tests verify individual contracts; improved agent decisions, speed and code quality have not been measured.
 
 This is a source-only work in progress that I use in my own setup, not a supported release. The public tree omits prebuilt native components and codeweave-pi's production Core payload; a clean-machine full-suite install has not been proven. [Documentation](docs/README.md) · [Installation notes](docs/getting-started.md) · [Distribution gaps](docs/publication-readiness.md).
 
 ![Animated jeito diagram: understand the task, choose relevant evidence, inspect its limits, then act and check. The sequence is illustrative.](docs/images/jeito-system-hero.gif)
 
-## What each part contributes
+## The choices behind the extensions
 
-| Extension (read more) | Contribution to the harness |
+| Extension (read more) | Engineering reason and intended benefit |
 | --- | --- |
-| [codeweave-pi](extensions/codeweave-pi/README.md) | Brings implementation, relationships, written contracts and current source into the same investigation at different depths. Prepared evidence carries its limits; edits answer to source the agent has seen. |
-| [tooltap](extensions/tooltap/README.md) | Lets an installation grow without putting every optional capability into the starting conversation. Late delivery preserves earlier messages, and discoverability remains separate from permission to run. |
-| [shell](extensions/shell/README.md) | Separates command lifetime from the agent's wait. Full results remain recoverable after a short reply, so independent work can continue while dependent work waits. |
-| [websift](extensions/websift/README.md) | Keeps research claims connected to saved, inspectable source and makes focused passages available later. A generated answer stays distinct from the page that could support it. |
-| [guidepin](extensions/guidepin/README.md) | Carries the task's governing intent and decisions across turns for reassessment. A reminder cannot create a new task or override the user. |
-| [draft-lift](extensions/draft-lift/README.md) | Gives the user an unsent place to refine the request against prior context, then decide which version the coding agent receives. |
-| [fff search](extensions/fff-search/README.md) | Lets a person bring path knowledge into the request from the editor. The selected file remains a clue to investigate, not a verdict on ownership. |
-| [stall-guard](extensions/stall-guard/README.md) | Allows guarded continuation after Pi settles from a separately tagged stall. Newer activity and deliberate aborts stay protected. |
-| [context diagnostics](extensions/context-diagnostics/README.md) (standalone) | Captures Pi-assembled context for opt-in diagnosis. The snapshot can be sensitive and does not establish the final provider request. |
+| [codeweave-pi](extensions/codeweave-pi/README.md) | A file hit leaves too much reconstruction to the agent. Connected implementation and written intent can help it decide what to investigate next, while current source remains available to challenge an indexed lead. |
+| [tooltap](extensions/tooltap/README.md) | A growing installation need not spend the first turn describing every optional capability. Later delivery preserves the prior conversation and the user's permission choices. |
+| [shell](extensions/shell/README.md) | The agent's wait and the command's lifetime serve different purposes. Independent work can continue, with the complete output available when the result matters. |
+| [websift](extensions/websift/README.md) | A research conclusion should remain answerable to its source. Saved pages and focused passages support follow-up without treating generated prose as evidence. |
+| [guidepin](extensions/guidepin/README.md) | The reason for a task should survive changes to its plan. Reminders retain governing intent for reassessment without becoming new instructions from the user. |
+| [draft-lift](extensions/draft-lift/README.md) | The person should choose the request the agent receives. An unsent revision avoids carrying discarded phrasings into the coding conversation. |
+| [fff search](extensions/fff-search/README.md) | Human knowledge of a relevant path is worth using directly. It narrows the search without claiming that the chosen file owns the change. |
+| [stall-guard](extensions/stall-guard/README.md) | Transport failure and a deliberate stop need different responses. Recovery is limited to a watchdog-tagged stall after Pi settles, with newer work protected. |
+| [context diagnostics](extensions/context-diagnostics/README.md) (standalone) | When behavior disagrees with the intended instructions, inspect what Pi assembled before changing the prompt. The opt-in snapshot is sensitive and cannot prove the final provider request. |
 
-## How the working context is assembled
+## What the instructions can and cannot enforce
 
-The [working instructions](config/APPEND_SYSTEM.md) ask the agent to identify which uncertainty could change its next action. The harness gives that instruction substance in the evidence it returns: code and document results are scoped and continuable, exact source can be read in chosen slices, and a search that cannot fit every requested occurrence fails as an audit. Complete displayed lines can be checked against the current file before an edit; unseen or changed lines cannot be supplied by a promising search result. Optional capabilities and long command output need not occupy the conversation before they matter.
-
-These constraints leave the agent able to pursue an unexpected connection or a conflicting contract. Speed and context cost matter when they help that work; an extra question is justified when its answer could change the implementation. Focused checks exercise the delivery and edit boundaries, while choosing the right question remains the agent's responsibility.
+The [working instructions](config/APPEND_SYSTEM.md) ask the agent to identify the user's outcome, distinguish observation from inference and seek the evidence that could change its next action. The implementation makes narrower guarantees: a bounded result reports meaningful omissions, an exhaustive audit cannot silently turn into a ranked sample, fuller evidence remains reachable, and an edit must answer to source the agent actually saw. These are constraints on what the harness may claim and change. They do not make the agent choose the right question; spending another turn to check a contract can still be the responsible path.
 
 ## Trying jeito
 
