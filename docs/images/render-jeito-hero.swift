@@ -53,10 +53,10 @@ func label(_ value: String, _ x: CGFloat, _ y: CGFloat, size: CGFloat,
 }
 
 let rows: [(name: String, action: String, proof: String)] = [
-    ("explore", "find the likely owner", "lead"),
-    ("read", "inspect current lines", "[path#hash]"),
-    ("edit", "change only seen lines", "stale? stop"),
-    ("check", "run the affected test", "receipt")
+    ("understand", "task + constraints", "intent"),
+    ("choose", "code, docs, web, relations", "right source"),
+    ("inspect", "bounded evidence + gaps", "omissions"),
+    ("act", "guarded edit + checks", "receipt")
 ]
 
 let destinationURL = URL(fileURLWithPath: output)
@@ -93,18 +93,18 @@ for frame in 0..<frameCount {
     rectangle(0, 0, 1200, 5, fill: mint)
     segment(430, 28, 430, 392, stroke: color(0x40655A), lineWidth: 1)
 
-    label("PI CODING AGENT  /  SOURCE VIEW", 48, 35, size: 15,
+    label("PI CODING AGENT  /  WORKING CONTEXT", 48, 35, size: 15,
           weight: .semibold, color: mint, mono: true, maxWidth: 348)
     label("jeito", 42, 86, size: 94, weight: .bold, maxWidth: 355)
     rectangle(48, 214, 68, 5, fill: mint, radius: 2)
     label("A coding harness", 48, 242, size: 29, weight: .semibold, maxWidth: 360)
     label("built to show its work.", 48, 278, size: 29, weight: .semibold, maxWidth: 368)
-    label("A search hit is a lead.", 48, 348, size: 18, color: muted, maxWidth: 348)
-    label("The file is the authority.", 48, 374, size: 18, color: muted, maxWidth: 348)
+    label("Context for the next decision.", 48, 348, size: 18, color: muted, maxWidth: 348)
+    label("Omissions stay visible.", 48, 374, size: 18, color: muted, maxWidth: 348)
 
-    label("FROM CLAIM TO EVIDENCE", 478, 36, size: 16, weight: .bold,
+    label("UNDERSTAND BEFORE ACTING", 478, 36, size: 16, weight: .bold,
           color: mint, mono: true, maxWidth: 400)
-    label("illustrative sequence", 979, 37, size: 15, color: muted, maxWidth: 185)
+    label("illustrative loop", 979, 37, size: 15, color: muted, maxWidth: 185)
     segment(502, 103, 502, 335, stroke: color(0x3B5D52), lineWidth: 3)
 
     let active = frame / 8
