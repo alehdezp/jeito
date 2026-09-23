@@ -1,59 +1,35 @@
 # codeweave-pi
 
-codeweave-pi gives Pi an evidence-first way to understand and change a local project. Its distinctive idea is that prepared intelligence and exact source proof are different capabilities: graphs and ranked retrieval locate the right boundary, while current bytes and hashes authorize safe mutation. The agent can move from architecture to a precise edit without pretending a search hit is source authority.
+![Animated codeweave-pi evidence handoff. A prepared relationship graph points to a candidate file, which is explicitly not edit authority. A live source read supplies complete displayed lines and a hash; the edit gate accepts seen current lines and refuses unsafe ones. The whole diagram remains legible when paused.](docs/images/codeweave-hero.gif)
 
-## What it provides
+A code graph can suggest which function owns a behavior before you know its name. It can also be incomplete or behind the current file. A document may record the intended contract without proving what this checkout implements. codeweave-pi puts those kinds of evidence in the same agent's reach while keeping their authority different. The banner is a schematic handoff, not a captured run: the amber candidate has to become mint current-source proof before the agent can change a line.
 
-| Need | Tools |
-|---|---|
-| Code topology; optional Graphify cross-domain maps | `explore`, `trace` |
-| Project documentation retrieval | `docs_search` |
-| Exact paths, text, symbols, source, and changes | `ls`, `find`, `grep`, `read`, `diff` |
-| Hash/provenance-guided mutation | `edit`, `write` |
-| Scoped diagnostics | `lsp_validate`, `CHECK LSP` in `edit` |
+## Navigation is more than finding a filename
 
-Prepared lanes preserve backend ranks, relationships, generation identity, and omissions. Exact tools query the live tree. Complete current source can become edit authority; stale, clipped, transformed, or locator-only output cannot.
+The [prepared code lane](native/analysis/README.md) indexes identities and typed relationships so `explore` can search for an unfamiliar behavior or traverse the neighborhood of an exact symbol. `trace` asks one narrower question about callers, imports, tests or a graph path. An implementation owner is not established merely because a test or helper has the same name; the returned identity and connections give the agent a way to check that judgment. [Graphify](docs/evidence.md) can add cross-domain maps, but is optional. These lanes report generation, scope and missing relationships rather than manufacturing a complete architecture from one hit.
 
-## Why it is unusual
+Written project decisions have a different home. `docs_search` retrieves QMD-indexed Markdown *sections*, with a ready-to-use current `read` selector, ranking details, a page window and an answerability label. A weak lead is not a negative answer; a score is not a probability that the document is right. When compatible inference is unavailable, lexical retrieval can still return candidates. pi-nav projects current Markdown hierarchy and source into those results; a stale selector is an omission to report, not a reason to present an old paragraph as current. The prepared indexes are maintained outside queries: asking a question does not download a model, build a graph or repair a store.
 
-- **Capability selection, not a fixed route:** use the observation that retires the real uncertainty instead of forcing every task through one search workflow.
-- **Proof-preserving edits:** the edit engine carries current-byte hashes and seen-line provenance through replace/delete/insert operations, stale recovery, file moves, and optional language-server checks.
-- **Local project ownership:** pi-nav handles live source; CodeGraph supplies incremental code relationships and local semantic discovery; QMD handles documentation retrieval. Graphify cross-domain maps are the only optional backend. Queries do not index or repair.
-- **Runtime boundary:** this public source snapshot omits prebuilt pi-nav executables and native modules and does not contain the production Core payload. A publisher-prepared package would carry matching native assets, Core, and its pinned code model; QMD models are provisioned at installation. Python is only for optional Graphify.
+This is an intentional division of labor, not a prescribed `explore → docs_search → read` itinerary. A known line can go straight to `read`; an unknown owner deserves code discovery; a claim about how components meet may need map evidence. Prepared code, authored intent and the live filesystem can disagree. The agent needs that disagreement, not a single blended confidence score. The [navigation doctrine](docs/harness-doctrine.md) explains the choice of evidence by uncertainty rather than by a fixed route.
 
-## Install from a checkout
+## A result should tell you what it did not show
 
-codeweave-pi is pre-release. The Core + QMD path needs Pi, Node 22.19+/npm, Git, prepared matching native/maintenance/model assets and first-install network access. This source snapshot lacks those packaged assets; source and isolated-candidate checks do not prove a fresh installation or cross-machine release. Python 3.10–3.14 with `venv` is only for optional Graphify.
+`grep` has a ranked route for understanding a known symbol or discovering a behavior, and a separate `output:"matches"` route for auditing occurrences. Literal and regex interpretations are explicit; ignored files, incomplete scans, page cursors and zero-result scope remain visible. Its complete model-facing reply is capped at 4,000 reference tokens and may need another page. If an exhaustive audit cannot fit, it does **not** silently become a ranked overview. For matched YAML, JSON and TOML, syntactic key context helps locate the surrounding configuration, but parent keys and nearby siblings do not become seen editable rows just because they were named.
 
-```bash
-git clone git@github.com:alehdezp/jeito.git jeito
-cd jeito
-npm run install:codeweave-pi
-```
+Markdown has a related presentation problem. On the first relevant `read` or `docs_search` exposure, existing YAML frontmatter can carry a document's title, description and authored `code`/`related` references with exact line numbers. A per-file allowance favors those identifying fields over dumping a long header repeatedly; a changed header can be shown again. References are validated as authored relationships, not treated as proof that the code obeys the prose. This applies to documents with available frontmatter; the public GitHub README itself has no YAML header. [The frontmatter implementation](src/core/markdown-frontmatter.ts) and [section-search tests](tests/v3-qmd-docs-search.test.mjs) show the bounded behavior.
 
-For a publisher-prepared checkout, the installer verifies Core, provisions and exercises the roughly 928 MiB QMD model pair, and registers only after success. Missing Core assets fail explicitly; startup never downloads or compiles them. Keep the registered checkout at the same path and restart Pi. Do not also register the aggregate package.
+## From displayed source to a guarded change
 
-Eligible projects use policy-approved automatic Core and QMD preparation. Use `/skill:deep-navigation-onboard` for provider changes or `/skill:navigation-setup` for project overrides and optional Graphify setup. `npm run nav:provision:legacy` prepares the optional Graphify runtime; existing stores are not migrated or adopted.
+An exact `read` can select a symbol, Markdown section, line range or several small slices in one call. It returns numbered current lines under `[path#hash]`. A complete, verbatim row already displayed by `grep`, `explore` or `trace` can also receive that authority after pi-nav checks the current bytes. A locator, clipped row, transformed excerpt or private snapshot cannot. The [source-authority coordinator](src/core/source-authority.ts) certifies only what reached the agent and keeps its full proof payload out of the reply.
 
-For the complete suite from a future immutable Git ref, follow the repository [installation guide](../../docs/getting-started.md).
+The agent then writes a small `edit` program against the displayed hash and original line numbers. It need not reread the same certified rows simply to restate them. TypeScript [prepares and applies](src/core/patch-apply.ts) the transaction, preserving line-ending and seen-row checks while the native lane supplies live source proof. A changed or ambiguous target is held; recovery may carry an unchanged observed row forward, but cannot make an unseen one editable. Each physical file lands atomically, **not** the whole multi-file request: a later failure does not roll back a successful earlier file, and the result names what landed or remains. Optional LSP checking and focused tests answer further questions; a hash alone cannot establish that the proposed change solves the task.
 
-## Status and boundaries
+That handoff is the engineering choice I care about most. Prepared retrieval is valuable because it can identify a boundary the agent did not know to ask for. Exact-source tools are valuable because they stop that helpful lead from turning into silent permission to mutate the wrong bytes. Bounded replies keep the next investigation feasible, provided the omissions and source identities stay visible.
 
-codeweave-pi is pre-release. Earlier native/platform receipts do not establish the new complete Core package. Fresh installation, immutable-ref update/rollback/removal, multi-machine delivery and loaded-runtime acceptance remain unproved. CRG is retired from the source in the current change set — the runtime, adapters, capability entry, and bundled `native/crg` source are being removed — so CRG-era receipts and test counts are historical. [`docs/setup.md`](docs/setup.md) owns the current setup path; [`docs/current-truth.md`](docs/current-truth.md) owns implementation limits; the root [publication-readiness register](../../docs/publication-readiness.md) owns unresolved release gaps.
+## Evidence and installation boundary
 
-## Documentation
+The [read/edit tests](tests/v3-live-source-authority.test.mjs) exercise complete-row certification, unseen-line refusal and stale recovery; [edit-recovery tests](tests/v3-edit-recovery.test.mjs) check changed and ambiguous anchors. The [QMD tests](tests/v3-qmd-docs-search.test.mjs) and [grep budget tests](tests/v3-grep-cap-fallback.test.mjs) check narrower retrieval and coverage contracts. [Current truth](docs/current-truth.md) separates those source and isolated-candidate results from a loaded Pi session, clean-package delivery and agent-behavior evidence. None establishes that agents are more accurate, faster or cheaper because of this extension.
 
-- [`docs/README.md`](docs/README.md) — route any architecture, operation, or contributor question.
-- [`docs/setup.md`](docs/setup.md) — install, onboard, configure, repair, update, and remove.
-- [`docs/tool-operating-reference.md`](docs/tool-operating-reference.md) — complete public tool contract.
-- [`docs/decisions/README.md`](docs/decisions/README.md) — accepted and provisional reasoning.
-- [`AGENTS.md`](AGENTS.md) — codeweave-pi contributor invariants.
-- [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md) — backend provenance and attribution.
+This public source snapshot omits the prebuilt pi-nav executable and native module, the locally adapted vendor tree and the production Core payload with its pinned code model. **A bare clone cannot install the complete codeweave-pi runtime.** A future publisher-prepared checkout needs Pi, Node.js 22.19 or newer, npm, Git and matching Core/native/model assets. That declared Node floor is not proof that a given native build supports its ABI. The `npm run install:codeweave-pi` flow checks prepared assets, provisions and exercises roughly 928 MiB of QMD models with first-install network and disk cost, and registers only after success. Startup does not silently compile or download them. Python 3.10–3.14 with `venv` is only for optional Graphify. Do not register codeweave-pi alongside a second copy or the jeito aggregate.
 
-## Focused verification
-
-```bash
-npm run validate:inner --workspace @alehdezp/codeweave-pi
-```
-
-Use the validation matrix in [`docs/evaluation-workflow.md`](docs/evaluation-workflow.md) for QMD, platform, installed-runtime, or release claims. A local source suite does not prove a managed Git installation or another operating system.
+[Setup](docs/setup.md) owns the development and recovery path; the [tool reference](docs/tool-operating-reference.md) names the actual public calls; [evidence and limits](docs/evidence.md) and the [decision record](docs/decisions/proof-preserving-mutation.md) explain what the source and tests establish. The root [installation guide](../../docs/getting-started.md), [distribution gaps](../../docs/publication-readiness.md) and [third-party notices](THIRD_PARTY_NOTICES.md) complete the picture before anyone treats this as a supported release.
