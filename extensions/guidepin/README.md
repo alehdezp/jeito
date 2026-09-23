@@ -1,15 +1,3 @@
----
-title: "guidepin — persistent partner reminders for jeito"
-description: "Why jeito appends working reminders, what its goal-management skill owns, and the costs of keeping guidance visible."
-tags: [jeito, guidepin, goals, system-prompt, salience]
-created: 2026-07-24
-updated: "2026-09-23 13Z"
-status: pre-release
-owns: "guidepin suite delivery, reminder behavior, and goal-skill boundary"
-audience: contributor
-related: [docs/pi-hooks-and-design.md, skills/goal-management/SKILL.md, THIRD_PARTY_NOTICES.md, ../../config/APPEND_SYSTEM.md]
----
-
 # guidepin
 
 ![guidepin banner: the name over the tagline "Reminders that ride along: append-only guidance for long sessions", with message blocks appearing one after another.](docs/images/v2-banner.svg)

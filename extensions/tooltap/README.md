@@ -1,15 +1,3 @@
----
-title: "tooltap — additional tools without rewriting the starting prompt"
-description: "Discover and enable Pi tools when needed, deliver their complete guidance later, and keep earlier instructions and ordinary declarations stable within a model epoch."
-tags: [jeito, tooltap, tool-loading, cache-stability]
-created: 2026-07-26
-updated: "2026-09-23 12Z"
-status: pre-release
-owns: "The approachable tooltap package entrypoint"
-audience: mixed
-related: [docs/README.md, docs/contract.md, docs/real-world-verification.md]
----
-
 # tooltap
 
 ![tooltap banner: the name over "Load tools when they matter" and a packet crossing four tool-entry doors.](docs/images/v2-banner.svg)

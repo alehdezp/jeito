@@ -1,14 +1,3 @@
----
-title: "Shell: bounded waiting, recoverable command output"
-description: "Run commands without making a slow process block the next decision, and inspect large outputs without losing the underlying log."
-tags: [jeito, shell, bash, jobs, leanctx]
-created: 2026-07-26
-status: pre-release
-owns: "The approachable Shell package entrypoint"
-audience: mixed
-related: [THIRD_PARTY_NOTICES.md]
-updated: "2026-09-23 13Z"
----
 # shell
 
 ![Shell banner: bound the wait and keep the evidence, with independent work overlapping a running command.](docs/images/v2-banner.svg)

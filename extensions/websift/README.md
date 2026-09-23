@@ -1,15 +1,3 @@
----
-title: "websift: research and source inspection for Pi"
-description: "Distinct search methods, focused readings with retained sources, and generated answers that remain separate from checked evidence."
-tags: [jeito, web, retrieval, evidence, search]
-created: 2026-07-27
-updated: "2026-09-23 12Z"
-status: pre-release
-owns: "The approachable websift package entrypoint"
-audience: mixed
-related: [docs/README.md, docs/DESIGN.md, docs/adr/README.md, THIRD_PARTY_NOTICES.md]
----
-
 # websift
 
 ![websift banner: the name over "Read less, keep the rest" with a scan line sweeping a saved page.](docs/images/v2-banner.svg)

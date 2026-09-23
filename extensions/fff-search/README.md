@@ -1,15 +1,3 @@
----
-title: "fff search: file selection in Pi's editor"
-description: "An indexed @file finder for Pi that respects explicit paths and leaves ordinary completion alone."
-tags: [jeito, fff, autocomplete, file-search]
-created: 2026-08-28
-status: pre-release
-owns: "fff search purpose, divergence, installation, and verification"
-audience: mixed
-related: [LICENSE, ../../docs/getting-started.md]
-updated: "2026-09-23 13Z"
----
-
 # fff search
 
 ![fff search banner: indexed @file completion for Pi, with a blinking caret and a highlighted file match.](docs/images/v2-banner.svg)

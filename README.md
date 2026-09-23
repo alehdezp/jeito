@@ -1,15 +1,3 @@
----
-title: "jeito: a coding harness that can show its work"
-description: "Why I built a Pi extension suite around source evidence, careful edits, controlled context and recoverable execution."
-tags: [jeito, pi, extensions, agent-harness]
-created: 2026-07-26
-status: pre-release
-owns: "The public entry point and extension router"
-audience: mixed
-related: [docs/README.md, docs/getting-started.md, CONTRIBUTING.md, SECURITY.md]
-updated: "2026-09-23 16Z"
----
-
 # jeito
 
 ![An animated illustration of jeito's evidence path. explore finds a likely owner; read shows current lines with a source hash; edit accepts only inspected lines; a focused check leaves a receipt. All four steps remain visible when the animation is paused.](docs/images/jeito-hero.gif)

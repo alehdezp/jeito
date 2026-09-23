@@ -1,14 +1,3 @@
----
-title: "Context Diagnostics: inspect what Pi assembled"
-description: "A development-only command for inspecting Pi's prompt, registered tools and messages without mistaking them for the final provider request."
-tags: [jeito, context-diagnostics, privacy, debugging]
-created: 2026-07-26
-status: development-only
-owns: "Context Diagnostics usage, installation, and privacy boundary"
-audience: contributor
-related: [../../SECURITY.md, ../../docs/getting-started.md]
-updated: "2026-09-23 13Z"
----
 # context diagnostics
 
 ![Context Diagnostics banner: see what Pi loaded before blaming the model, with a lens moving across a document.](docs/images/v2-banner.svg)

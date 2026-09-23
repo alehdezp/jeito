@@ -1,15 +1,3 @@
----
-title: "codeweave-pi — evidence and safe mutation for Pi"
-description: "Prepared project navigation, exact live source authority, hash-guided mutation, diagnostics, and extension-owned local runtimes."
-tags: [jeito, codeweave-pi, navigation, evidence, mutation]
-created: 2026-07-25
-updated: "2026-09-23 15Z"
-status: pre-release
-owns: "The approachable codeweave-pi package entrypoint"
-audience: mixed
-related: [docs/README.md, docs/setup.md, docs/current-truth.md, AGENTS.md]
----
-
 # codeweave-pi
 
 codeweave-pi gives Pi an evidence-first way to understand and change a local project. Its distinctive idea is that prepared intelligence and exact source proof are different capabilities: graphs and ranked retrieval locate the right boundary, while current bytes and hashes authorize safe mutation. The agent can move from architecture to a precise edit without pretending a search hit is source authority.

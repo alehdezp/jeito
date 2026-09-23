@@ -1,15 +1,3 @@
----
-title: "draft-lift: review the request before sending it"
-description: "Rewrite a Pi editor draft using the current conversation, compare the candidate and keep rejected revisions out of the task history."
-tags: [jeito, draft-lift, editor, prompt-enhancement]
-created: 2026-07-26
-status: experimental
-owns: "The approachable draft-lift package entrypoint"
-audience: mixed
-related: [docs/architecture.md, docs/decisions.md, docs/cache-parity.md]
-updated: "2026-09-23 13Z"
----
-
 # draft-lift
 
 ![draft-lift banner: rewrite the draft outside the task, compare it with the original, then decide whether to send.](docs/images/v2-banner.svg)

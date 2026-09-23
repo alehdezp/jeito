@@ -1,16 +1,3 @@
----
-title: "stall-guard: resume a session cut off by a stalled provider stream"
-description: "Detects the watchdog-tagged stalled-stream failure and continues the session, bounded at three consecutive resumes that reset on progress."
-tags: [jeito, pi, extension, stall-recovery, provider-resilience, codex]
-created: 2026-09-15
-updated: "2026-09-23 13Z"
-status: active
-owns: "Continuation of runs cut short by a stalled provider stream"
-audience: contributor
-related: [index.ts, ../../docs/recommendations.md]
-code: [index.ts]
----
-
 # stall-guard
 
 ## Why it exists
