@@ -4,7 +4,7 @@ codeweave-pi is designed to reduce the reconstruction involved in understanding 
 
 Editing also depends on what the agent has already seen. Complete source lines displayed during investigation can be reused after a current-file check, so an identical read is unnecessary. Changed observations are refused or recovered only when the observed target stayed the same. Focused tests exercise that connection between evidence and edit; they cannot establish whether agents choose better questions or deliver better code.
 
-![Illustrative codeweave-pi diagram showing one part of the work: prepared relationships suggest a candidate, while a live source view supplies displayed lines for a guarded edit.](docs/images/codeweave-hero.gif)
+![Animated codeweave-pi diagram: the question selects discovery, examination or exact checking; each view keeps scope and omissions visible and deeper source reachable. All labels remain visible when paused.](docs/images/codeweave-context.gif)
 
 ## Let the question determine the evidence
 

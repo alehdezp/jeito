@@ -1,12 +1,12 @@
 // Rebuild the codeweave-pi README GIF on macOS:
-// swift extensions/codeweave-pi/docs/images/render-codeweave-hero.swift extensions/codeweave-pi/docs/images/codeweave-hero.gif
-// Every label remains visible in a paused frame; motion traces the evidence handoff.
+// swift extensions/codeweave-pi/docs/images/render-codeweave-hero.swift extensions/codeweave-pi/docs/images/codeweave-context.gif
+// Labels remain visible when paused; the selected evidence view changes with the question.
 import AppKit
 import ImageIO
 import UniformTypeIdentifiers
 
 let output = CommandLine.arguments.count > 1 ? CommandLine.arguments[1]
-    : "extensions/codeweave-pi/docs/images/codeweave-hero.gif"
+    : "extensions/codeweave-pi/docs/images/codeweave-context.gif"
 let width = 1200
 let height = 420
 let frames = 40
@@ -83,70 +83,50 @@ for frame in 0..<frames {
     box(0, 0, 1200, 5, mint)
     line(430, 28, 430, 392, color(0x40655A))
 
-    text("CODE NAVIGATION  /  SOURCE PROOF", 48, 35, size: 14,
+    text("REPOSITORY CONTEXT  /  ON DEMAND", 48, 35, size: 14,
          weight: .semibold, tint: mint, mono: true, maxWidth: 360)
     text("codeweave-pi", 43, 101, size: 51, weight: .bold, maxWidth: 382)
     box(48, 214, 68, 5, mint, radius: 2)
-    text("Locate the owner.", 48, 242, size: 29, weight: .semibold, maxWidth: 360)
-    text("Earn the edit.", 48, 278, size: 29, weight: .semibold, maxWidth: 360)
-    text("Prepared evidence finds.", 48, 348, size: 18, tint: muted, maxWidth: 348)
-    text("Current bytes authorize.", 48, 374, size: 18, tint: muted, maxWidth: 348)
+    text("Build the next view.", 48, 244, size: 27,
+         weight: .semibold, maxWidth: 360)
+    text("Keep the rest reachable.", 48, 287, size: 20,
+         tint: muted, maxWidth: 355)
+    text("code  ·  docs  ·  source", 48, 365, size: 17,
+         tint: mint, mono: true, maxWidth: 350)
 
-    text("01  PREPARED EVIDENCE", 478, 29, size: 16,
-         weight: .bold, tint: amber, mono: true, maxWidth: 380)
-    text("relationships + docs", 478, 56, size: 17,
-         tint: muted, maxWidth: 310)
-    // A relationship network points to a candidate. It never supplies edit authority.
-    let edges: [(CGFloat, CGFloat, CGFloat, CGFloat)] = [
-        (520, 134, 616, 103), (520, 134, 615, 160),
-        (616, 103, 724, 126), (615, 160, 724, 126)
+    text("THE QUESTION CHANGES THE VIEW", 478, 30, size: 16,
+         weight: .bold, tint: amber, mono: true, maxWidth: 620)
+    let rows: [(String, String, CGFloat)] = [
+        ("DISCOVER", "implementation + relationships", 79),
+        ("EXAMINE", "callers, tests + written contracts", 151),
+        ("CHECK", "exact matches + current source", 223)
     ]
-    for (x,y,xx,yy) in edges { line(x,y,xx,yy,color(0x52665F),width:2) }
-    for (x,y) in [(520.0,134.0),(616.0,103.0),(615.0,160.0),(724.0,126.0)] {
-        circle(x,y,7,color(0x41645A))
-    }
-    let phase = frame / 10
+    // Highlight a different evidence view; the sequence is not a required workflow.
+    let selected = [0, 2, 1, 2][frame / 10]
     let travel = CGFloat(frame % 10) / 9
-    let selectedEdge = edges[min(phase,2)]
-    let px = selectedEdge.0 + (selectedEdge.2-selectedEdge.0)*travel
-    let py = selectedEdge.1 + (selectedEdge.3-selectedEdge.1)*travel
-    if phase < 2 {
-        circle(px,py,12,color(0xF3C57D,0.16))
-        circle(px,py,5,amber)
+    for (index, row) in rows.enumerated() {
+        let (label, detail, y) = row
+        line(465, 187, 491, y + 31, color(0x527467, 0.65), width: 2)
+        box(500, y, 657, 63, color(0x202D2A), radius: 9)
+        box(500, y, 4, 63, selected == index ? mint : color(0x46645A), radius: 2)
+        text(label, 519, y + 15, size: 16, weight: .bold,
+             tint: selected == index ? mint : muted, mono: true, maxWidth: 145)
+        text(detail, 678, y + 13, size: 18,
+             tint: selected == index ? ink : muted, maxWidth: 450)
     }
-    circle(724,126,8,phase >= 1 ? amber : color(0x41645A))
-    line(755, 126, 795, 126, color(0x8C7A5B), width:2)
-    box(803, 86, 354, 102, color(0x202C2A), radius:10)
-    box(803, 86, 4, 102, phase >= 1 ? amber : color(0x54655E), radius:2)
-    text("CANDIDATE  /  not edit authority", 822, 98, size: 16,
-         weight: .semibold, tint: phase >= 1 ? amber : muted,
-         mono:true, maxWidth:320)
-    text("src/tools/edit.ts", 822, 132, size: 22,
-         weight:.semibold, mono:true, maxWidth:310)
-    line(478, 203, 1160, 203, color(0x52665F), width:1)
+    circle(465, 187, 7, amber)
+    let destinationY = rows[selected].2 + 31
+    circle(465 + 27 * travel, 187 + (destinationY - 187) * travel,
+           5, amber)
+    circle(491, destinationY, 5, mint)
 
-    text("02  LIVE SOURCE", 478, 216, size:16, weight:.bold,
-         tint:mint, mono:true, maxWidth:280)
-    text("read the file as it is now", 478, 245, size:18,
-         tint:muted, maxWidth:350)
-    box(480, 283, 393, 90, color(0x1E312B), radius:9)
-    text("complete displayed lines", 498, 297, size:19,
-         weight:.semibold, maxWidth:355)
-    box(498, 335, 163, 27, phase >= 2 ? color(0x376650) : color(0x2A4338), radius:5)
-    text("[path#hash]", 507, 337, size:18, weight:.semibold,
-         tint:phase >= 2 ? mint : muted, mono:true, maxWidth:150)
-    if phase == 2 {
-        box(478, 283, 4, 90, mint, radius:2)
-        box(692 + travel*120, 335, 30, 27, color(0x70E6BF,0.22), radius:6)
-    }
-    line(886, 327, 911, 327, color(0x70E6BF,0.72), width:2)
-    box(919, 283, 238, 90, color(0x263A33), radius:9)
-    text("edit", 937, 295, size:23, weight:.bold, mono:true, maxWidth:190)
-    text("seen + live → apply", 937, 327, size:16,
-         tint:phase == 3 ? mint : muted, mono:true, maxWidth:210)
-    text("unsafe → refuse", 937, 351, size:16,
-         tint:phase == 3 ? amber : muted, mono:true, maxWidth:210)
-    if phase == 3 { box(917, 283, 4, 90, mint, radius:2) }
+    box(500, 318, 657, 78, color(0x1E312B), radius: 9)
+    text("EVIDENCE YOU CAN REVISIT", 519, 329, size: 16,
+         weight: .bold, tint: mint, mono: true, maxWidth: 420)
+    text("Scope + omissions  ·  deeper source stays reachable", 519, 354,
+         size: 17, maxWidth: 615)
+    text("Complete current lines can carry into a checked edit", 519, 377,
+         size: 15, tint: muted, maxWidth: 615)
 
     NSGraphicsContext.restoreGraphicsState()
     guard let image = bitmap.cgImage else { fatalError("Cannot encode GIF") }
