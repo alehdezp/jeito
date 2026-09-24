@@ -1,10 +1,8 @@
 # stall-guard
 
-## Why it exists
+**stall-guard turns a verified transport stall back into progress.** The settled harness behavior leaves a false choice: a watchdog must abort a silent request, but that abort defeats Pi's ordinary retry, so the turn dies and someone has to type `continue`. stall-guard waits until Pi settles and resumes only the watchdog-tagged stall, only while nothing newer exists — a user abort, a reply or a newer turn is never touched.
 
-A provider can stop sending data while Pi is working on a turn. A separate stall watchdog aborts the silent request, but that abort also prevents Pi's ordinary retry from running. The agent goes idle and waits for someone to type `continue`. A stalled connection has now stopped work that the user never asked to stop.
-
-stall-guard waits until Pi has settled and then resumes the tagged turn, provided no one has moved the conversation on. The watchdog marks the failure like this:
+The watchdog marks the failure like this:
 
 ```
 Error: Request was aborted
@@ -14,7 +12,7 @@ Error: Request was aborted
 
 ## How it resumes safely
 
-Pi cannot retry while the abort is active. On `agent_settled`, when no automatic retry, compaction or queued continuation will run, stall-guard checks that the stalled message is still the newest message on the active branch. Only then does it request one continuation. This prevents a late recovery from interrupting a user reply or another turn.
+One continuation is requested only after Pi settles and only while the stalled message is still the newest message on the active branch. This prevents a late recovery from interrupting a user reply or another turn.
 
 Bounds and resets:
 
