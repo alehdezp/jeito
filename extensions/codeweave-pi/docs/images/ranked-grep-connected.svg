@@ -1,51 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="460" viewBox="0 0 1200 460" role="img" aria-labelledby="rt rd">
-<title id="rt">One call returns the connected answer</title>
-<desc id="rd">Mechanism overview of ranked search: one question becomes behavior-ranked declaration cards, and the same bounded reply carries caller, use and documentation edges around them. Documentation arrives labeled as a document lead whose code link is unverified, and a cursor retains the investigation identity. Static labels carry the full explanation.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="rt rd">
+<title id="rt">One call, connected answer</title>
+<desc id="rd">Ranked search shown as one question entering a single bounded reply: the reply holds ranked code with certified source rows, a verified call site, and a document lead whose code link is unverified. A dashed bar shows the cursor that continues the investigation. Labels are complete when the motion is paused.</desc>
 <style>
-.flow { stroke-dasharray: 7 6; animation: rflow 2.6s linear infinite; }
-@keyframes rflow { to { stroke-dashoffset: -26; } }
 .pulse { animation: rpulse 3.4s ease-in-out infinite; }
-@keyframes rpulse { 0%,100% { opacity: .85; } 50% { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .flow, .pulse { animation: none; } }
+@keyframes rpulse { 0%,100% { opacity: .88; } 50% { opacity: 1; } }
+.dash { stroke-dasharray: 7 6; animation: rmove 2.8s linear infinite; }
+@keyframes rmove { to { stroke-dashoffset: -26; } }
+@media (prefers-reduced-motion: reduce) { .pulse, .dash { animation: none; } }
 </style>
 <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#ffffff" fill-opacity="0.05"/></pattern>
-<defs>
-<marker id="rahm" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#70E6BF"/></marker>
-<marker id="raha" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#edc786"/></marker>
-</defs>
-<rect width="1200" height="460" rx="14" fill="#111C1C"/>
-<rect width="1200" height="460" rx="14" fill="url(#dots)"/>
-<rect x="8" y="8" width="1184" height="444" rx="10" fill="none" stroke="#3a4541" stroke-width="1.5"/>
-<g font-family="Arial, Helvetica, sans-serif">
-<text x="48" y="48" fill="#70E6BF" font-size="13" letter-spacing="3">MECHANISM &#183; RANKED SEARCH</text>
-<text x="48" y="90" fill="#EAF4EE" font-size="30" font-weight="700">One call returns the connected answer</text>
-<text x="48" y="120" fill="#A4B9B0" font-size="15">code, relationships and documents in one bounded reply &#8212; stating what was verified and what was omitted.</text>
-<rect x="48" y="160" width="280" height="92" rx="10" fill="#172723" stroke="#3a4541" stroke-width="1.5"/>
-<text x="68" y="190" fill="#5c6863" font-size="12" letter-spacing="2">THE QUESTION</text>
-<text x="68" y="222" fill="#EAF4EE" font-size="18" font-weight="700">&#8220;flush the queue&#8221;</text>
-<text x="68" y="242" fill="#70E6BF" font-size="12.5">auto &#8594; behavior lane</text>
-<rect x="376" y="160" width="320" height="92" rx="10" fill="#25463B" stroke="#70E6BF" stroke-width="2"/>
-<text x="396" y="192" fill="#EAF4EE" font-size="16" font-weight="700">worker.ts:Worker.flush</text>
-<text x="396" y="218" fill="#A4B9B0" font-size="13">rank 1 &#183; symbol and behavior match</text>
-<text x="396" y="240" fill="#70E6BF" font-size="12.5">certified source rows</text>
-<rect x="376" y="272" width="320" height="92" rx="10" fill="#172723" stroke="#3a4541" stroke-width="1.5"/>
-<text x="396" y="304" fill="#EAF4EE" font-size="16" font-weight="700">queue.ts:flushQueue</text>
-<text x="396" y="330" fill="#A4B9B0" font-size="13">rank 2 &#183; calls the target</text>
-<text x="396" y="352" fill="#A4B9B0" font-size="12.5">candidate, not ownership</text>
-<path d="M328 206 L372 206" fill="none" stroke="#70E6BF" stroke-width="2" marker-end="url(#rahm)"/>
-<rect x="744" y="160" width="408" height="72" rx="10" fill="#172723" stroke="#3a4541" stroke-width="1.5"/>
-<text x="766" y="192" fill="#EAF4EE" font-size="14" font-weight="700">callers &#183; scheduler.ts:241</text>
-<text x="766" y="216" fill="#70E6BF" font-size="12.5">source-verified site</text>
-<rect x="744" y="244" width="408" height="72" rx="10" fill="#172723" stroke="#3a4541" stroke-width="1.5"/>
-<text x="766" y="276" fill="#EAF4EE" font-size="14" font-weight="700">uses &#183; retry.ts:88</text>
-<text x="766" y="300" fill="#70E6BF" font-size="12.5">source-verified site</text>
-<rect class="pulse" x="744" y="328" width="408" height="72" rx="10" fill="#172723" stroke="#edc786" stroke-width="2"/>
-<text x="766" y="360" fill="#EAF4EE" font-size="14" font-weight="700">documentation &#183; Retry policy</text>
-<text x="766" y="384" fill="#edc786" font-size="12.5">document lead &#183; code link unverified</text>
-<path class="flow" d="M696 190 L740 190" fill="none" stroke="#70E6BF" stroke-width="2" marker-end="url(#rahm)"/>
-<path class="flow" d="M696 222 L720 222 L720 274 L740 274" fill="none" stroke="#70E6BF" stroke-width="1.5" marker-end="url(#rahm)"/>
-<path d="M696 318 L720 318 L720 358 L740 358" fill="none" stroke="#edc786" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#raha)"/>
-<path d="M48 420 H1152" stroke="#3B5D52" stroke-width="1"/>
-<text x="48" y="446" fill="#A4B9B0" font-size="14">Ranking suggests; source certifies; the reply admits what it omitted.</text>
+<clipPath id="ground"><rect width="1200" height="520" rx="14"/></clipPath>
+<rect width="1200" height="520" rx="14" fill="#111C1C"/>
+<rect width="1200" height="520" rx="14" fill="url(#dots)"/>
+<g clip-path="url(#ground)" font-family="Arial, Helvetica, sans-serif">
+<rect x="0" y="0" width="430" height="520" fill="#172723"/>
+<path d="M430 0 V520" stroke="#3a4541" stroke-width="1.5"/>
+<rect x="14" y="0" width="1172" height="5" rx="2.5" fill="#70E6BF"/>
+<text x="48" y="58" fill="#70E6BF" font-size="13" letter-spacing="3">RANKED SEARCH</text>
+<text x="48" y="122" fill="#EAF4EE" font-size="34" font-weight="700">One call,</text>
+<text x="48" y="162" fill="#EAF4EE" font-size="34" font-weight="700">connected answer.</text>
+<rect x="48" y="192" width="68" height="5" rx="2" fill="#70E6BF"/>
+<text x="48" y="242" fill="#EAF4EE" font-size="21" font-weight="600">Ranking suggests.</text>
+<text x="48" y="272" fill="#EAF4EE" font-size="21" font-weight="600">Source certifies.</text>
+<text x="48" y="308" fill="#A4B9B0" font-size="15">The reply admits what it omitted.</text>
+<rect x="48" y="368" width="334" height="104" rx="12" fill="#111C1C" stroke="#3a4541" stroke-width="1.5"/>
+<text x="72" y="398" fill="#5c6863" font-size="11" letter-spacing="2">THE QUESTION</text>
+<text x="72" y="432" fill="#EAF4EE" font-size="20" font-weight="700">&#8220;flush the queue&#8221;</text>
+<text x="72" y="458" fill="#70E6BF" font-size="12.5">auto &#8594; behavior lane</text>
+<text x="510" y="62" fill="#70E6BF" font-size="12" letter-spacing="2">ONE BOUNDED REPLY</text>
+<text x="1144" y="62" fill="#A4B9B0" font-size="13" text-anchor="end">code &#183; relations &#183; documents</text>
+<rect class="pulse" x="510" y="88" width="634" height="108" rx="12" fill="#25463B" stroke="#70E6BF" stroke-width="2"/>
+<circle cx="558" cy="142" r="18" fill="none" stroke="#70E6BF" stroke-width="1.5"/>
+<path d="M553 137 l-5 5 5 5 M563 137 l5 5 -5 5" fill="none" stroke="#70E6BF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="600" y="136" fill="#EAF4EE" font-size="18" font-weight="700">worker.ts:Worker.flush</text>
+<text x="600" y="164" fill="#70E6BF" font-size="13">rank 1 &#183; certified source rows</text>
+<rect x="510" y="212" width="634" height="108" rx="12" fill="#172723" stroke="#3a4541" stroke-width="1.5"/>
+<circle cx="558" cy="266" r="18" fill="none" stroke="#A4B9B0" stroke-width="1.5"/>
+<circle cx="564" cy="266" r="3" fill="#A4B9B0"/>
+<path d="M546 266 h10 m-4 -4 l4 4 -4 4" fill="none" stroke="#A4B9B0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="600" y="260" fill="#EAF4EE" font-size="18" font-weight="700">callers &#183; scheduler.ts:241</text>
+<text x="600" y="288" fill="#70E6BF" font-size="13">verified call site</text>
+<rect x="510" y="336" width="634" height="108" rx="12" fill="#172723" stroke="#3a4541" stroke-width="1.5"/>
+<circle cx="558" cy="390" r="18" fill="none" stroke="#edc786" stroke-width="1.5"/>
+<rect x="552" y="381" width="12" height="16" rx="2" fill="none" stroke="#edc786" stroke-width="1.8"/>
+<path d="M555 386 h6 M555 390 h6 M555 394 h4" stroke="#edc786" stroke-width="1.4" stroke-linecap="round"/>
+<text x="600" y="384" fill="#EAF4EE" font-size="18" font-weight="700">docs &#183; Retry policy</text>
+<text x="600" y="412" fill="#edc786" font-size="13">lead &#183; code link unverified</text>
+<rect class="dash" x="510" y="464" width="634" height="40" rx="10" fill="none" stroke="#70E6BF" stroke-width="1.5"/>
+<text x="534" y="489" fill="#A4B9B0" font-size="13">cursor continues the investigation &#183; changed sources refuse replay</text>
 </g>
 </svg>

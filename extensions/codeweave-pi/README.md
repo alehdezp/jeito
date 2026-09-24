@@ -30,7 +30,7 @@ Eleven tools, one per evidence reality. Each settles one kind of question and cl
 
 ## Ranked grep: one call returns the connected answer
 
-![Mechanism diagram: one question becomes behavior-ranked declaration cards whose caller, use and documentation edges arrive in the same bounded reply, with documentation labeled as a source-verified lead and a cursor retaining the investigation identity.](docs/images/ranked-grep-connected.svg)
+![Mechanism diagram: one bounded reply holds a ranked declaration with certified source rows, a verified call site, and a document lead whose code link is unverified; a cursor continues the investigation. Labels are complete when paused.](docs/images/ranked-grep-connected.svg)
 
 **Why it exists.** Ownership questions fan out — the declaration, its callers, the document that promises its behavior. Common tools answer one dimension per search and leave the reconstruction to the agent. One ranked call returns the connected answer.
 

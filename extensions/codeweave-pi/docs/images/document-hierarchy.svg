@@ -1,38 +1,55 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img" aria-labelledby="dt dd2">
-<title id="dt">Sections keep their place in the tree</title>
-<desc id="dd2">Causal comparison held constant except the unit of retrieval: loose chunks lose their address and offer only a similarity score, while a retrieved section arrives with its folder and heading path, authored description, validated links, and freshness from reconciliation with the current tree. Static labels carry the full explanation.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520" role="img" aria-labelledby="dt dd2">
+<title id="dt">Sections keep their address</title>
+<desc id="dd2">Document retrieval compared under the same question: scattered chunks carry only a similarity score and no address, while the retrieved section is drawn as a tree node under docs/ and operations.md with verified and ambiguous links and freshness from reconciliation. Labels are complete when the motion is paused.</desc>
 <style>
 .pulse { animation: dpulse 3.4s ease-in-out infinite; }
-@keyframes dpulse { 0%,100% { opacity: .85; } 50% { opacity: 1; } }
+@keyframes dpulse { 0%,100% { opacity: .88; } 50% { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .pulse { animation: none; } }
 </style>
 <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#ffffff" fill-opacity="0.05"/></pattern>
-<rect width="1200" height="440" rx="14" fill="#111C1C"/>
-<rect width="1200" height="440" rx="14" fill="url(#dots)"/>
-<rect x="8" y="8" width="1184" height="424" rx="10" fill="none" stroke="#3a4541" stroke-width="1.5"/>
-<g font-family="Arial, Helvetica, sans-serif">
-<text x="48" y="48" fill="#70E6BF" font-size="13" letter-spacing="3">MECHANISM &#183; DOCUMENT EVIDENCE</text>
-<text x="48" y="90" fill="#EAF4EE" font-size="30" font-weight="700">Sections keep their place in the tree</text>
-<text x="48" y="120" fill="#A4B9B0" font-size="15">the same question, two units of retrieval &#8212; one keeps the address the answer depends on.</text>
-<rect x="48" y="160" width="420" height="210" rx="10" fill="#172723" stroke="#3a4541" stroke-width="1.5"/>
-<text x="70" y="192" fill="#5c6863" font-size="12" letter-spacing="2">CHUNK RETRIEVAL</text>
-<rect x="78" y="216" width="230" height="26" rx="5" fill="#273A35"/>
-<rect x="150" y="258" width="190" height="26" rx="5" fill="#273A35"/>
-<rect x="96" y="300" width="250" height="26" rx="5" fill="#273A35"/>
-<rect x="336" y="222" width="106" height="34" rx="8" fill="#172723" stroke="#edc786" stroke-width="1.5"/>
-<text x="389" y="244" fill="#edc786" font-size="13" text-anchor="middle">score 0.81</text>
-<text x="70" y="352" fill="#A4B9B0" font-size="13">no address &#8212; dependents unaskable</text>
-<path d="M498 170 V360" stroke="#3B5D52" stroke-width="1"/>
-<rect x="520" y="160" width="632" height="210" rx="10" fill="#172723" stroke="#3a4541" stroke-width="1.5"/>
-<text x="544" y="196" fill="#70E6BF" font-size="14">docs/ &#8250; operations.md &#8250; Retry policy</text>
-<rect x="544" y="214" width="584" height="134" rx="10" fill="#25463B" stroke="#70E6BF" stroke-width="2"/>
-<text x="568" y="246" fill="#EAF4EE" font-size="17" font-weight="700">Retry policy</text>
-<text x="568" y="272" fill="#A4B9B0" font-size="13">authored description &#8212; bounded retries</text>
-<text x="568" y="300" fill="#70E6BF" font-size="13">code link &#8212; verified</text>
-<text x="568" y="322" fill="#edc786" font-size="13">related link &#8212; ambiguous</text>
-<text class="pulse" x="568" y="340" fill="#70E6BF" font-size="13">fresh &#8212; reconciled with the tree</text>
-<text x="48" y="392" fill="#A4B9B0" font-size="13">classification travels with the lead: answer-bearing passage and weak lead stay distinct.</text>
-<path d="M48 404 H1152" stroke="#3B5D52" stroke-width="1"/>
-<text x="48" y="428" fill="#A4B9B0" font-size="14">A section knows where it lives; a chunk only knows what it resembles.</text>
+<clipPath id="ground"><rect width="1200" height="520" rx="14"/></clipPath>
+<rect width="1200" height="520" rx="14" fill="#111C1C"/>
+<rect width="1200" height="520" rx="14" fill="url(#dots)"/>
+<g clip-path="url(#ground)" font-family="Arial, Helvetica, sans-serif">
+<rect x="0" y="0" width="430" height="520" fill="#172723"/>
+<path d="M430 0 V520" stroke="#3a4541" stroke-width="1.5"/>
+<rect x="14" y="0" width="1172" height="5" rx="2.5" fill="#70E6BF"/>
+<text x="48" y="58" fill="#70E6BF" font-size="13" letter-spacing="3">DOCUMENT EVIDENCE</text>
+<text x="48" y="122" fill="#EAF4EE" font-size="34" font-weight="700">Sections keep</text>
+<text x="48" y="162" fill="#EAF4EE" font-size="34" font-weight="700">their address.</text>
+<rect x="48" y="192" width="68" height="5" rx="2" fill="#70E6BF"/>
+<text x="48" y="242" fill="#EAF4EE" font-size="21" font-weight="600">A section knows</text>
+<text x="48" y="272" fill="#EAF4EE" font-size="21" font-weight="600">where it lives.</text>
+<text x="48" y="308" fill="#A4B9B0" font-size="15">A chunk only knows what it resembles.</text>
+<rect x="48" y="368" width="334" height="104" rx="12" fill="#111C1C" stroke="#3a4541" stroke-width="1.5"/>
+<text x="72" y="398" fill="#5c6863" font-size="11" letter-spacing="2">WHAT TRAVELS WITH IT</text>
+<text x="72" y="430" fill="#EAF4EE" font-size="15">folder &#183; heading &#183; links &#183; freshness</text>
+<text x="72" y="456" fill="#A4B9B0" font-size="12">answer-bearing and weak leads stay distinct</text>
+<text x="510" y="62" fill="#70E6BF" font-size="12" letter-spacing="2">ONE QUESTION &#183; TWO UNITS OF RETRIEVAL</text>
+<text x="510" y="102" fill="#5c6863" font-size="12" letter-spacing="2">CHUNKS</text>
+<g transform="rotate(-3 605 141)"><rect x="510" y="124" width="190" height="34" rx="6" fill="#273A35"/><rect x="524" y="138" width="120" height="6" rx="3" fill="#3a4541"/></g>
+<g transform="rotate(2 640 197)"><rect x="560" y="180" width="160" height="34" rx="6" fill="#273A35"/><rect x="574" y="194" width="96" height="6" rx="3" fill="#3a4541"/></g>
+<g transform="rotate(-2 616 253)"><rect x="516" y="236" width="200" height="34" rx="6" fill="#273A35"/><rect x="530" y="250" width="130" height="6" rx="3" fill="#3a4541"/></g>
+<g transform="rotate(3 641 309)"><rect x="566" y="292" width="150" height="34" rx="6" fill="#273A35"/><rect x="580" y="306" width="86" height="6" rx="3" fill="#3a4541"/></g>
+<rect x="676" y="332" width="88" height="32" rx="8" fill="#111C1C" stroke="#edc786" stroke-width="1.5"/>
+<text x="720" y="353" fill="#edc786" font-size="13" text-anchor="middle">score 0.81</text>
+<text x="510" y="404" fill="#A4B9B0" font-size="14">similarity only &#8212; no address</text>
+<path d="M830 88 V452" stroke="#3B5D52" stroke-width="1"/>
+<text x="866" y="102" fill="#70E6BF" font-size="12" letter-spacing="2">SECTIONS</text>
+<circle cx="862" cy="133" r="3.5" fill="#70E6BF"/>
+<text x="874" y="139" fill="#EAF4EE" font-size="15" font-weight="700">docs/</text>
+<path d="M866 152 V327 H882" fill="none" stroke="#3B5D52" stroke-width="1.5"/>
+<path d="M866 152 V196 H882" fill="none" stroke="#3B5D52" stroke-width="1.5"/>
+<circle cx="882" cy="196" r="3" fill="#A4B9B0"/>
+<text x="892" y="202" fill="#A4B9B0" font-size="15" font-weight="700">operations.md</text>
+<rect x="882" y="238" width="262" height="180" rx="12" fill="#25463B" stroke="#70E6BF" stroke-width="2"/>
+<text x="906" y="272" fill="#EAF4EE" font-size="18" font-weight="700">Retry policy</text>
+<text x="906" y="298" fill="#A4B9B0" font-size="13">bounded retries</text>
+<path d="M906 314 H1120" stroke="#3B5D52" stroke-width="1"/>
+<text x="906" y="340" fill="#70E6BF" font-size="12.5">code link &#8212; verified</text>
+<text x="906" y="364" fill="#edc786" font-size="12.5">related &#8212; ambiguous</text>
+<text class="pulse" x="906" y="392" fill="#70E6BF" font-size="12.5">fresh &#8212; reconciled</text>
+<rect x="510" y="464" width="634" height="40" rx="10" fill="none" stroke="#70E6BF" stroke-width="1.5" stroke-dasharray="7 6"/>
+<text x="534" y="489" fill="#A4B9B0" font-size="13">stale sections are pruned, not ranked</text>
 </g>
 </svg>
