@@ -1,29 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="648" viewBox="0 0 640 648" role="img" aria-labelledby="title desc">
-<title id="title">Where a new tool's instructions enter the request</title>
-<desc id="desc">An existing request contains instructions followed by conversation. Adding a tool's instructions to the beginning changes the prefix before the conversation. Stow instead keeps earlier input identical and appends the tool contract. Blue marks retained input and green marks new content. This is a placement comparison, not a token count or cache benchmark.</desc>
-<defs><style>text{font-family:DejaVu Sans,Arial,sans-serif;fill:#F2F5F7}.kicker{font-size:20px;font-weight:700;letter-spacing:1px;fill:#A5B4C5}.title{font-size:30px;font-weight:700}.label{font-size:24px;font-weight:600}.body{font-size:24px}.note{font-size:22px;fill:#A5B4C5}.retained{fill:#192532;stroke:#A4CDFA;stroke-width:1.5}.added{fill:#1A2926;stroke:#D3ECA6;stroke-width:1.5}.blue{fill:#A4CDFA}.green{fill:#D3ECA6}</style></defs>
-<rect x="1" y="1" width="638" height="646" rx="20" fill="#0E141C" stroke="#2B3A4B"/>
-<path d="M32 44V26h6v6h6v-6h6v6h6v-6h6v18l-6 6v8H38v-8Z" fill="#D3ECA6"/>
-<text x="80" y="48" class="kicker">STOW-TOOLS</text>
-<text x="32" y="104" class="title">Two ways to add tool instructions</text>
-<text x="32" y="152" class="label">Before activation</text>
-<rect x="32" y="172" width="176" height="76" rx="8" class="retained"/>
-<text x="120" y="219" text-anchor="middle" class="body blue">Instructions</text>
-<rect x="224" y="172" width="240" height="76" rx="8" class="retained"/>
-<text x="344" y="219" text-anchor="middle" class="body blue">Conversation</text>
-<text x="32" y="304" class="label">Rebuild the earlier instructions</text>
-<rect x="32" y="324" width="176" height="76" rx="8" class="added"/>
-<text x="120" y="354" text-anchor="middle" class="body green">Changed</text><text x="120" y="382" text-anchor="middle" class="body green">instructions</text>
-<rect x="224" y="324" width="240" height="76" rx="8" class="retained"/>
-<text x="344" y="354" text-anchor="middle" class="body blue">Same</text><text x="344" y="382" text-anchor="middle" class="body blue">conversation</text>
-<path d="M40 414h416" stroke="#A5B4C5" stroke-width="1.5"/>
-<text x="40" y="443" class="note">The prefix differs before the conversation.</text>
-<text x="32" y="490" class="label">Stow: append the guide</text>
-<rect x="32" y="510" width="176" height="76" rx="8" class="retained"/>
-<text x="120" y="557" text-anchor="middle" class="body blue">Instructions</text>
-<rect x="224" y="510" width="240" height="76" rx="8" class="retained"/>
-<text x="344" y="557" text-anchor="middle" class="body blue">Conversation</text>
-<rect x="480" y="510" width="128" height="76" rx="8" class="added"/>
-<text x="544" y="540" text-anchor="middle" class="body green">+ tool</text><text x="544" y="568" text-anchor="middle" class="body green">guide</text>
-<text x="32" y="624" class="note">Cache reuse still depends on the provider.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img" aria-labelledby="tt td">
+<title id="tt">Two ways to add a tool mid-session</title>
+<desc id="td">Causal placement comparison: a request contains instructions followed by conversation. Rebuilding the early instructions for a new tool changes the prefix before the conversation. tooltap leaves the earlier input identical and appends the tool contract at the end. Everything except the placement is held constant. Static labels carry the full explanation; this is not a token count or cache benchmark.</desc>
+<pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#ffffff" fill-opacity="0.05"/></pattern>
+<rect width="1200" height="440" rx="14" fill="#111C1C"/>
+<rect width="1200" height="440" rx="14" fill="url(#dots)"/>
+<rect x="8" y="8" width="1184" height="424" rx="10" fill="none" stroke="#3a4541" stroke-width="1.5"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="48" y="44" fill="#70E6BF" font-size="13" letter-spacing="3">MECHANISM &#183; INSTRUCTION PLACEMENT</text>
+<text x="48" y="84" fill="#EAF4EE" font-size="30" font-weight="700">Two ways to add a tool mid-session</text>
+<text x="48" y="112" fill="#A4B9B0" font-size="15">the comparison holds everything constant except where the new instructions enter.</text>
+<text x="48" y="150" fill="#5c6863" font-size="12" letter-spacing="2">BEFORE ACTIVATION</text>
+<rect x="48" y="160" width="220" height="56" rx="8" fill="#172723" stroke="#3B5D52" stroke-width="1.5"/>
+<text x="158" y="193" fill="#A4B9B0" font-size="13" text-anchor="middle">instructions</text>
+<rect x="284" y="160" width="340" height="56" rx="8" fill="#172723" stroke="#3B5D52" stroke-width="1.5"/>
+<text x="454" y="193" fill="#A4B9B0" font-size="13" text-anchor="middle">conversation</text>
+<text x="880" y="193" fill="#A4B9B0" font-size="12.5">the baseline request</text>
+<text x="48" y="238" fill="#5c6863" font-size="12" letter-spacing="2">REBUILD FOR THE NEW TOOL</text>
+<rect x="48" y="248" width="220" height="56" rx="8" fill="#172723" stroke="#edc786" stroke-width="2"/>
+<text x="158" y="274" fill="#edc786" font-size="13" text-anchor="middle">changed</text>
+<text x="158" y="293" fill="#edc786" font-size="13" text-anchor="middle">instructions</text>
+<rect x="284" y="248" width="340" height="56" rx="8" fill="#172723" stroke="#3B5D52" stroke-width="1.5"/>
+<text x="454" y="281" fill="#A4B9B0" font-size="13" text-anchor="middle">same conversation</text>
+<text x="880" y="274" fill="#edc786" font-size="12.5">the prefix differs before</text>
+<text x="880" y="293" fill="#edc786" font-size="12.5">the conversation</text>
+<text x="48" y="316" fill="#5c6863" font-size="12" letter-spacing="2">TOOLTAP: APPEND THE CONTRACT</text>
+<rect x="48" y="326" width="220" height="56" rx="8" fill="#172723" stroke="#3B5D52" stroke-width="1.5"/>
+<text x="158" y="359" fill="#A4B9B0" font-size="13" text-anchor="middle">instructions</text>
+<rect x="284" y="326" width="340" height="56" rx="8" fill="#172723" stroke="#3B5D52" stroke-width="1.5"/>
+<text x="454" y="359" fill="#A4B9B0" font-size="13" text-anchor="middle">conversation</text>
+<rect x="640" y="326" width="200" height="56" rx="8" fill="#172723" stroke="#edc786" stroke-width="2"/>
+<text x="740" y="359" fill="#edc786" font-size="13" text-anchor="middle">+ tool contract</text>
+<text x="880" y="352" fill="#70E6BF" font-size="12.5">early input stays</text>
+<text x="880" y="371" fill="#70E6BF" font-size="12.5">byte-identical</text>
+<path d="M48 402 H1152" stroke="#3B5D52" stroke-width="1"/>
+<text x="48" y="426" fill="#A4B9B0" font-size="14">Cache reuse remains the provider&#8217;s decision; the placement makes it available.</text>
+</g>
 </svg>
