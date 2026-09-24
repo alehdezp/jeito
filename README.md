@@ -22,9 +22,17 @@ This is a source-only work in progress used in its author's setup, not a support
 | [stall-guard](extensions/stall-guard/README.md) | A stalled transport and a deliberate stop are different events: recovery applies only to watchdog-tagged stalls after Pi settles. |
 | [context diagnostics](extensions/context-diagnostics/README.md) (standalone) | Diagnosis starts from the context the runtime assembled, not from what the configuration appears to promise. |
 
+Four extensions share one mechanism: the conversation is append-only, so a turn's context is spent once and everything kept out of it stays recoverable.
+
+![Mechanism diagram: earlier conversation turns stay byte-stable while tooltap's late tool contract, guidepin's reminder, shell's job preview and websift's focused passage land at the tail, and detail kept outside the turn stays recoverable. Static labels carry the full explanation.](docs/images/append-only-session.svg)
+
 ## What the harness guarantees
 
 The [versioned system prompt](config/APPEND_SYSTEM.md) states the working contract: frame the task before acting, separate observation from inference, return to current source before an edit. Behavioral instructions hold as far as the model follows them. The guarantees below are enforced rather than requested: a bounded result reports what it omits; an exhaustive audit that cannot account for every occurrence fails instead of degrading into a ranked sample; omitted detail stays reachable; an edit cannot touch source the agent has not inspected. Choosing the right question stays with the agent, and another turn spent checking is a cost the design accepts.
+
+The same discipline governs mutation: evidence keeps its authority class until the edit gate.
+
+![Mechanism diagram: current source and fail-closed exhaustive search carry authority while relationships, document sections and human path hints stay leads; both pass an edit gate requiring complete inspected lines and the file hash, after which matching targets land per file and changed targets return for review.](docs/images/authority-narrows.svg)
 
 ## Trying jeito
 

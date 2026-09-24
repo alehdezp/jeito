@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400" role="img" aria-labelledby="ta da">
+<title id="ta">The append-only session</title>
+<desc id="da">Mechanism overview grouped across four extensions: a conversation timeline whose earlier turns stay byte-stable while tooltap's late tool contract, guidepin's reminder, shell's job preview and websift's focused passage land at the tail. Detail kept outside the turn stays recoverable. Static labels carry the full explanation; motion is illustrative.</desc>
+<style>
+.pulse { animation: pulseA 3.5s ease-in-out infinite; }
+@keyframes pulseA { 0%,100% { opacity: .55; } 50% { opacity: 1; } }
+.dock { animation: dockA 3.5s ease-in-out infinite; }
+@keyframes dockA { 0% { transform: translateX(-14px); opacity: 0; } 35% { opacity: 1; } 70% { transform: translateX(0); opacity: 1; } 100% { transform: translateX(0); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .pulse, .dock { animation: none; } }
+</style>
+<pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#ffffff" fill-opacity="0.05"/></pattern>
+<rect width="1200" height="400" rx="14" fill="#111C1C"/>
+<rect width="1200" height="400" rx="14" fill="url(#dots)"/>
+<rect x="8" y="8" width="1184" height="384" rx="10" fill="none" stroke="#3a4541" stroke-width="1.5"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="48" y="44" fill="#70E6BF" font-size="13" letter-spacing="3">MECHANISM &#183; APPEND-ONLY SESSION</text>
+<text x="48" y="84" fill="#EAF4EE" font-size="30" font-weight="700">Context is spent once</text>
+<text x="48" y="112" fill="#A4B9B0" font-size="15">tooltap &#183; guidepin &#183; shell &#183; websift &#8212; one rule: never rewrite what the conversation already said.</text>
+<text x="48" y="152" fill="#5c6863" font-size="12" letter-spacing="2">THE CONVERSATION</text>
+<rect x="48" y="176" width="112" height="52" rx="8" fill="#172723" stroke="#3B5D52" stroke-width="1.5"/>
+<text x="104" y="207" fill="#A4B9B0" font-size="12" text-anchor="middle">user</text>
+<rect x="172" y="176" width="140" height="52" rx="8" fill="#172723" stroke="#3B5D52" stroke-width="1.5"/>
+<text x="242" y="207" fill="#A4B9B0" font-size="12" text-anchor="middle">assistant</text>
+<rect x="324" y="176" width="112" height="52" rx="8" fill="#172723" stroke="#3B5D52" stroke-width="1.5"/>
+<text x="380" y="207" fill="#A4B9B0" font-size="12" text-anchor="middle">user</text>
+<rect x="448" y="176" width="140" height="52" rx="8" fill="#172723" stroke="#3B5D52" stroke-width="1.5"/>
+<text x="518" y="207" fill="#A4B9B0" font-size="12" text-anchor="middle">assistant</text>
+<rect class="pulse" x="602" y="176" width="98" height="52" rx="8" fill="#172723" stroke="#70E6BF" stroke-width="2" stroke-dasharray="6 5"/>
+<text x="651" y="207" fill="#70E6BF" font-size="12" text-anchor="middle">tail</text>
+<rect class="dock" x="596" y="196" width="12" height="12" rx="2" fill="#70E6BF"/>
+<path d="M48 244 H588" stroke="#3B5D52" stroke-width="1.5"/>
+<path d="M48 240 V248 M588 240 V248" stroke="#3B5D52" stroke-width="1.5"/>
+<text x="48" y="268" fill="#70E6BF" font-size="13">sealed input &#8212; bytes never move</text>
+<text x="48" y="290" fill="#A4B9B0" font-size="12">prefix reuse stays the provider&#8217;s decision</text>
+<path d="M700 202 H724 V330" fill="none" stroke="#3B5D52" stroke-width="1.5"/>
+<text x="740" y="152" fill="#5c6863" font-size="12" letter-spacing="2">WHAT LANDS AT THE TAIL</text>
+<rect x="740" y="168" width="6" height="34" rx="2" fill="#70E6BF"/>
+<text x="758" y="183" fill="#EAF4EE" font-size="15" font-weight="700">tooltap</text>
+<text x="758" y="201" fill="#A4B9B0" font-size="12">late tool contract docks &#8212; earlier turns unchanged</text>
+<rect x="740" y="214" width="6" height="34" rx="2" fill="#70E6BF"/>
+<text x="758" y="229" fill="#EAF4EE" font-size="15" font-weight="700">guidepin</text>
+<text x="758" y="247" fill="#A4B9B0" font-size="12">reminder appended after the request &#8212; history preserved</text>
+<rect x="740" y="260" width="6" height="34" rx="2" fill="#edc786"/>
+<text x="758" y="275" fill="#EAF4EE" font-size="15" font-weight="700">shell</text>
+<text x="758" y="293" fill="#A4B9B0" font-size="12">job off-thread &#8212; preview in-turn, full log on disk</text>
+<rect x="740" y="306" width="6" height="34" rx="2" fill="#edc786"/>
+<text x="758" y="321" fill="#EAF4EE" font-size="15" font-weight="700">websift</text>
+<text x="758" y="339" fill="#A4B9B0" font-size="12">page retained to disk &#8212; focused passage in-turn</text>
+<path d="M48 352 H1152" stroke="#3B5D52" stroke-width="1"/>
+<text x="48" y="376" fill="#A4B9B0" font-size="14">Everything new lands at the tail; everything already spent keeps its bytes, and omitted detail stays reachable.</text>
+</g>
+</svg>
