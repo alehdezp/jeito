@@ -2,9 +2,9 @@
 
 ![fff search banner: indexed @file completion for Pi, with a blinking caret and a highlighted file match.](docs/images/v2-banner.svg)
 
-Naming the file in a request lets the agent work from a path you chose rather than one it inferred. Pi already has fuzzy `@file` completion, so fff search is a choice of finder, not a missing feature supplied to Pi. It keeps a project file inventory warm between queries and records the files you select. That costs a native dependency, a watcher and local history databases; there is no comparison showing that it picks better files or finishes tasks faster than Pi's finder.
+**fff search is a finder choice for `@file` completion that puts path knowledge in the person's hands.** Naming the file lets the agent work from a path the person chose instead of one it inferred, and a warm project index answers without rescanning the tree. Pi already has fuzzy `@file` completion, so this is a choice of finder, not a missing feature. The cost is a native dependency, a watcher and local history databases; there is no comparison showing it picks better files or finishes tasks faster than Pi's finder.
 
-The integration wraps Pi's autocomplete provider instead of replacing the whole editor. Ordinary completion still goes to Pi. For an `@` query, it searches its maintained project index and offers up to 20 candidates; selecting one inserts an `@path` reference, not file contents. If that search fails or finds nothing after the extension has loaded, the same query falls back to Pi's suggestions. Fallback cannot help if the native library prevents the extension from loading in the first place.
+The finder wraps Pi's autocomplete provider instead of replacing the editor: ordinary completion still goes to Pi, selection inserts the `@path` reference rather than file contents, and a failed or empty search falls back to Pi's suggestions once the extension has loaded. Fallback cannot help if the native library prevents loading in the first place.
 
 ## Let the query set the search boundary
 
