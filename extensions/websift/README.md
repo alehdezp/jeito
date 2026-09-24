@@ -2,23 +2,23 @@
 
 ![websift banner: the name over "Read less, keep the rest" with a scan line sweeping a saved page.](docs/images/v2-banner.svg)
 
-Web research can crowd the agent's working context with pages it never needed, or produce a fluent answer whose links were never checked. These failures pull in opposite directions: too much raw text makes the task harder to see; too little source inspection makes a guess look like evidence.
+**websift keeps the source and narrows the reading, so a claim stays answerable to its page.** Both settled research habits lose the evidence: raw pages flood the working context with text the task never needed, and a fluent summary hides the qualification that changes the conclusion. websift saves extracted pages as local files, returns a full small page or focused passages from a large one, and lets the rest be read later without another fetch.
 
-**websift retains the source and narrows the reading.** It saves extracted pages as local files, returns a full small page or focused passages from a large one, and lets the agent inspect the rest later without another fetch. Search hits are leads; generated answers carry provider citations; fetched passages can be checked against claims. The distinction matters more than how many results a search returns.
+Search hits are leads; generated answers carry provider citations; fetched passages can be checked against claims. The distinction matters more than how many results a search returns.
 
-The work also changes shape. Exact terms, unfamiliar terminology, first-hand posts, region-specific coverage and installed library versions call for different methods. websift offers separate searches and version-pinned docs, plus `web_lookup` for package and agent-skill candidates. They share a `web_` naming pattern and an explicit evidence boundary; no single provider silently becomes the answer to every question. One known page may need only a plain fetch. A longer investigation benefits from saved material and a deliberate next method.
+The question picks the method. Exact terms, unfamiliar terminology, first-hand posts, region-specific coverage and installed library versions call for different searches and version-pinned docs, and no single provider silently becomes the answer to every question. One known page may need only a plain fetch; a longer investigation benefits from saved material and a deliberate next method.
 
 ## Search by wording, meaning or source
 
-An exact name gives a search something precise to match. A question about an unfamiliar approach may need material that uses different terminology. Establishing who announced something and when requires attention to the original account and publication date. websift preserves these distinctions through Serper's lexical search, Exa's lexical and semantic methods, and X search with account and date controls. Tavily supplies another general search index with a regional ranking control.
+Serper matches exact wording, Exa covers lexical and semantic phrasing, X search adds account and date controls for first-hand posts, and Tavily adds a region-ranked index. Each search names its provider and makes one attempt.
 
-Each search method names its provider and makes one attempt without silently switching services. After examining the results, the agent can choose another method to address a specific gap, such as unfamiliar terminology or a missing first-hand source. That choice can change the evidence being sought instead of simply repeating the same search elsewhere. The extension does not automatically run every provider.
+After examining the results, the agent can choose another method to fill a specific gap — unfamiliar terminology, a missing first-hand source — instead of repeating the same search elsewhere. The extension does not automatically run every provider.
 
 Choosing the collection matters too. `context7` resolves a library and retrieves documentation for an advertised version, so the request can target the API being used. An unavailable version returns candidates instead of silently serving the latest; returned source references still need checking for release mismatches. `web_lookup` searches npm packages or SkillsMP's agent skills when the question is whether a usable implementation already exists. Those records identify candidates, not their safety or suitability, and lookup installs nothing.
 
-## A focused reading can still be widened
+## Narrow the reading, keep the source
 
-Returning whole pages puts text into the conversation before its relevance is clear. A generated summary makes a different selection, but cannot expose a qualification it omitted. websift separates the text it retains from the text it returns: `web_fetch` saves the extracted page and supplies a local path alongside its reading.
+websift separates the text it retains from the text it returns: `web_fetch` saves the extracted page and supplies a local path alongside its reading. Returning whole pages would put text into the conversation before its relevance is clear; a generated summary makes a different selection and cannot expose a qualification it omitted.
 
 Smaller pages can appear in full. On large pages, search terms select up to five matching passages, with locations for further inspection. Matching is lexical and takes headings into account. It can miss different terminology or a condition elsewhere in the page; a high-ranked passage is a starting point, not proof of complete coverage. The retained file makes it possible to examine that condition without retrieving the page again.
 
