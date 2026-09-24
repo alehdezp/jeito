@@ -3,7 +3,7 @@ title: "Write Pi extension READMEs"
 description: "A source-grounded authoring procedure, rejection catalogue and review method for explaining an extension's contribution without producing a feature inventory or agent operating manual."
 tags: [readme, documentation, authoring, editorial-review, visual-design, pi-extensions]
 created: 2026-09-20
-updated: "2026-09-24 08Z"
+updated: "2026-09-24 09Z"
 status: under-review
 owns: "Extension README explanation, editorial selection, visual admission and acceptance procedure"
 audience: contributor
@@ -73,6 +73,8 @@ Use an editorial reference to understand how its prose connects ideas. Verify it
 ## Write in project voice
 
 The reader is meeting a project, not its author. Public pages use project voice throughout: the first person never appears — no "I", "we", "my" or "our" — in prose, headings, tables or captions. State what the project does, chooses, guarantees and refuses.
+
+The page's job is the adoption case: lead with why the work is worth installing — the idea, and the settled harness assumption it improves. Capability lists and implementation logic are supporting material at most, and narration of how the code works is never the leading mechanism. The reader decides from the idea and its consequence, not from an inventory.
 
 Present the work as an opinionated design. Name the position it defends about how agent work should be done, including where it improves on the conventional agent-harness default. That positioning is a design claim, so state it as one: "an edit is authorized only by current source the agent has inspected". Never convert it into a measured comparison, a named-competitor claim or a promised outcome: "jeito patches more safely than other tools" is unsupported. The page earns its impression from the precision of its positions and the honesty of its limits; adjectives do no work here.
 
