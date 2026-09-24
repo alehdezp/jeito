@@ -3,7 +3,7 @@ title: "jeito documentation index"
 description: "Routes installation, contribution, security, publication, and extension questions to one current owner."
 tags: [jeito, documentation-index, routing]
 created: 2026-07-27
-updated: "2026-09-23 12Z"
+updated: "2026-09-24 08Z"
 status: active
 owns: "Repository-wide public documentation routing"
 audience: mixed
@@ -18,12 +18,12 @@ Use the document that owns the question. Historical ADRs explain prior decisions
 
 | Question | Owner |
 |---|---|
-| How do I explain an extension in its README and choose its visuals? | [`extension-readme-writing.md`](extension-readme-writing.md) |
-| What is jeito and which extension should I open? | [`README.md`](../README.md) |
-| How do I install the suite or one extension from Git/a checkout? | [`getting-started.md`](getting-started.md) |
-| How do I contribute? | [`CONTRIBUTING.md`](../CONTRIBUTING.md) |
+| How is an extension explained in its README and its visuals chosen? | [`extension-readme-writing.md`](extension-readme-writing.md) |
+| What is jeito, and which extension fits which need? | [`README.md`](../README.md) |
+| How is the suite or one extension installed from Git or a checkout? | [`getting-started.md`](getting-started.md) |
+| What does contributing require? | [`CONTRIBUTING.md`](../CONTRIBUTING.md) |
 | Which engineering invariants govern changes? | [`AGENTS.md`](../AGENTS.md) |
-| How do I report a vulnerability? | [`SECURITY.md`](../SECURITY.md) |
+| Where do vulnerability reports go? | [`SECURITY.md`](../SECURITY.md) |
 | What still blocks public release? | [`publication-readiness.md`](publication-readiness.md) |
 | Which third-party licenses and adaptations are present? | [`THIRD_PARTY_NOTICES.md`](../THIRD_PARTY_NOTICES.md) |
 | How are optional third-party packages handled? | [`recommendations.md`](recommendations.md) |

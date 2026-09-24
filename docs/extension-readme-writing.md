@@ -3,7 +3,7 @@ title: "Write Pi extension READMEs"
 description: "A source-grounded authoring procedure, rejection catalogue and review method for explaining an extension's contribution without producing a feature inventory or agent operating manual."
 tags: [readme, documentation, authoring, editorial-review, visual-design, pi-extensions]
 created: 2026-09-20
-updated: 2026-09-21
+updated: "2026-09-24 08Z"
 status: under-review
 owns: "Extension README explanation, editorial selection, visual admission and acceptance procedure"
 audience: contributor
@@ -60,7 +60,7 @@ Use plain English while retaining technical distinctions that carry the argument
 
 Describe agent behavior to the human reader. Keep exact controls where they help someone evaluate or begin using the extension, but route parameter catalogues and ordinary operating sequences to their proper references. No tools/hooks/skills inventory or complete worked workflow is required.
 
-Judge a section by the question it answers, not its grammatical person. “Why preserve distinct search methods?” calls for a design explanation; “Which parameters should the agent try next?” calls for operating guidance. Replacing an imperative with “the agent” does not change that distinction.
+Judge a section by the question it answers. “Why preserve distinct search methods?” calls for a design explanation; “Which parameters should the agent try next?” calls for operating guidance. Move operating detail to its owner instead of rephrasing it. Voice is not a section-level choice: project voice applies to every section without exception.
 
 Use a brief grounded illustration when it clarifies a consequence or dependency. Label illustrative timing or conceptual behavior. An example must not imply a measured gain, automatic continuation, lossless capture, durability or correctness that the evidence does not establish.
 
@@ -69,6 +69,20 @@ State supported consequences directly. Distinguish a capability, an intended ben
 Credit the underlying engine or service accurately and explain the integration's contribution. Preserve required legal notices. Attribution should not turn into either an ownership overclaim or an apology for building on existing work.
 
 Use an editorial reference to understand how its prose connects ideas. Verify its technical claims separately. Do not copy its headings, paragraph lengths or diagram subjects mechanically. When a rewrite is authorized, compose from the contribution brief rather than patching rejected paragraphs into another arrangement.
+
+## Write in project voice
+
+The reader is meeting a project, not its author. Public pages use project voice throughout: the first person never appears — no "I", "we", "my" or "our" — in prose, headings, tables or captions. State what the project does, chooses, guarantees and refuses.
+
+Present the work as an opinionated design. Name the position it defends about how agent work should be done, including where it improves on the conventional agent-harness default. That positioning is a design claim, so state it as one: "an edit is authorized only by current source the agent has inspected". Never convert it into a measured comparison, a named-competitor claim or a promised outcome: "jeito patches more safely than other tools" is unsupported. The page earns its impression from the precision of its positions and the honesty of its limits; adjectives do no work here.
+
+Do not tell a problem-and-cure story. A generic or invented failure scenario followed by the extension as its resolution is banned in every entry, even abstractly and even when the facts are accurate. The design position leads; the difficulty it addresses appears as the reason for that position, at most a clause, with no scene and no chronology.
+
+Do not paraphrase behavior. Prose that narrates implementation logic in sequence is pseudocode with the code removed. "Complete source lines displayed during investigation can be reused after a current-file check" is narration; "an edit is authorized only by current source the agent has inspected" is a guarantee. READMEs state guarantees and consequences.
+
+Do not invent terminology. Use established names and plain phrases. `config/APPEND_SYSTEM.md` is the versioned system prompt, not "the working instructions". If a project coinage is unavoidable, define it in the sentence that introduces it.
+
+Before drafting, write the extension's idea in one sentence: the position it defends about how agent work should be done. The page exists to make that idea understood and credible; every section either supports it or serves setup, safety or attribution.
 
 ## Design the jeito header and explanatory figures
 
@@ -102,6 +116,9 @@ Use these cases when the draft's framing or audience is uncertain. The correctio
 | U5 | One convenient mechanism stands in for a broader product, or a modest integration acquires an inflated mission. | Check the explanation against the public surface and accepted purpose. Its breadth should account for the contribution without manufacturing importance. |
 | U6 | Source structure or an internal method is mistaken for a delivered capability. | Verify registration and consumers. The README must describe the interface the person or agent actually receives. |
 | U7 | The page teaches the agent's next tool call, parameter choices or recovery sequence. | Explain the design and available choices to the person evaluating it; move operating detail to its owner. |
+| U8 | A generic problem-and-cure story presents the extension as the resolution of an invented failure. | Lead with the design position; the difficulty appears only as its reason. The passage must survive deletion of the scene. |
+| U9 | Prose narrates implementation logic in sequence and calls it explanation. | Replace the walkthrough with the guarantee and its consequence; move the sequence to an operating reference. |
+| U10 | A coined term carries the explanation, such as "the working instructions". | Use the established or plain name; define an unavoidable coinage at first use. |
 
 ## Reject failures of composition and evidence
 
@@ -120,6 +137,8 @@ Use these cases while selecting and revising prose. Correct facts can still form
 | C9 | A good reference's headings, length or rhetorical pattern become a compulsory template. | Compose around this extension's explanatory dependencies. Related pages may share an identity without sharing an outline. |
 | C10 | Successive wording changes preserve a misunderstanding of the contribution. | Return to the contribution brief, revise the interpretation and rebuild affected sections. Another synonym pass is not recovery. |
 | C11 | A fluent external review is treated as independent technical evidence. | Separate its editorial observations from implementation claims. Verify behavior and inspect assets the reviewer could not access. |
+| C12 | The author enters the page: "I built", "we chose", "my setup". | Project voice everywhere; the person never appears. |
+| C13 | Opinionated positioning slides into measured or named-competitor superiority. | Keep it a design claim with its intended consequence; drop measured promises and competitor names. |
 
 ## Reject failures of visual explanation and delivery
 
