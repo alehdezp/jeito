@@ -2,7 +2,7 @@
 
 ![Context Diagnostics banner: see what Pi loaded before blaming the model, with a lens moving across a document.](docs/images/v2-banner.svg)
 
-When an instruction seems to have been ignored, first check whether Pi assembled it at all. Context Diagnostics writes a structured snapshot of Pi's current system prompt, prompt options, registered tool descriptions and schemas, available messages, model and context usage. It helps find a missing instruction or an unexpected tool definition before you rewrite a prompt to solve the wrong problem.
+**Context Diagnostics shows the context the runtime actually assembled.** The settled debugging habit rewrites prompt files when an instruction seems ignored; the cheaper check is whether Pi assembled the instruction at all. A structured snapshot captures the system prompt, prompt options, registered tool descriptions and schemas, available messages, and model and context usage — enough to find a missing instruction or an unexpected tool definition before rewriting to solve the wrong problem.
 
 This is **Pi-side state**, not a record of the final provider request. A registered tool might not be active or sent to the model; fields collected through optional APIs can be empty, and an absent field proves nothing about what the provider saw. The snapshot cannot explain a model's answer. Pi's own session export may already answer the question. Use this extension when you need structured files or captures at specific stages of a turn.
 
@@ -14,7 +14,7 @@ Tooltap's `/stow-dump-context` answers a different question: what provider paylo
 
 ## Handle the capture as private data
 
-Files are written in `context-dumps/` beneath Pi's agent directory (`~/.pi/agent/` by default, or `PI_CODING_AGENT_DIR`). An optional command label is reduced to letters, digits, dots, underscores and dashes, truncated at 60 characters, with `manual` as fallback. New directories request mode `0700` and new files `0600`. Existing permissions are not repaired; captures with the same label in one second can overwrite each other.
+Files are written in `context-dumps/` beneath Pi's agent directory (`~/.pi/agent/` by default, or `PI_CODING_AGENT_DIR`). Labels are sanitized and truncated, with `manual` as fallback. New directories request mode `0700` and new files `0600`; existing permissions are not repaired, and captures with the same label in one second can overwrite each other.
 
 A dump can contain private instructions, conversation, code and credentials. The extension neither redacts nor encrypts nor deletes it. Save only what you need, keep the result out of commits and issues, and delete it after the investigation. See the [security policy](../../SECURITY.md).
 
