@@ -3,7 +3,7 @@ title: "Upstream provenance ledger — jeito websift"
 description: "Index and format of provenance records for every upstream source jeito websift ports from or derives a contract from, with grounding status and upkeep commands."
 tags: [jeito, web, provenance, upstreams, licensing, ledger]
 created: 2026-07-27
-updated: 2026-07-28
+updated: "2026-09-24 08Z"
 status: active
 owns: "Upstream provenance ledger index and format"
 audience: contributor
@@ -72,7 +72,7 @@ npm run vendor:fetch    # clone/refresh all at pinned refs
 | context7 | `vendor/pi-context7` (subpath `packages/context7`) | reference | main |
 | pi-package-search | `vendor/pi-package-search` | reference | main |
 
-`port` = we copy code from it; `reference` = we inspect it to derive an adapter
+`port` = code is copied into first-party sources; `reference` = inspected to derive an adapter
 (the runtime uses the vendor's npm SDK). First-party serper/skillsmp are absorbed
 from sibling extensions, not vendored. Refs are best-known; `vendor:fetch` prints
 the resolved commit SHA — **record it in each provenance doc** so the snapshot is
