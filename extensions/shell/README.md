@@ -2,9 +2,9 @@
 
 ![Shell banner: bound the wait and keep the evidence, with independent work overlapping a running command.](docs/images/v2-banner.svg)
 
-A command can take longer than the agent expected without being stuck. Killing it at a timeout wastes useful work; waiting indefinitely prevents the agent from making another decision. A large command log presents the same false choice: send everything into the conversation or risk cutting off the line that explains a failure.
+**Shell separates process lifetime, waiting time and how much output reaches the model — three resources a plain timeout welds together.** The settled choice is false: block the turn until the command ends, or kill it at a timeout and discard the work. A large log forces the same choice between flooding the conversation and cutting the line that explains a failure. Shell lets a long command finish while the agent keeps deciding. Pi already saves oversized tool output; Shell's distinct choices are a soft wait that keeps the process alive, command-aware output handling, and selective inspection across that process's lifetime.
 
-Shell separates **process lifetime**, **waiting time**, and **the amount of output shown to the model**. `bash` waits ten seconds by default. If the process is still running, it returns a job ID while the command continues; the agent can work on something independent or use `jobs` to wait for completion and inspect progress. This does not make dependent work safe to start early: the agent still has to wait for a result before relying on it.
+A ten-second soft wait returns a job ID instead of blocking while the command continues; `jobs` waits for completion or inspects progress later. Dependent work is still dependent: a result must exist before anything relies on it.
 
 ## Read what matters without throwing away the run
 
@@ -12,13 +12,13 @@ Shell applies [LeanCTX](https://github.com/yvgude/lean-ctx) to command output. L
 
 The boundary matters: the log contains what LeanCTX produced, **not what compression removed**. Select raw, uncompressed capture before running a command whose exact output matters. Standard and error output are combined. Smaller previews do not promise less total context use if the agent subsequently reads the entire log.
 
-A multiline command also becomes a reusable `sh-N` scratch cell. `show` displays its source without running it, `run` repeats it unchanged, `clone` copies it under a new name, and `list` shows the available cells. Twenty are retained; adding another drops the oldest. This helps with local iterations, not durable scripts, which belong in project files.
+A multiline command also becomes a reusable `sh-N` scratch cell — `show`, `run`, `clone` and `list`, twenty retained — for local iteration, not durable scripts, which belong in project files.
 
 ## Session and security limits
 
 Jobs and scratch cells are session-local. Logs and temporary scripts use the shared `/tmp/jeito-shell` directory; shutdown ends running jobs and removes temporary material there, including scripts another session may share. Do not run Shell tests alongside a live session using that directory. Saved output can contain secrets: Shell does not redact it or isolate commands from the host. Incremental reads advance over captured text even if a preview omits some of it; retrieve omitted text from the saved log.
 
-Shell registers `bash` and `jobs` as tools and a shutdown hook. It adds no commands or skills. Pi already saves oversized tool output; Shell's distinct choices are a soft wait that keeps the process alive, command-aware output handling, and selective inspection across that process's lifetime. Neither total cost nor task speed has been benchmarked here.
+Shell registers `bash` and `jobs` as tools and a shutdown hook. It adds no commands or skills. Neither total cost nor task speed has been benchmarked here.
 
 ## Install from a checkout
 
