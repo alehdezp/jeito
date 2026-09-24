@@ -2,9 +2,9 @@
 
 ![tooltap banner: the name over "Load tools when they matter" and a packet crossing four tool-entry doors.](docs/images/v2-banner.svg)
 
-Loading every available tool at startup spends context before the agent knows which ones it needs. Changing the beginning of the prompt to add a tool later can also invalidate the prefix a provider might have cached. One sampled `jobs` definition is 2,187 characters, about 550 tokens at four characters per token; fifty definitions of that size would be roughly 27,000 tokens. This illustrates the cost, not a benchmark of this harness or a measured effect on agent quality.
+**tooltap makes an agent's toolset grow with the task instead of the install.** The settled default declares every tool in the first request: each turn pays for capability most turns never use, and finding a tool is fused with permission to run it. tooltap breaks both assumptions. A tool can join a live session later with its full contract and without repricing the turns already spent, and discovery never grants execution. Selection policy and executable access that preserve instruction placement are the contribution beyond Pi's deferred transport.
 
-**tooltap keeps the start small without making later tools unusable.** Its stable `tools` control separates discovery, permission, delivery of a tool's full contract, and execution. When the task calls for another tool, its guidance arrives in a later reply instead of rewriting earlier instructions. Existing input remains eligible for cache reuse; the provider decides whether it actually reuses it. For a small, stable tool set, loading everything upfront is simpler.
+One sampled `jobs` definition is 2,187 characters, about 550 tokens at four characters per token; fifty definitions of that size would be roughly 27,000 tokens. This illustrates the cost, not a benchmark of this harness or a measured effect on agent quality.
 
 ## Keep late activation from changing earlier input
 
@@ -14,9 +14,9 @@ Pi's native deferred-tool support addresses schema delivery. In Pi 0.84.3, the v
 
 ![Two ways of enabling a tool after a session has started. Rebuilding early instructions changes the prefix before the existing conversation. Tooltap leaves that input in place and adds the tool's contract later. The diagram shows placement, not measured cache savings.](docs/images/late-tools.svg)
 
-Tooltap separates discovery, executable access and instruction placement. Finding a tool does not authorize its use. Enabling it grants session access and returns the full description, argument schema and usage guidance in the activation reply. Compatible Pi runtime APIs expose the implementation without adding that guidance to earlier instructions.
+Finding a tool does not authorize its use. Enabling it grants session access and returns the full description, argument schema and usage guidance in the activation reply. Compatible Pi runtime APIs expose the implementation without adding that guidance to earlier instructions.
 
-You can therefore extend the tools available to an ongoing task without rebuilding its starting prompt just to expose them. This is the contribution beyond Pi's deferred transport: selection policy and executable access that preserve instruction placement together, including across registry refreshes and restored sessions.
+You can therefore extend the tools available to an ongoing task without rebuilding its starting prompt just to expose them, including across registry refreshes and restored sessions.
 
 ## Use native deferral where available, a gateway elsewhere
 
