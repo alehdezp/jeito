@@ -1,37 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="640" height="568" viewBox="0 0 640 568" role="img" aria-labelledby="title desc">
-  <title id="title">Small excerpt, larger source</title>
-  <desc id="desc">One retained page contains two nested reading ranges. A solid blue outline marks the first excerpt. A larger dashed outline marks surrounding text available through an explicit later local read. The source is unchanged and no second fetch is needed. These are conceptual ranges, not a tool screenshot or a promise of complete extraction.</desc>
-  <defs>
-    <style>
-      text { font-family: Arial, Helvetica, sans-serif; fill: #F2F5F7; }
-      .label { font-size: 26px; font-weight: 600; }
-      .muted { fill: #A5B4C5; }
-      .excerpt { fill: #A4CDFA; }
-      .expanded { fill: #D3ECA6; }
-    </style>
-  </defs>
-  <rect x="1" y="1" width="638" height="566" rx="20" fill="#0E141C" stroke="#2B3A4B" stroke-width="2"/>
-  <text x="32" y="43" font-size="22" font-weight="700" letter-spacing="1.5" class="muted">SOURCE READING</text>
-  <text x="32" y="88" font-size="34" font-weight="700" letter-spacing="-.6">Small excerpt, larger source</text>
-
-  <rect x="32" y="124" width="376" height="332" rx="12" fill="#151E29" stroke="#58738F" stroke-width="1.5"/>
-  <text x="56" y="169" class="label">Retained text</text>
-  <path d="M56 190H384" fill="none" stroke="#2B3A4B" stroke-width="1.5"/>
-
-  <rect x="56" y="210" width="320" height="188" rx="8" fill="none" stroke="#D3ECA6" stroke-width="2" stroke-dasharray="7 6"/>
-  <path d="M88 240H330M88 358H318M88 376H292" fill="none" stroke="#A5B4C5" stroke-width="5" stroke-linecap="round"/>
-  <rect x="68" y="266" width="296" height="60" rx="6" fill="#192532" stroke="#A4CDFA" stroke-width="2"/>
-  <path d="M88 286H318M88 306H338" fill="none" stroke="#A4CDFA" stroke-width="5" stroke-linecap="round"/>
-  <text x="56" y="436" font-size="24" class="muted">Same extracted page</text>
-
-  <path d="M364 296H428" fill="none" stroke="#A4CDFA" stroke-width="2"/>
-  <text x="444" y="286" class="label excerpt">First</text>
-  <text x="444" y="318" class="label excerpt">excerpt</text>
-  <path d="M376 374H428" fill="none" stroke="#D3ECA6" stroke-width="2" stroke-dasharray="7 6"/>
-  <text x="444" y="369" class="label expanded">Wider</text>
-  <text x="444" y="401" class="label expanded">reading</text>
-
-  <path d="M32 480H608" fill="none" stroke="#2B3A4B" stroke-width="1.5"/>
-  <text x="32" y="514" font-size="25">Read more locally, without fetching again.</text>
-  <text x="32" y="546" font-size="24" class="muted">Widening the reading is an explicit action.</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img" aria-labelledby="wt wd">
+<title id="wt">A claim stays answerable to its page</title>
+<desc id="wd">Mechanism overview grouped across websift's research modes: a search hit is a lead that may miss other terminology, a generated answer carries provider citations only, and a fetched passage is checkable text. All three check back against the retained page, which keeps the first excerpt inside a wider range that a later local read can open without a second fetch. Static labels carry the full explanation.</desc>
+<style>
+.check { stroke-dasharray: 7 6; animation: wflow 2.4s linear infinite; }
+@keyframes wflow { to { stroke-dashoffset: -26; } }
+@media (prefers-reduced-motion: reduce) { .check { animation: none; } }
+</style>
+<pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#ffffff" fill-opacity="0.05"/></pattern>
+<defs>
+<marker id="wahg" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#A4B9B0"/></marker>
+<marker id="wahm" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#70E6BF"/></marker>
+</defs>
+<rect width="1200" height="440" rx="14" fill="#111C1C"/>
+<rect width="1200" height="440" rx="14" fill="url(#dots)"/>
+<rect x="8" y="8" width="1184" height="424" rx="10" fill="none" stroke="#3a4541" stroke-width="1.5"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="48" y="44" fill="#70E6BF" font-size="13" letter-spacing="3">MECHANISM &#183; EVIDENCE STATUS</text>
+<text x="48" y="84" fill="#EAF4EE" font-size="30" font-weight="700">A claim stays answerable to its page</text>
+<text x="48" y="112" fill="#A4B9B0" font-size="15">a search hit, a generated answer and a fetched passage make different claims; the retained page checks all three.</text>
+<rect x="48" y="150" width="380" height="58" rx="8" fill="#172723" stroke="#edc786" stroke-width="2" stroke-dasharray="5 4"/>
+<text x="64" y="174" fill="#EAF4EE" font-size="15" font-weight="700">search hit</text>
+<text x="64" y="195" fill="#A4B9B0" font-size="12">lead &#8212; may miss other terminology</text>
+<rect x="48" y="222" width="380" height="58" rx="8" fill="#172723" stroke="#edc786" stroke-width="2"/>
+<text x="64" y="246" fill="#EAF4EE" font-size="15" font-weight="700">generated answer</text>
+<text x="64" y="267" fill="#A4B9B0" font-size="12">provider citation &#8212; unverified prose</text>
+<rect x="48" y="294" width="380" height="58" rx="8" fill="#172723" stroke="#70E6BF" stroke-width="2"/>
+<text x="64" y="318" fill="#EAF4EE" font-size="15" font-weight="700">fetched passage</text>
+<text x="64" y="339" fill="#A4B9B0" font-size="12">checkable text &#8212; quoted from the page</text>
+<path d="M428 179 L518 238" fill="none" stroke="#edc786" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#wahg)"/>
+<path d="M428 251 L518 248" fill="none" stroke="#edc786" stroke-width="2" marker-end="url(#wahg)"/>
+<path class="check" d="M428 323 L518 258" fill="none" stroke="#70E6BF" stroke-width="2" marker-end="url(#wahm)"/>
+<rect x="520" y="150" width="632" height="240" rx="10" fill="#172723" stroke="#3B5D52" stroke-width="1.5"/>
+<text x="552" y="184" fill="#EAF4EE" font-size="16" font-weight="700">retained page &#8212; source of record</text>
+<rect x="552" y="202" width="568" height="122" rx="8" fill="none" stroke="#A4B9B0" stroke-width="1.5" stroke-dasharray="6 5"/>
+<text x="568" y="224" fill="#A4B9B0" font-size="12">wider local read &#8212; no second fetch</text>
+<rect x="584" y="242" width="380" height="58" rx="8" fill="#25463B" stroke="#70E6BF" stroke-width="2"/>
+<text x="600" y="266" fill="#70E6BF" font-size="13" font-weight="700">first excerpt</text>
+<text x="600" y="287" fill="#EAF4EE" font-size="12">the text the turn received</text>
+<text x="552" y="362" fill="#A4B9B0" font-size="12">quotes and consequential claims compare here.</text>
+<path d="M48 402 H1152" stroke="#3B5D52" stroke-width="1"/>
+<text x="48" y="426" fill="#A4B9B0" font-size="14">Leads and citations stay provisional; the retained page is the source of record.</text>
+</g>
 </svg>

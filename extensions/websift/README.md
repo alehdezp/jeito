@@ -22,7 +22,7 @@ websift separates the text it retains from the text it returns: `web_fetch` save
 
 Smaller pages can appear in full. On large pages, search terms select up to five matching passages, with locations for further inspection. Matching is lexical and takes headings into account. It can miss different terminology or a condition elsewhere in the page; a high-ranked passage is a starting point, not proof of complete coverage. The retained file makes it possible to examine that condition without retrieving the page again.
 
-![One retained page with two nested reading ranges. The solid inner range is the first excerpt; a larger dashed range shows surrounding text available through a later local read. Both use the same extracted source, without another fetch.](docs/images/source-check.svg)
+![Mechanism diagram: a search hit is a lead, a generated answer carries provider citations only, and a fetched passage is checkable text; all three check back against the retained page, which holds the first excerpt inside a wider range a later local read can open without a second fetch.](docs/images/source-check.svg)
 
 Downloads and bounded crawls extend this from individual pages to a collection. A crawl records the titles, URLs and local paths of the pages it collected; repository downloads retain a shallow clone for code inspection. Ordinary file tools can search this material across follow-up questions. The collection consists of files and navigation metadata, with no automatic semantic index or guarantee of whole-site coverage.
 
