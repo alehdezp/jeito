@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img" aria-labelledby="rt rd">
+<title id="rt">One call returns the connected answer</title>
+<desc id="rd">Mechanism overview of ranked search: one question becomes behavior-ranked declaration cards, and the same bounded reply carries caller, use and documentation edges around them. Documentation arrives labeled as a source-verified lead whose code association is unverified, and a cursor retains the query, focus, scope and source versions for continuation. Static labels carry the full explanation.</desc>
+<style>
+.flow { stroke-dasharray: 7 6; animation: rflow 2.4s linear infinite; }
+@keyframes rflow { to { stroke-dashoffset: -26; } }
+.pulse { animation: rpulse 3.2s ease-in-out infinite; }
+@keyframes rpulse { 0%,100% { opacity: .8; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .flow, .pulse { animation: none; } }
+</style>
+<pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#ffffff" fill-opacity="0.05"/></pattern>
+<defs>
+<marker id="rahm" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#70E6BF"/></marker>
+<marker id="raha" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#edc786"/></marker>
+</defs>
+<rect width="1200" height="440" rx="14" fill="#111C1C"/>
+<rect width="1200" height="440" rx="14" fill="url(#dots)"/>
+<rect x="8" y="8" width="1184" height="424" rx="10" fill="none" stroke="#3a4541" stroke-width="1.5"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="48" y="44" fill="#70E6BF" font-size="13" letter-spacing="3">MECHANISM &#183; RANKED SEARCH</text>
+<text x="48" y="84" fill="#EAF4EE" font-size="30" font-weight="700">One call returns the connected answer</text>
+<text x="48" y="112" fill="#A4B9B0" font-size="15">behavior-ranked code, its relationships and its documents &#8212; bounded, continuable, labeled with what was verified.</text>
+<rect x="48" y="150" width="240" height="84" rx="8" fill="#172723" stroke="#3B5D52" stroke-width="1.5"/>
+<text x="64" y="176" fill="#5c6863" font-size="11" letter-spacing="2">THE QUESTION</text>
+<text x="64" y="202" fill="#EAF4EE" font-size="15" font-weight="700">&#8220;flush the queue&#8221;</text>
+<text x="64" y="222" fill="#70E6BF" font-size="11">auto &#8594; behavior lane</text>
+<rect x="336" y="150" width="300" height="84" rx="8" fill="#25463B" stroke="#70E6BF" stroke-width="2"/>
+<text x="352" y="178" fill="#EAF4EE" font-size="15" font-weight="700">worker.ts:Worker.flush</text>
+<text x="352" y="200" fill="#A4B9B0" font-size="12">rank 1 &#183; symbol and behavior match</text>
+<text x="352" y="222" fill="#70E6BF" font-size="11">certified source rows</text>
+<rect x="336" y="250" width="300" height="84" rx="8" fill="#172723" stroke="#3B5D52" stroke-width="1.5"/>
+<text x="352" y="278" fill="#EAF4EE" font-size="15" font-weight="700">queue.ts:flushQueue</text>
+<text x="352" y="300" fill="#A4B9B0" font-size="12">rank 2 &#183; calls the target</text>
+<text x="352" y="322" fill="#A4B9B0" font-size="11">candidate, not ownership</text>
+<path d="M288 192 L332 192" fill="none" stroke="#70E6BF" stroke-width="2" marker-end="url(#rahm)"/>
+<rect x="684" y="150" width="468" height="64" rx="8" fill="#172723" stroke="#3B5D52" stroke-width="1.5"/>
+<text x="700" y="176" fill="#EAF4EE" font-size="13.5" font-weight="700">callers &#8212; scheduler.ts:241</text>
+<text x="700" y="198" fill="#70E6BF" font-size="11">source-verified site</text>
+<rect x="684" y="230" width="468" height="64" rx="8" fill="#172723" stroke="#3B5D52" stroke-width="1.5"/>
+<text x="700" y="256" fill="#EAF4EE" font-size="13.5" font-weight="700">uses &#8212; retry.ts:88</text>
+<text x="700" y="278" fill="#70E6BF" font-size="11">source-verified site</text>
+<rect class="pulse" x="684" y="310" width="468" height="64" rx="8" fill="#172723" stroke="#edc786" stroke-width="2"/>
+<text x="700" y="336" fill="#EAF4EE" font-size="13.5" font-weight="700">documentation &#8212; operations.md &#8250; Retry policy</text>
+<text x="700" y="358" fill="#edc786" font-size="11">source-verified document lead &#183; code association unverified</text>
+<path class="flow" d="M636 178 L680 178" fill="none" stroke="#70E6BF" stroke-width="2" marker-end="url(#rahm)"/>
+<path class="flow" d="M636 210 L664 210 L664 258 L680 258" fill="none" stroke="#70E6BF" stroke-width="1.5" marker-end="url(#rahm)"/>
+<path d="M636 282 L664 282 L664 338 L680 338" fill="none" stroke="#edc786" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#raha)"/>
+<text x="48" y="392" fill="#A4B9B0" font-size="12">the reply respects one ceiling &#183; a cursor pins query, focus, scope and source versions &#183; changed inputs refuse replay</text>
+<path d="M48 406 H1152" stroke="#3B5D52" stroke-width="1"/>
+<text x="48" y="430" fill="#A4B9B0" font-size="14">Ranking suggests; source certifies; the reply admits what it omitted.</text>
+</g>
+</svg>
