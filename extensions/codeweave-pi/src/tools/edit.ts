@@ -12,7 +12,7 @@ import { rejectObsoleteNavigationParams } from "../core/navigation-clean.ts";
 import { asToolCallValidationError, invalidToolCallResult, ToolCallValidationError } from "../core/tool-call-contract.ts";
 
 export const editParams = S.object({
-  input: S.string("The edit program — required. One or more [PATH#HASH] file sections, each holding operations against the original snapshot's numbers; earlier operations never renumber later anchors.\n\nLine operations (for partial changes): REPLACE N: or REPLACE N..M: plus +TEXT rows · DELETE N or DELETE N..M · INSERT BEFORE|AFTER N: or INSERT AT START|END: plus +TEXT. INSERT AFTER N auto-adjusts outward across following closing braces when the new text's indentation belongs outside them — the result note names where it landed.\n\nBlock operations (whole constructs): REPLACE BLOCK AT N:, DELETE BLOCK AT N, INSERT AFTER BLOCK AT N: — only when the read certified a block starting at N; otherwise use a concrete range.\n\nCHECK LSP validates the file after it lands; place it after that file's last operation.\n\nDELETE FILE or MOVE FILE TO destination must be the only operation in its file's section.\n\nCopy every hash and line number from the read or edit output you are working from — never guess. Each file lands as one piece, but the whole request is not all-or-nothing: an earlier file stays landed if a later one fails.\n\nWorked example — two files, four operations, validation, with every number from one read:\n\n[src/render.ts#A1B2C3D4]\nREPLACE 42..44:\n+function renderCard(item: Item): string {\n+  return frame(item.title);\n+}\nDELETE 58\nINSERT AFTER BLOCK AT 120:\n+function renderFooter(): string {\n+  return `v${VERSION}`;\n+}\nCHECK LSP\n[src/types.ts#E5F6A7B8]\nREPLACE 12:\n+  title: string;\n+  subtitle?: string;\nCHECK LSP\n\nNote what the example demonstrates: DELETE 58 targets original line 58 even though the REPLACE above changed the line count — snapshot numbers, not shifted ones; and 120 must be a certified block-opening line from the read."),
+  input: S.string("The edit program — required. One or more [PATH#HASH] file sections, each holding operations against the original snapshot's numbers; earlier operations never renumber later anchors.\n\nLine operations (for partial changes): REPLACE N: or REPLACE N..M: plus +TEXT rows · DELETE N or DELETE N..M · INSERT BEFORE|AFTER N: or INSERT AT START|END: plus +TEXT. INSERT AFTER N auto-adjusts outward across following closing braces when the new text's indentation belongs outside them — the result note names where it landed.\n\nBlock operations (whole constructs): REPLACE BLOCK AT N:, DELETE BLOCK AT N, INSERT AFTER BLOCK AT N: — only when the read certified a block starting at N; otherwise use a concrete range.\n\nCHECK LSP validates the file after it lands; place it after that file's last operation.\n\nDELETE FILE or MOVE FILE TO destination must be the only operation in its file's section.\n\nCopy the hash and use the original snapshot's coordinates. A full raw read grants full-file authority; count unnumbered rows from the stated start, without a required numbered re-read. Never guess unseen coordinates. Each file lands as one piece, but the whole request is not all-or-nothing: an earlier file stays landed if a later one fails.\n\nWorked example — two files, four operations, validation, with every number from one read:\n\n[src/render.ts#A1B2C3D4]\nREPLACE 42..44:\n+function renderCard(item: Item): string {\n+  return frame(item.title);\n+}\nDELETE 58\nINSERT AFTER BLOCK AT 120:\n+function renderFooter(): string {\n+  return `v${VERSION}`;\n+}\nCHECK LSP\n[src/types.ts#E5F6A7B8]\nREPLACE 12:\n+  title: string;\n+  subtitle?: string;\nCHECK LSP\n\nNote what the example demonstrates: DELETE 58 targets original line 58 even though the REPLACE above changed the line count — snapshot numbers, not shifted ones; and 120 must be a certified block-opening line from the read."),
 }, ["input"]);
 
 export function registerEditTool(pi: ExtensionAPI): void {
@@ -66,8 +66,24 @@ function recoverReadRows(entries: readonly any[], cwd: string, path: string, tex
       if (canonical !== path) continue;
       const header = rendered.indexOf(`[${file.path}#${tag}]`);
       if (header < 0) continue;
+      let inFile = true;
       for (let row = header + 1; row < rendered.length; row++) {
-        if (/^\[.+#[0-9A-F]{8}\]$/.test(rendered[row]!)) break;
+        if (/^\[.+#[0-9A-F]{8}\]$/.test(rendered[row]!)) {
+          inFile = rendered[row] === `[${file.path}#${tag}]`;
+          continue;
+        }
+        if (!inFile) continue;
+        const raw = /^Raw (?:full file|range) lines (\d+)-(\d+); (?:full-file|shown-range) edit authority\. Warning:/.exec(rendered[row]!);
+        if (raw) {
+          const start = Number(raw[1]), end = Number(raw[2]);
+          if (!Number.isSafeInteger(start) || !Number.isSafeInteger(end) || start < 1 || end < start || end > source.length) continue;
+          const count = end - start + 1;
+          const complete = file.intervals.some((range: any) => range?.start <= start && range?.end >= end) &&
+            source.slice(start - 1, end).every((line, offset) => rendered[row + 1 + offset] === line);
+          if (complete) for (let line = start; line <= end; line++) seen.add(line);
+          row += count;
+          continue;
+        }
         const match = /^(\d+):(.*)$/.exec(rendered[row]!);
         if (!match) continue;
         const line = Number(match[1]);

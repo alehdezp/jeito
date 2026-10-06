@@ -113,3 +113,57 @@ test("batch recovery uses delivered rows from the matching file, not its neighbo
   assert.ok(result.details.files.some(file => file.changes.some(change => change.reason === "unseen")));
   assert.equal(await readFile(join(cwd, "one.txt"), "utf8"), "one\ntwo\n");
 });
+
+function rawBranchTools(cwd) {
+  const tools = new Map();
+  const pi = { registerTool(tool) { tools.set(tool.name, tool); } };
+  registerReadTool(pi);
+  registerEditTool(pi);
+  const entries = [];
+  const ctx = { cwd, sessionManager: { getSessionId: () => cwd, getCwd: () => cwd, getBranch: () => entries } };
+  const remember = (toolName, result) => entries.push({ type: "message", message: { role: "toolResult", toolName, ...result } });
+  return { tools, entries, ctx, remember };
+}
+
+test("full raw authority survives memory loss, including hash-looking source rows", async t => {
+  const cwd = await fixture(t);
+  const { tools, ctx, remember } = rawBranchTools(cwd);
+  const source = "one\n[fake.txt#ABCDEF12]\n3:numbered-looking source\nlast\n";
+  await writeFile(join(cwd, "raw.log"), source);
+  const read = await tools.get("read").execute("raw", { path: "raw.log::raw" }, undefined, undefined, ctx);
+  remember("read", read);
+  snapshots.clear();
+  const result = await tools.get("edit").execute("raw-edit", { input: `[raw.log#${read.details.tag}]\nREPLACE 4:\n+LAST` }, undefined, undefined, ctx);
+  assert.equal(result.details.status, "success");
+  assert.equal(await readFile(join(cwd, "raw.log"), "utf8"), source.replace("last\n", "LAST\n"));
+});
+
+test("mixed numbered/raw batch receipts recover every shown raw row", async t => {
+  const cwd = await fixture(t);
+  const { tools, ctx, remember } = rawBranchTools(cwd);
+  await writeFile(join(cwd, "raw.log"), "one\ntwo\nthree\n");
+  const read = await tools.get("read").execute("raw-batch", { paths: ["raw.log:1-1", "raw.log:raw"] }, undefined, undefined, ctx);
+  remember("read", read);
+  snapshots.clear();
+  const result = await tools.get("edit").execute("raw-edit", { input: `[raw.log#${read.details.files[1].tag}]\nREPLACE 3:\n+THREE` }, undefined, undefined, ctx);
+  assert.equal(result.details.status, "success");
+  assert.equal(await readFile(join(cwd, "raw.log"), "utf8"), "one\ntwo\nTHREE\n");
+});
+
+test("raw receipt details cannot authorize altered or missing displayed bytes", async t => {
+  const cwd = await fixture(t);
+  const { tools, ctx, remember, entries } = rawBranchTools(cwd);
+  const source = "one\ntwo\nthree\n";
+  await writeFile(join(cwd, "raw.log"), source);
+  const read = await tools.get("read").execute("raw", { path: "raw.log:raw" }, undefined, undefined, ctx);
+  for (const replacement of ["one\nwrong\nthree\n", "one\n"]) {
+    const altered = structuredClone(read);
+    altered.content[0].text = altered.content[0].text.replace(source, replacement);
+    entries.length = 0;
+    remember("read", altered);
+    snapshots.clear();
+    const result = await tools.get("edit").execute("raw-held", { input: `[raw.log#${read.details.tag}]\nREPLACE 2:\n+NO` }, undefined, undefined, ctx);
+    assert.ok(result.details.files.some(file => file.changes.some(change => change.reason === "unseen")));
+    assert.equal(await readFile(join(cwd, "raw.log"), "utf8"), source);
+  }
+});

@@ -405,16 +405,35 @@ test("over-cap unseen reveals stay closed across retries", async () => {
   assert.match(await readFile(path, "utf8"), /line 90/);
 });
 
-test("raw inspection does not mint hidden hash authority", async () => {
+test("full raw read authorizes every displayed row without a numbered re-read", async () => {
   const cwd = await fixture();
   const path = join(cwd, "raw-only.txt");
-  const text = "one\ntwo\nthree\n";
+  const text = Array.from({ length: 150 }, (_, index) => `line ${index + 1}`).join("\n") + "\n";
   await writeFile(path, text);
   const canonical = canonicalExistingPath(path);
   snapshots.invalidate(canonical);
-  const raw = (await renderRead({ cwd, path: `${path}:raw` })).text;
-  assert.doesNotMatch(raw, HEADER_RE);
-  assert.equal(snapshots.byTag(canonical, computeTag(text)), undefined);
+  const raw = (await renderRead({ cwd, path: `${path}::raw` })).text;
+  assert.match(raw, HEADER_RE);
+  assert.match(raw, /Raw full file lines 1-150; full-file edit authority\. Warning:/);
+  assert.match(raw, /No re-read required/);
+  assert.ok(raw.includes(text));
+  assert.equal(snapshots.byTag(canonical, computeTag(text)).seenLines.size, 150);
+  await applyPatch({ cwd, patch: `${header(raw)}\nREPLACE 150:\n+LAST` });
+  assert.equal(await readFile(path, "utf8"), text.replace("line 150\n", "LAST\n"));
+});
+
+test("raw ranges authorize shown rows but not omitted gaps", async () => {
+  const cwd = await fixture();
+  const path = join(cwd, "raw-ranges.txt");
+  const text = "one\ntwo\nthree\nfour\nfive\n";
+  await writeFile(path, text);
+  const raw = (await renderRead({ cwd, path: `${path}:2-2,4-4:raw` })).text;
+  assert.match(raw, /Raw range lines 2-2; shown-range edit authority/);
+  assert.match(raw, /Raw range lines 4-4; shown-range edit authority/);
+  assert.deepEqual([...snapshots.byTag(canonicalExistingPath(path), computeTag(text)).seenLines], [2, 4]);
+  const result = await applyPatch({ cwd, patch: `${header(raw)}\nREPLACE 2:\n+TWO\nREPLACE 3:\n+THREE` });
+  assert.match(result, /Held remaining change/);
+  assert.equal(await readFile(path, "utf8"), "one\nTWO\nthree\nfour\nfive\n");
 });
 
 test("oh-my-pi operation syntax is rejected in favor of the single natural language", async () => {

@@ -222,14 +222,10 @@ export async function prepareRead(params: { cwd: string; path: string; signal?: 
   }
 
   if (target.raw) {
-    const rawIntervals = intervals ?? [{ start: 1, end: lineCount }];
-    const rawText = renderRaw(normalized, lines, intervals ?? [], target.selector !== undefined, display);
-    if (frontmatter?.text) {
-      const prepared = preparedAuthority(display, canonicalPath, normalized, frontmatter.text, lineNumbersFromIntervals(frontmatter.intervals), [], frontmatter.intervals, frontmatter);
-      prepared.text = `${prepared.text}\n\n${rawText}`;
-      return prepared;
-    }
-    return withFrontmatter({ text: rawText, canonicalPath, displayPath: display, intervals: rawIntervals }, canonicalPath, frontmatter);
+    const rawIntervals = target.selector ? intervals ?? [] : lineCount ? [{ start: 1, end: lineCount }] : [];
+    const seenLines = [...new Set([...lineNumbersFromIntervals(rawIntervals), ...lineNumbersFromIntervals(frontmatter?.intervals ?? [])])].sort((a, b) => a - b);
+    const body = [frontmatter?.text, renderRaw(normalized, lines, rawIntervals, target.selector !== undefined)].filter(Boolean).join("\n\n");
+    return preparedAuthority(display, canonicalPath, normalized, body, seenLines, [], intervalsFromLineNumbers(seenLines), frontmatter);
   }
 
   if (frontmatter?.intervals.length) intervals = mergeSourceIntervals([...(intervals ?? []), ...frontmatter.intervals]);
@@ -610,7 +606,7 @@ async function renderLargeRangeNoTag(absolutePath: string, display: string, sele
   if (Buffer.byteLength(body, "utf8") > DEFAULT_EXACT_BUDGET) {
     return `Read refused: exact selector output for ${display} exceeds budget. Narrow the selector, e.g. ${display}:${intervals[0]?.start}-${Math.min(intervals[0]?.start ?? 1, intervals[0]?.end ?? 1)}.\nNo edit hash was created.`;
   }
-  if (raw) return `[${display} · raw range · no edit hash]\nLarge file ${formatBytes(sizeBytes)}; raw bounded range shown for inspection only. Re-read exact numbered ranges before claims or edits.\n${body}`;
+  if (raw) return `[${display} · raw range · no edit hash]\nWarning: this large-file range has no snapshot hash or edit authority; the whole file exceeds the snapshot cap.\n${body}`;
   return `[${display} · range · no edit hash]\nLarge file ${formatBytes(sizeBytes)}; bounded range shown without edit authority.\n${body}\nNo edit hash was created. Use this for inspection only; edits require a fresh [path#HASH] from a safely snapshotable file.`;
 }
 
@@ -668,7 +664,8 @@ function fallbackSummary(path: string, lines: string[]): string {
   return `[${path} · summary · no edit hash]\n${lines.length} lines. Use exact selectors before editing.`;
 }
 
-function renderRaw(normalized: string, lines: string[], intervals: Interval[], ranged: boolean, display = "file"): string {
-  const body = !ranged ? normalized : intervals.map(interval => lines.slice(interval.start - 1, interval.end).join("\n")).join("\n");
-  return `[${display} · raw · no edit hash]\nRaw text shown for inspection only; re-read exact numbered ranges before claims or edits.\n${body}`;
+function renderRaw(normalized: string, lines: string[], intervals: Interval[], ranged: boolean): string {
+  const warning = "Warning: line numbers are not shown; count from the stated start for line edits. No re-read required.";
+  if (!ranged) return `Raw full file lines 1-${lines.length}; full-file edit authority. ${warning}\n${normalized}`;
+  return intervals.map(interval => `Raw range lines ${interval.start}-${interval.end}; shown-range edit authority. ${warning}\n${lines.slice(interval.start - 1, interval.end).join("\n")}`).join("\n\n");
 }

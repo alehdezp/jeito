@@ -3,7 +3,7 @@ title: "jeito codeweave-pi tool operating reference and coverage audit"
 description: "Exhaustive inventory of jeito codeweave-pi tools plus the APPEND-owned jeito Shell execution surface, with optimal call construction and coverage auditing."
 tags: [jeito-codeweave-pi, jeito-shell, tool-reference, operational-literacy, call-construction, coverage-audit]
 created: 2026-07-25
-updated: 2026-09-21
+updated: "2026-10-06 16Z"
 status: active
 owns: "Exhaustive public tool features, parameters, and optimal call construction"
 audience: agent
@@ -311,7 +311,7 @@ Do not batch speculative files whose first result could change later targets. Ne
 
 ### Read authority and structural blocks
 
-Only displayed complete numbered rows become mutation authority. Large summaries, outlines, transformed snippets, stale content, or path-only results remain locators. Structural blocks certified at read time authorize `BLOCK AT` edit operations; parser/backend work never runs during mutation.
+Displayed complete source rows become mutation authority under the returned `[path#HASH]`, including unnumbered raw text. Full raw reads authorize the whole file; raw range reads authorize only the stated, displayed ranges. Their warning calls out line counting, not a required re-read. Large summaries, outlines, transformed snippets, stale content, or path-only results remain locators; omitted or refused output grants no authority. Structural blocks certified at read time authorize `BLOCK AT` edit operations; parser/backend work never runs during mutation.
 
 Coverage: **APPEND prominently covers single-file distant selectors and multi-file read; schema covered; batch/selector/hash/block tests present.**
 

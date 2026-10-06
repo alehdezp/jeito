@@ -113,9 +113,9 @@ async function runGates(session, label) {
   assert.equal(await readFile(file, "utf8"), "ALPHA\nBETA\ngamma\ndelta\n");
 
   const raw = await call(session, cwd, "read", { path: `${file}:1-2:raw` });
-  assert.match(raw, /\[.*smoke\.ts · raw · no edit hash\]/);
+  assert.match(raw, /Raw range lines 1-2; shown-range edit authority\. Warning:/);
   assert.match(raw, /ALPHA\nBETA/);
-  assert.doesNotMatch(raw, TAG_RE);
+  assert.match(raw, TAG_RE);
 
   const largeCode = join(cwd, "large.ts");
   await writeFile(largeCode, ["import x from 'x'", "", "export function target() {", "  return 1", "}", ...Array.from({ length: 140 }, (_, i) => `// filler ${i}`)].join("\n") + "\n");

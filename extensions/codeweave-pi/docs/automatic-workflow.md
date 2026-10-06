@@ -3,7 +3,7 @@ title: "Implemented jeito-codeweave-pi installation and runtime flows"
 description: "Source-backed installation and runtime flows, including query purity, session-scoped Markdown frontmatter, mutation, recovery, and shutdown."
 tags: [jeito-codeweave-pi, lifecycle, postinstall, qmd-local-models, frontmatter, runtime-provisioning, query-purity]
 created: 2026-07-25
-updated: 2026-09-21
+updated: "2026-10-06 16Z"
 status: active
 owns: "End-to-end lifecycle: installation, startup, query, mutation, reconciliation, shutdown"
 audience: contributor
@@ -137,13 +137,13 @@ read selector
   -> exact file bytes are normalized; pi-nav resolves exact code symbols and returns a source hash checked against those bytes
   -> missing, ambiguous, stale, unsupported, over-budget, or escaping selectors fail closed before authority is minted
   -> on a Markdown file's first session exposure, numbered frontmatter rows attach within the metadata budget; visible `code`/`related` values run through the same selector resolver without reading targets into context
-  -> structural summary or exact numbered rows are rendered
+  -> structural summary, exact numbered rows, or hash-bearing raw text is rendered; full raw text authorizes the whole file, raw ranges authorize their shown rows, with only an advisory line-counting warning
   -> structural-block-resolver certifies displayed complete constructs
   -> SnapshotStore records digest, eight-hex hash, seen lines, blocks
 
 edit input
   -> patch-parser isolates trusted [path#HASH] sections and parses natural operations, RETRY, and CHECK LSP
-  -> if full text was evicted, restore compact full-digest row/block authority; the public wrapper can also recover unchanged read rows from the existing active-branch transcript
+  -> if full text was evicted, restore compact full-digest row/block authority; the public wrapper can also recover complete numbered rows or validated raw ranges from existing active-branch read results
   -> an unknown hash alone provides no row authority; normal held-row disclosure and safe salvage remain available
   -> edit-target compiles authored hunks into desired states and conservative change islands
   -> deterministic repair and stale recovery run without bypassing seen-line provenance
@@ -169,7 +169,7 @@ Core owners:
 
 Continuation rule: the successful edit result is exact mutation evidence and the next authority. Use its post-edit coordinate manifest for distant hunks; do not automatically reread or diff unless a broader change question remains. Mutation invariants are `docs/harness-doctrine.md:navigation-harness-doctrine/mutation-doctrine#2`; the salvage rationale is `docs/decisions/proof-preserving-mutation.md:proof-preserving-source-authority-and-the-salvage-edit-engine/part-b-salvage-edit-engine#2`.
 
-Cache eviction controls memory, not permission: `SnapshotStore` keeps compact full-digest row/block receipts within the existing encoded-byte budget. `src/tools/edit.ts::recoverReadRows` uses existing active-branch read results only when memory cannot supply proof; canonical path, tag, delivered numbered text and recorded intervals must agree with current source. Compaction does not itself revoke earlier reads. Cold recovery currently does not reconstruct native/edit-only receipts or certified block metadata; these remain integration gaps, not a blanket reread policy. Read rendering and the public edit language are unchanged.
+Cache eviction controls memory, not permission: `SnapshotStore` keeps compact full-digest row/block receipts within the existing encoded-byte budget. `src/tools/edit.ts::recoverReadRows` uses existing active-branch read results only when memory cannot supply proof; canonical path, tag, complete delivered text and recorded intervals must agree with current source. Raw ranges are checked as complete verbatim spans, including when numbered and raw groups share one file. Compaction does not itself revoke earlier reads. Cold recovery currently does not reconstruct native/edit-only receipts or certified block metadata; these remain integration gaps, not a blanket reread policy.
 
 ## 5. Stale edit recovery
 

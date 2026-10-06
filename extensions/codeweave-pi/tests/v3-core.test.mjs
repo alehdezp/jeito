@@ -1167,9 +1167,9 @@ test("write/read/edit/stale/multihunk/raw/malformed gates", async () => {
   assert.equal(await readFile(path, "utf8"), "ALPHA\nBETA\ngamma\ndelta\n");
 
   const raw = (await renderRead({ cwd, path: `${path}:1-2:raw` })).text;
-  assert.match(raw, /\[.*smoke\.txt · raw · no edit hash\]/);
+  assert.match(raw, /Raw range lines 1-2; shown-range edit authority\. Warning:/);
   assert.match(raw, /ALPHA\nBETA/);
-  assert.doesNotMatch(raw, TAG_RE);
+  assert.match(raw, TAG_RE);
 
   assert.match(
     await applyPatch({ cwd, patch: `${tagOf(multiOut).header}\nREPLACE 2:\n-BETA` }),

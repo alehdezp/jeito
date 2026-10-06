@@ -3,7 +3,7 @@ title: "Navigation harness doctrine and invariants"
 description: "Product reasoning, evidence-capability routing, source and mutation authority, native-output preservation, query-time purity, and change-classification invariants."
 tags: [jeito-codeweave-pi, doctrine, invariants, evidence-acquisition, mutation-authority]
 created: 2026-07-25
-updated: 2026-09-21
+updated: "2026-10-06 16Z"
 status: active
 owns: "Product reasoning, evidence-capability routing, and timeless architecture invariants"
 audience: contributor
@@ -103,6 +103,8 @@ Keep these concepts separate:
 3. **Mutation authority**: complete current-byte source rows recorded under a whole-file hash with seen-line provenance.
 
 Complete, current, verbatim displayed project rows with path and line identity may be certified by any capability after byte/identity validation. `read` supplies missing source authority; it is not the only possible authority origin. Clipped snippets, transformed prose, historical removals, generated text, summaries, inferred text, stale versions, and path-only results are never mutation authority.
+
+Full raw text reads with a current `[path#HASH]` grant full-file edit authority; raw range reads grant authority for the displayed ranges. The warning about unnumbered text is advisory: count from the stated start for line operations, without a mandatory numbered re-read. Reply-budget omissions and refusals do not grant authority.
 
 Source authority is orthogonal to routing: a hash does not prove the boundary is complete or editing is next. The implemented flow is `docs/automatic-workflow.md:implemented-runtime-flows/3-unified-source-authority#2`; the proof-preserving rationale is `docs/decisions/proof-preserving-mutation.md:proof-preserving-source-authority-and-the-salvage-edit-engine/part-a-unified-source-authority#2`.
 

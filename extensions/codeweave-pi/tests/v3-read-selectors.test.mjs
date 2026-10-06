@@ -61,9 +61,9 @@ test("read valid selectors still work and mint hashes only for shown source", as
   assert.doesNotMatch(ranged, /line three/);
 
   const raw = await call(pi.tool("read"), { path: "README.md:raw" }, cwd);
-  assert.match(raw, /\[README\.md · raw · no edit hash\]/);
-  assert.match(raw, /Raw text shown for inspection only/);
-  assert.doesNotMatch(raw, TAG_RE);
+  assert.match(raw, TAG_RE);
+  assert.match(raw, /Raw full file lines 1-3; full-file edit authority\. Warning:/);
+  assert.doesNotMatch(raw, /inspection only|no edit hash|re-read exact/);
   assert.match(raw, /line three/);
   const doubleColonRaw = await call(pi.tool("read"), { path: "README.md::raw" }, cwd);
   assert.equal(doubleColonRaw, raw);
